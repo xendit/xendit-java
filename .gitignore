@@ -71,3 +71,6 @@ fabric.properties
 .gradle/
 build/
 .idea/
+
+# Bintray creds
+local.properties

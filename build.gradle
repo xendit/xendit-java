@@ -1,17 +1,42 @@
-plugins {
-    id 'java'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }
 
-group 'xendit'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
 }
 
-dependencies {
-    implementation 'com.google.code.gson:gson:2.8.5'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+ext {
+    bintrayOrg = 'xendit'
+    bintrayRepo = 'android'
+    bintrayName = 'xendit-java-lib'
+
+    libraryName = 'Xendit Java Library'
+    artifact = 'xendit-java-lib'
+
+    libraryDescription = 'Easily connect to Xendit with this library.'
+
+    siteUrl = 'https://github.com/xendit/xendit-java-library'
+    gitUrl = 'https://github.com/xendit/xendit-java-library.git'
+
+    developerId = 'hakiemaul'
+    developerName = 'Aulia Hakiem.'
+    developerEmail = 'hakiem@xendit.co'
+
+    licenseName = 'MIT'
+    licenseUrl = ''
+    allLicenses = ["MIT"]
 }
