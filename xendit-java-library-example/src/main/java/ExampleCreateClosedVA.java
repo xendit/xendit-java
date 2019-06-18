@@ -14,7 +14,7 @@ public class ExampleCreateClosedVA {
         closedVAMap.put("external_id", "my_external_id");
         closedVAMap.put("bank_code", BankCode.BNI.getText());
         closedVAMap.put("name", "John Doe");
-        closedVAMap.put("expected_amount", 20000);
+        closedVAMap.put("expected_amount", "200000000");
 
         try {
             /**
@@ -27,13 +27,13 @@ public class ExampleCreateClosedVA {
              * Second option. Create with individual value of required params.
              */
             VirtualAccount virtualAccount2 = VirtualAccount.createClosed("my_external_id",
-                    BankCode.PERMATA.getText(), "John Doe", new Long(100000));
+                    BankCode.PERMATA.getText(), "John Doe", 100000L);
 
             /**
              * Third option. Create with individual value of required params plus added additional params at the end.
              */
             VirtualAccount virtualAccount3 = VirtualAccount.createClosed("my_external_id",
-                    BankCode.MANDIRI.getText(), "John Doe", new Long(100000),
+                    BankCode.MANDIRI.getText(), "John Doe", 100000L,
                     closedVAMap);
 
             System.out.println(virtualAccount);

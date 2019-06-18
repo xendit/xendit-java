@@ -3,15 +3,17 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
+import com.xendit.exception.ParamException;
 import com.xendit.network.RequestResource;
-import com.xendit.resources.CreateClosedVirtualAccount;
 
-import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VirtualAccount extends BaseModel {
+    private static final Long MINIMUM_AMOUNT = 10000L;
+    private static final Long MAXIMUM_AMOUNT = 50000000000L;
+
     @SerializedName("id")
     private String id;
 
@@ -65,10 +67,7 @@ public class VirtualAccount extends BaseModel {
      * @throws XenditException
      */
     public static VirtualAccount createClosed(Map<String, Object> params) throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
-        params.put("is_closed", true);
-
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return create(params, true);
     }
 
     /**
@@ -79,17 +78,15 @@ public class VirtualAccount extends BaseModel {
      * @return VirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount) throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
-
+    public static VirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount)
+            throws XenditException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("external_id", externalId);
         params.put("bank_code", bankCode);
         params.put("name", name);
         params.put("expected_amount", expectedAmount);
-        params.put("is_closed", true);
 
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return create(params, true);
     }
 
     /**
@@ -104,17 +101,14 @@ public class VirtualAccount extends BaseModel {
     public static VirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount,
                                        Map<String, Object> additionalParam)
             throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
-
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("external_id", externalId);
         params.put("bank_code", bankCode);
         params.put("name", name);
         params.put("expected_amount", expectedAmount);
-        params.put("is_closed", true);
         params.putAll(additionalParam);
 
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return create(params, true);
     }
 
     /**
@@ -124,10 +118,7 @@ public class VirtualAccount extends BaseModel {
      * @throws XenditException
      */
     public static VirtualAccount createOpen(Map<String, Object> params) throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
-        params.put("is_closed", false);
-
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return create(params, false);
     }
 
     /**
@@ -139,15 +130,12 @@ public class VirtualAccount extends BaseModel {
      * @throws XenditException
      */
     public static VirtualAccount createOpen(String externalId, String bankCode, String name) throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
-
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("external_id", externalId);
         params.put("bank_code", bankCode);
         params.put("name", name);
-        params.put("is_closed", false);
 
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return create(params, false);
     }
 
     /**
@@ -162,16 +150,13 @@ public class VirtualAccount extends BaseModel {
     public static VirtualAccount createOpen(String externalId, String bankCode, String name,
                                        Map<String, Object> additionalParam)
             throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
-
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("external_id", externalId);
         params.put("bank_code", bankCode);
         params.put("name", name);
-        params.put("is_closed", false);
         params.putAll(additionalParam);
 
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return create(params, false);
     }
 
     /**
@@ -183,5 +168,45 @@ public class VirtualAccount extends BaseModel {
     public static AvailableBank[] getAvailableBank() throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts/available-banks");
         return request(RequestResource.Method.GET, url, null, AvailableBank[].class);
+    }
+
+    private static VirtualAccount create(Map<String, Object> params, Boolean isClosed) throws XenditException {
+        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
+
+        params.put("is_closed", isClosed);
+
+        if (isClosed && params.containsKey("suggested_amount")) {
+            throw new ParamException("Suggested amount is not supported for closed VA");
+        }
+
+        if (params.containsKey("expected_amount")) {
+            String expectedAmount = params.get("expected_amount").toString();
+
+            amountValidation(expectedAmount);
+        }
+
+        if (params.containsKey("suggested_amount")) {
+            String suggestedAmount = params.get("suggested_amount").toString();
+
+            amountValidation(suggestedAmount);
+        }
+
+        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+    }
+
+    private static void amountValidation(String amount) throws ParamException {
+        try {
+            Long longAmount = new Long(amount);
+
+            if (longAmount < MINIMUM_AMOUNT) {
+                throw new ParamException(String.format("Minimum amount is %s", MINIMUM_AMOUNT));
+            }
+
+            if (longAmount > MAXIMUM_AMOUNT) {
+                throw new ParamException(String.format("Maximum amount is %s", MAXIMUM_AMOUNT));
+            }
+        } catch (NumberFormatException e) {
+            throw new ParamException("Invalid amount format");
+        }
     }
 }
