@@ -10,17 +10,17 @@ public class ExampleCreateOpenVA {
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
 
-        Map<String, Object> closedVAMap = new HashMap<String, Object>();
-        closedVAMap.put("external_id", "my_external_id");
-        closedVAMap.put("bank_code", BankCode.BNI.getText());
-        closedVAMap.put("name", "John Doe");
+        Map<String, Object> openVAMap = new HashMap<String, Object>();
+        openVAMap.put("external_id", "my_external_id");
+        openVAMap.put("bank_code", BankCode.BNI.getText());
+        openVAMap.put("name", "John Doe");
 
         try {
             /**
              * First option. Create directly from a properly named hashmap key value pair.
              * Check https://xendit.github.io/apireference/#create-fixed-virtual-accounts for field name.
              */
-            VirtualAccount virtualAccount = VirtualAccount.createOpen(closedVAMap);
+            VirtualAccount virtualAccount = VirtualAccount.createOpen(openVAMap);
 
             /**
              * Second option. Create with individual value of required params.
@@ -32,7 +32,7 @@ public class ExampleCreateOpenVA {
              * Third option. Create with individual value of required params plus added additional params at the end.
              */
             VirtualAccount virtualAccount3 = VirtualAccount.createOpen("my_external_id",
-                    BankCode.MANDIRI.getText(), "John Doe", closedVAMap);
+                    BankCode.MANDIRI.getText(), "John Doe", openVAMap);
 
             System.out.println(virtualAccount);
         } catch (XenditException e) {
