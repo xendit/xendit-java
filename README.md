@@ -1,4 +1,10 @@
 # Xendit Java Library
+Java library to be used with Xendit Payment Gateway. Register [here](http://dashboard.xendit.co).
+
+## Features
+- Create Open Amount VA
+- Create Closed Amount VA
+- Get List of Available Banks
 
 ## Requirements
 JDK 1.7 or later.
@@ -18,6 +24,9 @@ Gradle:
 ```
 compile 'com.xendit:xendit-java-library:1.0.0'
 ```
+
+## Usage
+You need to use secret API key in order to use functionality in this library.
 
 ## Examples
 Example.java
