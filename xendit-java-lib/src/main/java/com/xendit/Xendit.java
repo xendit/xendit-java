@@ -5,7 +5,7 @@ public class Xendit {
 
     public static volatile String apiKey;
 
-    public static volatile String apiUrl = LIVE_URL;
+    private static volatile String apiUrl = LIVE_URL;
 
     public static String getUrl() {
         return apiUrl;
