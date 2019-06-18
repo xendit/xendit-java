@@ -44,7 +44,7 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
-out/*
+out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -68,5 +68,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Gradle files
-.gradle/*
-build/*
+.gradle/
+build/
+.idea/
