@@ -58,42 +58,6 @@ public class VirtualAccount extends BaseModel {
     @SerializedName("description")
     private Long description;
 
-    public class AvailableBank {
-        @SerializedName("name")
-        String name;
-
-        @SerializedName("code")
-        String code;
-    }
-
-    public enum BankCode {
-        BNI("BNI"),
-        MANDIRI("MANDIRI"),
-        BRI("BRI"),
-        BCA("BCA"),
-        PERMATA("PERMATA");
-
-        private String text;
-
-        BankCode(String text) {
-            this.text = text;
-        }
-
-        public String getText() {
-            return this.text;
-        }
-
-        @Nullable
-        public static VirtualAccount.BankCode fromString(String text) {
-            for (VirtualAccount.BankCode m : VirtualAccount.BankCode.values()) {
-                if (m.text.equalsIgnoreCase(text)) {
-                    return m;
-                }
-            }
-            return null;
-        }
-    }
-
     /**
      * Create closed VA with complete object
      * @param params listed here https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
