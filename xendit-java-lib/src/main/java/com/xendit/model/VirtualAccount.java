@@ -72,9 +72,10 @@ public class VirtualAccount extends BaseModel {
 
     /**
      * Create closed VA with only required parameters
-     * @param externalId String
-     * @param bankCode String
-     * @param name String
+     * @param externalId An ID of your choice, usually something that link Xendit VA with your internal system.
+     * @param bankCode Bank code of the VA you want to create. See BankCode enum.
+     * @param name Name of the VA, usually your end user's name or your company's.
+     * @param expectedAmount Expected payment amount for this VA.
      * @return VirtualAccount model.
      * @throws XenditException
      */
@@ -90,11 +91,13 @@ public class VirtualAccount extends BaseModel {
     }
 
     /**
-     * Create open VA with required parameters and can accept additional params
-     * @param externalId String
-     * @param bankCode String
-     * @param name String
-     * @param additionalParam Map<String, Object>
+     * Create closed VA with required parameters and can accept additional params
+     * @param externalId An ID of your choice, usually something that link Xendit VA with your internal system.
+     * @param bankCode Bank code of the VA you want to create. See BankCode enum.
+     * @param name Name of the VA, usually your end user's name or your company's.
+     * @param expectedAmount Expected payment amount for this VA.
+     * @param additionalParam Optional params.
+     *                        Check https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
      * @return VirtualAccount model.
      * @throws XenditException
      */
@@ -122,10 +125,10 @@ public class VirtualAccount extends BaseModel {
     }
 
     /**
-     * Create open VA with only required parameters
-     * @param externalId String
-     * @param bankCode String
-     * @param name String
+     * Create open VA with only required parameters.
+     * @param externalId An ID of your choice, usually something that link Xendit VA with your internal system.
+     * @param bankCode Bank code of the VA you want to create. See BankCode enum.
+     * @param name Name of the VA, usually your end user's name or your company's.
      * @return VirtualAccount model.
      * @throws XenditException
      */
@@ -139,11 +142,12 @@ public class VirtualAccount extends BaseModel {
     }
 
     /**
-     * Create closed VA with required parameters and can accept additional params
-     * @param externalId String
-     * @param bankCode String
-     * @param name String
-     * @param additionalParam Map<String, Object>
+     * Create open VA with required params and optional params.
+     * @param externalId An ID of your choice, usually something that link Xendit VA with your internal system.
+     * @param bankCode Bank code of the VA you want to create. See BankCode enum.
+     * @param name Name of the VA, usually your end user's name or your company's.
+     * @param additionalParam Optional params.
+     *                        Check https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
      * @return VirtualAccount model.
      * @throws XenditException
      */
@@ -161,8 +165,7 @@ public class VirtualAccount extends BaseModel {
 
     /**
      *
-     * @return array of AvailableBank. The bank code returned can be used to create
-     * VirtualAccount.
+     * @return array of AvailableBank model.
      * @throws XenditException
      */
     public static AvailableBank[] getAvailableBank() throws XenditException {

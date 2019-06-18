@@ -33,8 +33,7 @@ public class ExampleCreateClosedVA {
              * Third option. Create with individual value of required params plus added additional params at the end.
              */
             VirtualAccount virtualAccount3 = VirtualAccount.createClosed("my_external_id",
-                    BankCode.MANDIRI.getText(), "John Doe", 100000L,
-                    closedVAMap);
+                    BankCode.MANDIRI.getText(), "John Doe", 100000L, closedVAMap);
 
             System.out.println(virtualAccount);
         } catch (XenditException e) {
