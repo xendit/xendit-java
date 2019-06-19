@@ -14,7 +14,7 @@ Maven:
 ```
 <dependency>
   <groupId>com.xendit</groupId>
-  <artifactId>xendit-java-library</artifactId>
+  <artifactId>xendit-java-lib</artifactId>
   <version>1.0.0</version>
   <type>pom</type>
 </dependency>
@@ -22,8 +22,10 @@ Maven:
 
 Gradle:
 ```
-compile 'com.xendit:xendit-java-library:1.0.0'
+compile 'com.xendit:xendit-java-lib:1.0.0'
 ```
+
+More information: https://bintray.com/xendit/android/xendit-java-lib
 
 ## Usage
 You need to use secret API key in order to use functionality in this library.
