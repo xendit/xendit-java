@@ -173,6 +173,28 @@ public class VirtualAccount extends BaseModel {
         return request(RequestResource.Method.GET, url, null, AvailableBank[].class);
     }
 
+    /**
+     * Get fixed VA based on its ID
+     * @param id ID of the fixed virtual account to retrieve
+     * @return VirtualAccount model.
+     * @throws XenditException
+     */
+    public static VirtualAccount get(String id) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts/", id);
+        return request(RequestResource.Method.GET, url, null, VirtualAccount.class);
+    }
+
+    /**
+     * Get VA payment based on its payment ID
+     * @param paymentId ID of the payment to retrieve
+     * @return VirtualAccountPayment model.
+     * @throws XenditException
+     */
+    public static VirtualAccountPayment getPayment(String paymentId) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/payment/xendit/virtual-account-payments/", paymentId);
+        return request(RequestResource.Method.GET, url, null, VirtualAccountPayment.class);
+    }
+
     private static VirtualAccount create(Map<String, Object> params, Boolean isClosed) throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
 
