@@ -10,7 +10,7 @@ public class ExampleGetVA {
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
 
-        String virtualAccountId = "5d072b6dfcbd4d3b6c1fca32";
+        String virtualAccountId = "5d10f954fcbd4d3b6c1fcf2e";
 
         try {
             /**

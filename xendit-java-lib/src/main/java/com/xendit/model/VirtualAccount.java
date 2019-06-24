@@ -169,7 +169,7 @@ public class VirtualAccount extends BaseModel {
      * @throws XenditException
      */
     public static AvailableBank[] getAvailableBank() throws XenditException {
-        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts/available-banks");
+        String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/available-banks");
         return request(RequestResource.Method.GET, url, null, AvailableBank[].class);
     }
 

@@ -7,7 +7,7 @@ public class ExampleGetVAPayment {
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
 
-        String virtualAccountPaymentId = "5d072b6dfcbd4d3b6c1fca32";
+        String virtualAccountPaymentId = "my_external_id_1561393634704";
 
         try {
             /**
