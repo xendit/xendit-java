@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VirtualAccount extends BaseModel {
+public class FixedVirtualAccount extends BaseModel {
     private static final Long MINIMUM_AMOUNT = 10000L;
     private static final Long MAXIMUM_AMOUNT = 50000000000L;
 
@@ -63,10 +63,10 @@ public class VirtualAccount extends BaseModel {
     /**
      * Create closed VA with complete object
      * @param params listed here https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createClosed(Map<String, Object> params) throws XenditException {
+    public static FixedVirtualAccount createClosed(Map<String, Object> params) throws XenditException {
         return create(params, true);
     }
 
@@ -76,10 +76,10 @@ public class VirtualAccount extends BaseModel {
      * @param bankCode Bank code of the VA you want to create. See BankCode enum.
      * @param name Name of the VA, usually your end user's name or your company's.
      * @param expectedAmount Expected payment amount for this VA.
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount)
+    public static FixedVirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount)
             throws XenditException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("external_id", externalId);
@@ -98,10 +98,10 @@ public class VirtualAccount extends BaseModel {
      * @param expectedAmount Expected payment amount for this VA.
      * @param additionalParam Optional params.
      *                        Check https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount,
+    public static FixedVirtualAccount createClosed(String externalId, String bankCode, String name, Long expectedAmount,
                                        Map<String, Object> additionalParam)
             throws XenditException {
         Map<String, Object> params = new HashMap<String, Object>();
@@ -117,10 +117,10 @@ public class VirtualAccount extends BaseModel {
     /**
      * Create closed VA with complete object
      * @param params listed here https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createOpen(Map<String, Object> params) throws XenditException {
+    public static FixedVirtualAccount createOpen(Map<String, Object> params) throws XenditException {
         return create(params, false);
     }
 
@@ -129,10 +129,10 @@ public class VirtualAccount extends BaseModel {
      * @param externalId An ID of your choice, usually something that link Xendit VA with your internal system.
      * @param bankCode Bank code of the VA you want to create. See BankCode enum.
      * @param name Name of the VA, usually your end user's name or your company's.
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createOpen(String externalId, String bankCode, String name) throws XenditException {
+    public static FixedVirtualAccount createOpen(String externalId, String bankCode, String name) throws XenditException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("external_id", externalId);
         params.put("bank_code", bankCode);
@@ -148,10 +148,10 @@ public class VirtualAccount extends BaseModel {
      * @param name Name of the VA, usually your end user's name or your company's.
      * @param additionalParam Optional params.
      *                        Check https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount createOpen(String externalId, String bankCode, String name,
+    public static FixedVirtualAccount createOpen(String externalId, String bankCode, String name,
                                        Map<String, Object> additionalParam)
             throws XenditException {
         Map<String, Object> params = new HashMap<String, Object>();
@@ -176,12 +176,12 @@ public class VirtualAccount extends BaseModel {
     /**
      * Get fixed VA based on its ID
      * @param id ID of the fixed virtual account to retrieve
-     * @return VirtualAccount model.
+     * @return FixedVirtualAccount model.
      * @throws XenditException
      */
-    public static VirtualAccount get(String id) throws XenditException {
+    public static FixedVirtualAccount getFixedVA(String id) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts/", id);
-        return request(RequestResource.Method.GET, url, null, VirtualAccount.class);
+        return request(RequestResource.Method.GET, url, null, FixedVirtualAccount.class);
     }
 
     /**
@@ -190,12 +190,12 @@ public class VirtualAccount extends BaseModel {
      * @return VirtualAccountPayment model.
      * @throws XenditException
      */
-    public static VirtualAccountPayment getPayment(String paymentId) throws XenditException {
+    public static FixedVirtualAccountPayment getPayment(String paymentId) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/payment/xendit/virtual-account-payments/", paymentId);
-        return request(RequestResource.Method.GET, url, null, VirtualAccountPayment.class);
+        return request(RequestResource.Method.GET, url, null, FixedVirtualAccountPayment.class);
     }
 
-    private static VirtualAccount create(Map<String, Object> params, Boolean isClosed) throws XenditException {
+    private static FixedVirtualAccount create(Map<String, Object> params, Boolean isClosed) throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/virtual-accounts");
 
         params.put("is_closed", isClosed);
@@ -216,7 +216,7 @@ public class VirtualAccount extends BaseModel {
             amountValidation(suggestedAmount);
         }
 
-        return request(RequestResource.Method.POST, url, params, VirtualAccount.class);
+        return request(RequestResource.Method.POST, url, params, FixedVirtualAccount.class);
     }
 
     private static void amountValidation(String amount) throws ParamException {

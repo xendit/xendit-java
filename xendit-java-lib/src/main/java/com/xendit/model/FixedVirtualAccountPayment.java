@@ -2,7 +2,7 @@ package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VirtualAccountPayment extends BaseModel {
+public class FixedVirtualAccountPayment extends BaseModel {
     @SerializedName("id")
     String id;
 

@@ -1,7 +1,7 @@
 import com.xendit.Xendit;
 import com.xendit.enums.BankCode;
 import com.xendit.exception.XenditException;
-import com.xendit.model.VirtualAccount;
+import com.xendit.model.FixedVirtualAccount;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,18 +20,18 @@ public class ExampleCreateOpenVA {
              * First option. Create directly from a properly named hashmap key value pair.
              * Check https://xendit.github.io/apireference/#create-fixed-virtual-accounts for field name.
              */
-            VirtualAccount virtualAccount = VirtualAccount.createOpen(openVAMap);
+            FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(openVAMap);
 
             /**
              * Second option. Create with individual value of required params.
              */
-            VirtualAccount virtualAccount2 = VirtualAccount.createOpen("my_external_id",
+            FixedVirtualAccount virtualAccount2 = FixedVirtualAccount.createOpen("my_external_id",
                     BankCode.BRI.getText(), "John Doe");
 
             /**
              * Third option. Create with individual value of required params plus added additional params at the end.
              */
-            VirtualAccount virtualAccount3 = VirtualAccount.createOpen("my_external_id",
+            FixedVirtualAccount virtualAccount3 = FixedVirtualAccount.createOpen("my_external_id",
                     BankCode.MANDIRI.getText(), "John Doe", openVAMap);
 
             System.out.println(virtualAccount);
