@@ -1,5 +1,5 @@
 # Xendit Java Library
-Java library to be used with Xendit Payment Gateway. Register [here](http://dashboard.xendit.co).
+Java library to be used with Xendit Payment Gateway. Register [here](http://dashboard.xendit.co/auth/register).
 
 ## Features
 - Create Open Amount VA
@@ -15,14 +15,14 @@ Maven:
 <dependency>
   <groupId>com.xendit</groupId>
   <artifactId>xendit-java-lib</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <type>pom</type>
 </dependency>
 ```
 
 Gradle:
 ```
-compile 'com.xendit:xendit-java-lib:1.0.0'
+compile 'com.xendit:xendit-java-lib:1.1.0'
 ```
 
 More information: https://bintray.com/xendit/android/xendit-java-lib
@@ -36,7 +36,7 @@ Example.java
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xendit.model.VirtualAccount;
+import com.xendit.model.FixedVirtualAccount;
 
 import java.util.Arrays;
 
@@ -45,7 +45,7 @@ public class Example {
         Xendit.apiKey = "xnd_development_...";
 
         try {
-            AvailableBank[] banks = VirtualAccount.getAvailableBank();
+            AvailableBank[] banks = FixedVirtualAccount.getAvailableBank();
             System.out.println(Arrays.toString(banks));
         } catch (XenditException e) {
             e.printStackTrace();
