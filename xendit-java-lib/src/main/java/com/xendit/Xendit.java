@@ -1,7 +1,7 @@
 package com.xendit;
 
 public class Xendit {
-    public static final String LIVE_URL = "https://tpi-dev.xendit.co";
+    public static final String LIVE_URL = "https://tpi.xendit.co";
 
     public static volatile String apiKey;
 
