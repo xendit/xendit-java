@@ -5,6 +5,7 @@ import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.exception.ParamException;
 import com.xendit.network.RequestResource;
+import lombok.Getter;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -15,49 +16,64 @@ public class FixedVirtualAccount extends BaseModel {
     private static final Long MAXIMUM_AMOUNT = 50000000000L;
 
     @SerializedName("id")
+    @Getter
     private String id;
 
     @SerializedName("owner_id")
+    @Getter
     private String ownerId;
 
     @SerializedName("external_id")
+    @Getter
     private String externalId;
 
     @SerializedName("merchant_code")
+    @Getter
     private String merchantCode;
 
     @SerializedName("account_number")
+    @Getter
     private String accountNumber;
 
     @SerializedName("bank_code")
+    @Getter
     private String bankCode;
 
     @SerializedName("name")
+    @Getter
     private String name;
 
     @SerializedName("is_closed")
+    @Getter
     private Boolean isClosed;
 
     @SerializedName("expiration_date")
+    @Getter
     private Date expirationDate;
 
     @SerializedName("is_single_use")
+    @Getter
     private Boolean isSingleUse;
 
     @SerializedName("status")
+    @Getter
     private String status;
 
     // optionals
     @SerializedName("suggested_amount")
+    @Getter
     private Long suggestedAmount;
 
     @SerializedName("expected_amount")
+    @Getter
     private Long expectedAmount;
 
     @SerializedName("currency")
+    @Getter
     private String currency;
 
     @SerializedName("description")
+    @Getter
     private String description;
 
     /**
