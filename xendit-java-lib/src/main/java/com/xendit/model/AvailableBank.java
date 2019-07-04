@@ -8,4 +8,10 @@ public class AvailableBank extends BaseModel {
 
     @SerializedName("code")
     String code;
+
+    @SerializedName("can_disburse")
+    Boolean canDisburse;
+
+    @SerializedName("can_name_validate")
+    Boolean canNameValidate;
 }

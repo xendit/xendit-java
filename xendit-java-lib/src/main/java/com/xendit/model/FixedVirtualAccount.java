@@ -58,7 +58,7 @@ public class FixedVirtualAccount extends BaseModel {
     private String currency;
 
     @SerializedName("description")
-    private Long description;
+    private String description;
 
     /**
      * Create closed VA with complete object
