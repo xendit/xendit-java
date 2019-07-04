@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ExampleCreateDisbursement {
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_SCkGRbAMLEhaj61PeFuMMBlaXMBoAguNLuYQHgpjvgDBlcE2Pi722oqmGfKfc0";
+        Xendit.apiKey = "xnd_development_...";
 
         Map<String, Object> disbursementMap = new HashMap<String, Object>();
         disbursementMap.put("external_id", "my_external_id");

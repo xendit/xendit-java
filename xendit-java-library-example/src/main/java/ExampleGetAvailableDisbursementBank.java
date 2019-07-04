@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class ExampleGetAvailableDisbursementBank {
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_SCkGRbAMLEhaj61PeFuMMBlaXMBoAguNLuYQHgpjvgDBlcE2Pi722oqmGfKfc0";
+        Xendit.apiKey = "xnd_development_...";
 
         try {
             AvailableBank[] banks = Disbursement.getAvailableBank();
