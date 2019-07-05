@@ -5,10 +5,12 @@ import javax.annotation.Nullable;
 
 public enum BankCode {
     BNI("BNI"),
+    BNI_SYARIAH("BNI_SYARIAH"),
     MANDIRI("MANDIRI"),
     BRI("BRI"),
     BCA("BCA"),
-    PERMATA("PERMATA");
+    PERMATA("PERMATA"),
+    SINARMAS("SINARMAS");
 
     private String text;
 

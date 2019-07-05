@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.xendit'
-version '1.1.0'
+version '1.2.0'
 
 sourceCompatibility = 1.8
 
@@ -16,7 +16,12 @@ repositories {
 
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.projectlombok:lombok:1.18.8'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
