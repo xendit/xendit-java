@@ -5,6 +5,9 @@ Java library to be used with Xendit Payment Gateway. Register [here](http://dash
 - Create Open Amount VA
 - Create Closed Amount VA
 - Get List of Available Banks
+- Get VA
+- Get VA payment
+- Create disbursement
 
 ## Requirements
 JDK 1.7 or later.
@@ -15,14 +18,14 @@ Maven:
 <dependency>
   <groupId>com.xendit</groupId>
   <artifactId>xendit-java-lib</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <type>pom</type>
 </dependency>
 ```
 
 Gradle:
 ```
-compile 'com.xendit:xendit-java-lib:1.1.0'
+compile 'com.xendit:xendit-java-lib:1.2.0'
 ```
 
 More information: https://bintray.com/xendit/android/xendit-java-lib
