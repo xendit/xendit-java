@@ -1,6 +1,7 @@
 import com.xendit.Xendit;
 import com.xendit.enums.BankCode;
 import com.xendit.exception.XenditException;
+import com.xendit.model.AvailableBank;
 import com.xendit.model.Disbursement;
 
 import java.math.BigInteger;
@@ -11,19 +12,33 @@ public class ExampleCreateDisbursement {
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
 
-        Map<String, Object> disbursementMap = new HashMap<String, Object>();
-        disbursementMap.put("external_id", "my_external_id");
-        disbursementMap.put("bank_code", BankCode.BNI.getText());
-        disbursementMap.put("account_holder_name", "John Doe");
-        disbursementMap.put("account_number", "123456789");
-        disbursementMap.put("description", "My Description");
-        disbursementMap.put("amount", "90000");
-
         try {
             /**
+             * [OPTIONAL]
+             * Before requesting disbursement to Xendit, you should get the supported bank code via getAvailableBank
+             * method. You can skip this step if your system is already familiar with our standard code.
+             * In this example, we call available disbursement bank function.
+             */
+            AvailableBank[] availableBanks = Disbursement.getAvailableBank();
+
+            /**
+             * Let's say that we want to disburse to the first bank in that list.
+             */
+            AvailableBank destinationBank = availableBanks[0];
+
+            /**
+             * There are several options to create disbursement.
              * First option. Create directly from a properly named hashmap key value pair.
              * Check https://xendit.github.io/apireference/#create-disbursement for field name.
              */
+            Map<String, Object> disbursementMap = new HashMap<String, Object>();
+            disbursementMap.put("external_id", "my_external_id");
+            disbursementMap.put("bank_code", destinationBank.getCode());
+            disbursementMap.put("account_holder_name", "John Doe");
+            disbursementMap.put("account_number", "123456789");
+            disbursementMap.put("description", "My Description");
+            disbursementMap.put("amount", "90000");
+
             Disbursement disbursement = Disbursement.create(disbursementMap);
 
             /**
@@ -31,12 +46,11 @@ public class ExampleCreateDisbursement {
              */
             Disbursement disbursement2 = Disbursement.create(
                     "my_external_id",
-                    BankCode.MANDIRI.getText(),
+                    destinationBank.getCode(),
                     "John Doe",
                     "1234567890",
                     "description",
                     new BigInteger("90000")
-
             );
 
             /**
@@ -44,7 +58,7 @@ public class ExampleCreateDisbursement {
              */
             Disbursement disbursement3 = Disbursement.create(
                     "my_external_id",
-                    BankCode.MANDIRI.getText(),
+                    destinationBank.getCode(),
                     "John Doe",
                     "1234567890",
                     "description",
@@ -59,7 +73,7 @@ public class ExampleCreateDisbursement {
              */
             Disbursement disbursement4 = Disbursement.create(
                     "my_external_id",
-                    BankCode.MANDIRI.getText(),
+                    destinationBank.getCode(),
                     "John Doe",
                     "1234567890",
                     "description",
@@ -77,7 +91,7 @@ public class ExampleCreateDisbursement {
              */
             Disbursement disbursement5 = Disbursement.create(
                     "my_external_id",
-                    BankCode.MANDIRI.getText(),
+                    destinationBank.getCode(),
                     "John Doe",
                     "1234567890",
                     "description",
