@@ -228,9 +228,36 @@ public class Disbursement extends BaseModel {
         return createRequest(params);
     }
 
+    /**
+     * Get disbursement available bank
+     * @return
+     * @throws XenditException
+     */
     public static AvailableBank[] getAvailableBank() throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/payment/xendit/available-banks?product_type=DISBURSEMENT");
         return request(RequestResource.Method.GET, url, null, AvailableBank[].class);
+    }
+
+    /**
+     * Get array of object disbursements by external id
+     * @param externalId
+     * @return
+     * @throws XenditException
+     */
+    public static Disbursement[] getByExternalId(String externalId) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/payment/xendit/disbursements?external_id=", externalId);
+        return request(RequestResource.Method.GET, url, null, Disbursement[].class);
+    }
+
+    /**
+     * Get object disbursement by id
+     * @param id
+     * @return
+     * @throws XenditException
+     */
+    public static Disbursement getById(String id) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/payment/xendit/disbursements/", id);
+        return request(RequestResource.Method.GET, url, null, Disbursement.class);
     }
 
     private static Disbursement createRequest(Map<String, Object> params) throws XenditException {
