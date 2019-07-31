@@ -8,6 +8,7 @@ Java library to be used with Xendit Payment Gateway. Register [here](http://dash
 - Get VA
 - Get VA payment
 - Create disbursement
+- Get disbursement
 
 ## Requirements
 JDK 1.7 or later.
@@ -18,14 +19,14 @@ Maven:
 <dependency>
   <groupId>com.xendit</groupId>
   <artifactId>xendit-java-lib</artifactId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <type>pom</type>
 </dependency>
 ```
 
 Gradle:
 ```
-compile 'com.xendit:xendit-java-lib:1.2.0'
+compile 'com.xendit:xendit-java-lib:1.3.0'
 ```
 
 More information: https://bintray.com/xendit/android/xendit-java-lib
@@ -58,6 +59,13 @@ public class Example {
 ```
 
 See other examples [here](https://github.com/xendit/xendit-java-library/tree/master/xendit-java-library-example/src/main/java).
+
+## Publish
+RUn these commands with `local.properties` fields already configured with bintray credentials.
+```
+./gradlew install
+./gradlew bintrayUpload
+```
 
 ## Contributing
 TBD
