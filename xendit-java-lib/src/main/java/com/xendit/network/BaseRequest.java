@@ -37,7 +37,6 @@ public class BaseRequest {
 
         headers.put("User-Agent", "Xendit Java Library/v1");
         headers.put("Accept", "application/json");
-        headers.put("x-plugin-name", "JAVA_LIBRARY");
 
         String base64Key = encodeBase64(apiKey + ":");
         headers.put("Authorization", "Basic " + base64Key);
