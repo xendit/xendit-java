@@ -10,6 +10,11 @@ public class ExampleCreateInvoice {
         Xendit.apiKey = "xnd_development_...";
 
         try {
+            /**
+             * There are several options to create invoice.
+             * First option. Create directly from a properly named hashmap key value pair.
+             * Check https://xendit.github.io/apireference/#create-invoice for field name.
+             */
             Map<String, Object> params = new HashMap<>();
             params.put("external_id", "my_external_id");
             params.put("amount", 1800000);
@@ -17,7 +22,14 @@ public class ExampleCreateInvoice {
             params.put("description", "Invoice Demo #123");
 
             Invoice invoice = Invoice.create(params);
-            System.out.println(invoice);
+
+            /**
+             * Second option. Create with individual value of required params.
+             */
+
+            Invoice invoice1 = Invoice.create("my_external_id", 1800000, "customer@domain.com", "Invoice Demo #123");
+
+            System.out.println(invoice1);
         } catch (XenditException e) {
             e.printStackTrace();
         }

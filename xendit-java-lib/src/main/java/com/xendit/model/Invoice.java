@@ -83,6 +83,15 @@ public class Invoice extends BaseModel {
     @Getter
     private String currency;
 
+    /**
+     * Create invoice with given parameters
+     * @param externalId ID of your choice (typically the unique identifier of an invoice in your system)
+     * @param amount Description of the invoice
+     * @param payerEmail Email of the end user you're charging
+     * @param description Amount on the invoice. The minimum amount to create an invoice is 10000.
+     * @return Invoice
+     * @throws XenditException XenditException
+     */
     public static Invoice create(
             String externalId,
             Number amount,
@@ -97,8 +106,25 @@ public class Invoice extends BaseModel {
         return createRequest(params);
     }
 
+    /**
+     * Create invoice with all parameters as HashMap
+     * @param params listed here https://xendit.github.io/apireference/#create-invoice.
+     * @return Invoice
+     * @throws XenditException XenditException
+     */
     public static Invoice create(Map<String, Object> params) throws XenditException {
         return createRequest(params);
+    }
+
+    /**
+     * Get invoice detail by ID
+     * @param id ID of the invoice to retrieve
+     * @return Invoice
+     * @throws XenditException XenditException
+     */
+    public static Invoice retrieve(String id) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices/", id);
+        return request(RequestResource.Method.GET, url, null, Invoice.class);
     }
 
     private static Invoice createRequest(Map<String, Object> params) throws XenditException {
