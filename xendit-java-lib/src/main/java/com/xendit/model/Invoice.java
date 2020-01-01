@@ -127,6 +127,17 @@ public class Invoice extends BaseModel {
         return request(RequestResource.Method.GET, url, null, Invoice.class);
     }
 
+    /**
+     * Expire an already created invoice
+     * @param id ID of the invoice to be expired / canceled
+     * @return Invoice
+     * @throws XenditException XenditException
+     */
+    public static Invoice expire(String id) throws XenditException {
+        String url = String.format("%s%s%s%s", Xendit.getUrl(), "/invoices/", id, "/expire!");
+        return request(RequestResource.Method.POST, url, null, Invoice.class);
+    }
+
     private static Invoice createRequest(Map<String, Object> params) throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/v2/invoices");
         return request(RequestResource.Method.POST, url, params, Invoice.class);
