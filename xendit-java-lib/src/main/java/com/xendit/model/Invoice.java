@@ -35,9 +35,17 @@ public class Invoice extends BaseModel {
     @Getter
     private String merchantProfilePictureUrl;
 
+    @SerializedName("bank_code")
+    @Getter
+    private String bankCode;
+
     @SerializedName("amount")
     @Getter
     private Number amount;
+
+    @SerializedName("initial_amount")
+    @Getter
+    private Number initialAmount;
 
     @SerializedName("payer_email")
     @Getter
@@ -59,17 +67,33 @@ public class Invoice extends BaseModel {
     @Getter
     private AvailableBankInvoice[] availableBanks;
 
+    @SerializedName("available_retail_outlets")
+    @Getter
+    private AvailableRetailOutletInvoice[] availableRetailOutlets;
+
     @SerializedName("available_ewallets")
     @Getter
     private AvailableEwalletInvoice[] availableEwallets;
 
+    @SerializedName("paid_at")
+    @Getter
+    private String paidAt;
+
+    @SerializedName("paid_amount")
+    @Getter
+    private Number paidAmount;
+
+    @SerializedName("adjusted_received_amount")
+    @Getter
+    private Number adjustedReceivedAmount;
+
     @SerializedName("should_exclude_credit_card")
     @Getter
-    private String shouldExcludeCreditCard;
+    private Boolean shouldExcludeCreditCard;
 
     @SerializedName("should_send_email")
     @Getter
-    private String shouldSendEmail;
+    private Boolean shouldSendEmail;
 
     @SerializedName("created")
     @Getter
@@ -82,6 +106,58 @@ public class Invoice extends BaseModel {
     @SerializedName("currency")
     @Getter
     private String currency;
+
+    @SerializedName("initial_currency")
+    @Getter
+    private String initialCurrency;
+
+    @SerializedName("on_demand_link")
+    @Getter
+    private String onDemandLink;
+
+    @SerializedName("on_demand_payload")
+    @Getter
+    private Object onDemandPayload;
+
+    @SerializedName("recurring_payment_id")
+    @Getter
+    private String recurringPaymentId;
+
+    @SerializedName("credit_card_charge_id")
+    @Getter
+    private String creditCardChargeId;
+
+    @SerializedName("mid_label")
+    @Getter
+    private String midLabel;
+
+    @SerializedName("payment_channel")
+    @Getter
+    private String paymentChannel;
+
+    @SerializedName("payment_method")
+    @Getter
+    private String paymentMethod;
+
+    @SerializedName("payment_destination")
+    @Getter
+    private String paymentDestination;
+
+    @SerializedName("success_redirect_url")
+    @Getter
+    private String successRedirectUrl;
+
+    @SerializedName("failure_redirect_url")
+    @Getter
+    private String failureRedirectUrl;
+
+    @SerializedName("items")
+    @Getter
+    private ItemInvoice[] items;
+
+    @SerializedName("fixed_va")
+    @Getter
+    private Boolean fixedVa;
 
     /**
      * Create invoice with given parameters
@@ -135,12 +211,12 @@ public class Invoice extends BaseModel {
      */
     public static Invoice[] getAll(Map<String, Object> params) throws XenditException {
         String parameters = "";
-        if (params.containsValue("limit")) parameters += String.format("%s%s", "&limit=", params.get("limit"));
-        if (params.containsValue("statuses")) parameters += String.format("%s%s", "&statuses=", params.get("statuses"));
-        if (params.containsValue("last_invoice_id")) parameters += String.format("%s%s", "&last_invoice_id=", params.get("last_invoice_id"));
-        if (params.containsValue("client_types")) parameters += String.format("%s%s", "&client_types=", params.get("client_types"));
-        if (params.containsValue("after")) parameters += String.format("%s%s", "&after=", params.get("after"));
-        if (params.containsValue("before")) parameters += String.format("%s%s", "&before=", params.get("before"));
+        if (params.containsKey("limit")) parameters += String.format("%s%s", "&limit=", params.get("limit"));
+        if (params.containsKey("statuses")) parameters += String.format("%s%s", "&statuses=", params.get("statuses"));
+        if (params.containsKey("last_invoice_id")) parameters += String.format("%s%s", "&last_invoice_id=", params.get("last_invoice_id"));
+        if (params.containsKey("client_types")) parameters += String.format("%s%s", "&client_types=", params.get("client_types"));
+        if (params.containsKey("after")) parameters += String.format("%s%s", "&after=", params.get("after"));
+        if (params.containsKey("before")) parameters += String.format("%s%s", "&before=", params.get("before"));
         String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?", parameters);
         return request(RequestResource.Method.GET, url, null, Invoice[].class);
     }

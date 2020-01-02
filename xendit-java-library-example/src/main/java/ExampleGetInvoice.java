@@ -19,9 +19,12 @@ public class ExampleGetInvoice {
     private static void getAll() {
         try {
             Map<String, Object> params = new HashMap<>();
-            params.put("limit", 3);
+            params.put("limit", 2);
             params.put("statuses", "[\"SETTLED\",\"EXPIRED\"]");
             params.put("client_types", "[\"DASHBOARD\",\"API_GATEWAY\"]");
+            params.put("last_invoice_id", "5ca186e407f3b83e34176eac");
+            params.put("after", "2016-02-24T23:48:36.697Z");
+            params.put("before", "2020-02-24T23:48:36.697Z");
             Invoice[] invoices = Invoice.getAll(params);
             System.out.println(Arrays.toString(invoices));
         } catch (XenditException e) {
