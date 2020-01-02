@@ -2,7 +2,6 @@ package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
-import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
 import lombok.Getter;
@@ -162,9 +161,9 @@ public class Invoice extends BaseModel {
     /**
      * Create invoice with given parameters
      * @param externalId ID of your choice (typically the unique identifier of an invoice in your system)
-     * @param amount Description of the invoice
-     * @param payerEmail Email of the end user you're charging
-     * @param description Amount on the invoice. The minimum amount to create an invoice is 10000.
+     * @param amount Amount on the invoice. The minimum amount to create an invoice is 10000.
+     * @param payerEmail Email of the end user you're charging.
+     * @param description Description of the invoice.
      * @return Invoice
      * @throws XenditException XenditException
      */
