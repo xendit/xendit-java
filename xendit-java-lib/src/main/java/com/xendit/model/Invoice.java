@@ -122,9 +122,27 @@ public class Invoice extends BaseModel {
      * @return Invoice
      * @throws XenditException XenditException
      */
-    public static Invoice retrieve(String id) throws XenditException {
+    public static Invoice getById(String id) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices/", id);
         return request(RequestResource.Method.GET, url, null, Invoice.class);
+    }
+
+    /**
+     * Get all invoices by given parameters
+     * @param params listed here https://xendit.github.io/apireference/#list-all-invoices
+     * @return Array of invoices
+     * @throws XenditException XenditException
+     */
+    public static Invoice[] getAll(Map<String, Object> params) throws XenditException {
+        String parameters = "";
+        if (params.containsValue("limit")) parameters += String.format("%s%s", "&limit=", params.get("limit"));
+        if (params.containsValue("statuses")) parameters += String.format("%s%s", "&statuses=", params.get("statuses"));
+        if (params.containsValue("last_invoice_id")) parameters += String.format("%s%s", "&last_invoice_id=", params.get("last_invoice_id"));
+        if (params.containsValue("client_types")) parameters += String.format("%s%s", "&client_types=", params.get("client_types"));
+        if (params.containsValue("after")) parameters += String.format("%s%s", "&after=", params.get("after"));
+        if (params.containsValue("before")) parameters += String.format("%s%s", "&before=", params.get("before"));
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?", parameters);
+        return request(RequestResource.Method.GET, url, null, Invoice[].class);
     }
 
     /**
