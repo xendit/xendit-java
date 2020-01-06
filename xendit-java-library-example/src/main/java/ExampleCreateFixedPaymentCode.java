@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ExampleCreateFixedPaymentCode {
-    public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_...";
-
+    private static void createWithParamObject() {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("external_id", "test");
@@ -20,5 +18,19 @@ public class ExampleCreateFixedPaymentCode {
         } catch (XenditException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void createWithoutParamObject() {
+        try {
+            FixedPaymentCode fpc = FixedPaymentCode.create("test", "ALFAMART", "Rika Sutanto", 10000);
+            System.out.println(fpc);
+        } catch (XenditException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        Xendit.apiKey = "xnd_development_...";
+        createWithoutParamObject();
     }
 }

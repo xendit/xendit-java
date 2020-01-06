@@ -93,4 +93,15 @@ public class FixedPaymentCode extends BaseModel {
         params.put("expected_amount", expectedAmount);
         return request(RequestResource.Method.POST, url, params, FixedPaymentCode.class);
     }
+
+    /**
+     * Get fixed payment code by ID
+     * @param id ID of the fixed payment code to retrieve
+     * @return FixedPaymentCode
+     * @throws XenditException XenditException
+     */
+    public static FixedPaymentCode getById(String id) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/fixed_payment_code/", id);
+        return request(RequestResource.Method.GET, url, null, FixedPaymentCode.class);
+    }
 }
