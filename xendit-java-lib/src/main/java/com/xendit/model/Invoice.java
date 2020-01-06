@@ -158,6 +158,48 @@ public class Invoice extends BaseModel {
     @Getter
     private Boolean fixedVa;
 
+    public Invoice() {}
+
+    public Invoice(Map<String, Object> params) {
+        if (params.containsKey("id")) this.id = params.get("id").toString();
+        if (params.containsKey("external_id")) this.externalId = params.get("external_id").toString();
+        if (params.containsKey("user_id")) this.userId = params.get("user_id").toString();
+        if (params.containsKey("status")) this.status = params.get("status").toString();
+        if (params.containsKey("merchant_name")) this.merchantName = params.get("merchant_name").toString();
+        if (params.containsKey("merchant_profile_picture_url")) this.merchantProfilePictureUrl = params.get("merchant_profile_picture_url").toString();
+        if (params.containsKey("bank_code")) this.bankCode = params.get("bank_code").toString();
+        if (params.containsKey("amount")) this.amount = (int)params.get("amount");
+        if (params.containsKey("initial_amount")) this.initialAmount = (int)params.get("initial_amount");
+        if (params.containsKey("payer_email")) this.payerEmail = params.get("payer_email").toString();
+        if (params.containsKey("description")) this.description = params.get("description").toString();
+        if (params.containsKey("expiry_date")) this.expiryDate = params.get("expiry_date").toString();
+        if (params.containsKey("invoice_url")) this.invoiceUrl = params.get("invoice_url").toString();
+        if (params.containsKey("available_banks")) this.availableBanks = (AvailableBankInvoice[])params.get("available_banks");
+        if (params.containsKey("available_retail_outlets")) this.availableRetailOutlets = (AvailableRetailOutletInvoice[])params.get("available_retail_outlets");
+        if (params.containsKey("available_ewallets")) this.availableEwallets = (AvailableEwalletInvoice[])params.get("available_ewallets");
+        if (params.containsKey("paid_at")) this.paidAt = params.get("paid_at").toString();
+        if (params.containsKey("paid_amount")) this.paidAmount = (int)params.get("paid_amount");
+        if (params.containsKey("adjusted_received_amount")) this.adjustedReceivedAmount = (int)params.get("adjusted_received_amount");
+        if (params.containsKey("should_exclude_credit_card")) this.shouldExcludeCreditCard = (boolean)params.get("should_exclude_credit_card");
+        if (params.containsKey("should_send_email")) this.shouldSendEmail = (boolean)params.get("should_send_email");
+        if (params.containsKey("created")) this.created = params.get("created").toString();
+        if (params.containsKey("updated")) this.updated = params.get("updated").toString();
+        if (params.containsKey("currency")) this.currency = params.get("currency").toString();
+        if (params.containsKey("initial_currency")) this.initialCurrency = params.get("initial_currency").toString();
+        if (params.containsKey("on_demand_link")) this.onDemandLink = params.get("on_demand_link").toString();
+        if (params.containsKey("on_demand_payload")) this.onDemandPayload = params.get("on_demand_payload");
+        if (params.containsKey("recurring_payment_id")) this.recurringPaymentId = params.get("recurring_payment_id").toString();
+        if (params.containsKey("credit_card_charge_id")) this.creditCardChargeId = params.get("credit_card_charge_id").toString();
+        if (params.containsKey("mid_label")) this.midLabel = params.get("mid_label").toString();
+        if (params.containsKey("payment_channel")) this.paymentChannel = params.get("payment_channel").toString();
+        if (params.containsKey("payment_method")) this.paymentMethod = params.get("payment_method").toString();
+        if (params.containsKey("payment_destination")) this.paymentDestination = params.get("payment_destination").toString();
+        if (params.containsKey("success_redirect_url")) this.successRedirectUrl = params.get("success_redirect_url").toString();
+        if (params.containsKey("failure_redirect_url")) this.failureRedirectUrl = params.get("failure_redirect_url").toString();
+        if (params.containsKey("items")) this.items = (ItemInvoice[])params.get("items");
+        if (params.containsKey("fixed_va")) this.fixedVa = (boolean)params.get("fixed_va");
+    }
+
     /**
      * Create invoice with given parameters
      * @param externalId ID of your choice (typically the unique identifier of an invoice in your system)
