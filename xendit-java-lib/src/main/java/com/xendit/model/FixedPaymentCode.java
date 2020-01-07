@@ -104,4 +104,39 @@ public class FixedPaymentCode extends BaseModel {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/fixed_payment_code/", id);
         return request(RequestResource.Method.GET, url, null, FixedPaymentCode.class);
     }
+
+    /**
+     * Update fixed payment code by ID and with all parameters as HashMap
+     * @param id ID of the fixed payment code to be updated
+     * @param params listed here https://xendit.github.io/apireference/#update-fixed-payment-code
+     * @return FixedPaymentCode
+     * @throws XenditException XenditException
+     */
+    public static FixedPaymentCode update(String id, Map<String, Object> params) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/fixed_payment_code/", id);
+        return request(RequestResource.Method.PATCH, url, params, FixedPaymentCode.class);
+    }
+
+    /**
+     * Update fixed payment code by ID and with parameters
+     * @param id ID of the fixed payment code to be updated
+     * @param name Name for the fixed payment code
+     * @param expectedAmount The amount that is expected to be paid by end customer
+     * @param expirationDate The time when the fixed payment code will be expired. You can set it to be days in the past to expire fixed payment code immediately
+     * @return FixedPaymentCode
+     * @throws XenditException XenditException
+     */
+    public static FixedPaymentCode update(
+            String id,
+            String name,
+            Number expectedAmount,
+            String expirationDate
+    ) throws XenditException {
+        String url = String.format("%s%s%s", Xendit.getUrl(), "/fixed_payment_code/", id);
+        Map<String, Object> params = new HashMap<>();
+        if (name != null) params.put("name", name);
+        if (expectedAmount != null) params.put("expected_amount", expectedAmount);
+        if (expirationDate != null) params.put("expiration_date", expirationDate);
+        return request(RequestResource.Method.PATCH, url, params, FixedPaymentCode.class);
+    }
 }
