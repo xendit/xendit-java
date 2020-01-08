@@ -20,10 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class BaseRequest {
+public class BaseRequest implements NetworkClient {
     private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
 
-    public static <T> T request(
+    public <T> T request(
             RequestResource.Method method,
             String url,
             Map<String, Object> params,

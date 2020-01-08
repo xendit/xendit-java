@@ -6,5 +6,5 @@ import lombok.Getter;
 public class AvailableEwalletInvoice extends BaseModel {
     @SerializedName("ewallet_type")
     @Getter
-    String ewalletType;
+    private String ewalletType;
 }

@@ -1,6 +1,7 @@
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.Invoice;
+import com.xendit.network.BaseRequest;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class ExampleGetInvoice {
 
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
-        getById();
+        Xendit.requestClient = new BaseRequest();
+        getAll();
     }
 }

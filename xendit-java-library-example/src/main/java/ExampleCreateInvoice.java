@@ -1,6 +1,7 @@
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.Invoice;
+import com.xendit.network.BaseRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 public class ExampleCreateInvoice {
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
+        Xendit.requestClient = new BaseRequest();
 
         try {
             /**
@@ -29,7 +31,7 @@ public class ExampleCreateInvoice {
 
             Invoice invoice1 = Invoice.create("my_external_id", 1800000, "customer@domain.com", "Invoice Demo #123");
 
-            System.out.println(invoice1);
+            System.out.println(invoice);
         } catch (XenditException e) {
             e.printStackTrace();
         }

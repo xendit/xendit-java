@@ -4,10 +4,13 @@ import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,22 +25,30 @@ public class InvoiceTest {
     private static final String INVALID_KEY = "xnd_development_...";
 
     private Invoice initExpiredInvoice() {
-        Map<String, Object> params = new HashMap<>();
-        params.put("external_id", "my_external_id");
-        params.put("id", "my_id");
-        params.put("status", "EXPIRED");
-        return new Invoice(params);
+        return Invoice.builder().status("EXPIRED").build();
     }
 
     @Test
-    public void create_Success_IfApiKeyIsValid() throws XenditException {
+    public void create_Success_IfApiKeyIsValid() throws Exception {
         Xendit.apiKey = SAMPLE_KEY;
 
+        Invoice invoiceResult = Invoice.builder()
+                .externalId("test_id")
+                .amount(100000)
+                .payerEmail("test@email.com")
+                .description("Testing")
+                .build();
+
         PowerMockito.mockStatic(Invoice.class);
-        when(Invoice.create("test_id", 100000, "test@email.com", "Testing")).thenReturn(new Invoice());
+        when(Invoice.create("test_id", 100000, "test@email.com", "Testing")).thenReturn(invoiceResult);
         Invoice invoice = Invoice.create("test_id", 100000, "test@email.com", "Testing");
-        assertNotNull(invoice);
-        assertThat(invoice, instanceOf(Invoice.class));
+        Class invoiceClass = invoice.getClass();
+        Method request = invoiceClass.getDeclaredMethod("request");
+//        Mockito.verify(Invoice);
+//        when(Invoice.create("test_id", 100000, "test@email.com", "Testing")).thenReturn(invoiceMock);
+//        PowerMockito.verifyStatic(VerificationModeFactory.times(1));
+//        assertNotNull(invoice);
+//        assertThat(invoice, instanceOf(Invoice.class));
     }
 
     @Test
@@ -51,7 +62,7 @@ public class InvoiceTest {
         params.put("description", "Testing");
 
         PowerMockito.mockStatic(Invoice.class);
-        when(Invoice.create(params)).thenReturn(new Invoice());
+        when(Invoice.create(params)).thenReturn(Invoice.builder().build());
         Invoice invoice = Invoice.create(params);
         assertNotNull(invoice);
         assertThat(invoice, instanceOf(Invoice.class));
@@ -103,7 +114,7 @@ public class InvoiceTest {
         Xendit.apiKey = SAMPLE_KEY;
 
         PowerMockito.mockStatic(Invoice.class);
-        when(Invoice.getById("5e0cb0bbf4d38b20d5421b72")).thenReturn(new Invoice());
+        when(Invoice.getById("5e0cb0bbf4d38b20d5421b72")).thenReturn(Invoice.builder().build());
         Invoice invoice = Invoice.getById("5e0cb0bbf4d38b20d5421b72");
         assertNotNull(invoice);
         assertThat(invoice, instanceOf(Invoice.class));

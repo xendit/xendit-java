@@ -17,7 +17,7 @@ public class BaseModel {
             Map<String, Object> params,
             Class<T> clazz
     ) throws XenditException {
-        return BaseRequest.request(method, url, params, clazz);
+        return new BaseRequest().request(method, url, params, clazz);
     }
 
     public static final Gson PRETTY_PRINT_GSON =

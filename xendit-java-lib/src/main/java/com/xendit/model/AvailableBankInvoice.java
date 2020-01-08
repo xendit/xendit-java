@@ -6,29 +6,29 @@ import lombok.Getter;
 public class AvailableBankInvoice extends BaseModel {
     @SerializedName("bank_code")
     @Getter
-    String bankCode;
+    private String bankCode;
 
     @SerializedName("collection_type")
     @Getter
-    String collectionType;
+    private String collectionType;
 
     @SerializedName("bank_account_number")
     @Getter
-    String bankAccountNumber;
+    private String bankAccountNumber;
 
     @SerializedName("transfer_amount")
     @Getter
-    Number transferAmount;
+    private Number transferAmount;
 
     @SerializedName("bank_branch")
     @Getter
-    String bankBranch;
+    private String bankBranch;
 
     @SerializedName("account_holder_name")
     @Getter
-    String accountHolderName;
+    private String accountHolderName;
 
     @SerializedName("identity_amount")
     @Getter
-    Number identityAmount;
+    private Number identityAmount;
 }
