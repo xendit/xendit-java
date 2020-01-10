@@ -3,7 +3,7 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
-public class FixedVirtualAccountPayment extends BaseModel {
+public class FixedVirtualAccountPayment {
     @SerializedName("id")
     @Getter
     String id;

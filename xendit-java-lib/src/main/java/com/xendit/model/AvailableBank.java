@@ -3,7 +3,7 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
-public class AvailableBank extends BaseModel {
+public class AvailableBank {
     @SerializedName("name")
     @Getter
     String name;

@@ -11,7 +11,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Disbursement extends BaseModel {
+public class Disbursement {
     private static final BigInteger MINIMUM_AMOUNT = new BigInteger("10000");
     private static final BigInteger MAXIMUM_AMOUNT = new BigInteger("25000000");
 

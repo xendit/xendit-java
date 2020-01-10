@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FixedVirtualAccount extends BaseModel {
+public class FixedVirtualAccount {
     private static final Long MINIMUM_AMOUNT = 10000L;
     private static final Long MAXIMUM_AMOUNT = 50000000000L;
 

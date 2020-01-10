@@ -3,8 +3,6 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.BaseRequest;
-import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Builder
-public class Invoice extends BaseModel {
+public class Invoice {
     @SerializedName("id")
     @Getter
     private String id;
