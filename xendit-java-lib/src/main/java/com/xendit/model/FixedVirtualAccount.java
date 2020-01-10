@@ -186,7 +186,7 @@ public class FixedVirtualAccount extends BaseModel {
      */
     public static AvailableBank[] getAvailableBank() throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/available_virtual_account_banks");
-        return request(RequestResource.Method.GET, url, null, AvailableBank[].class);
+        return Xendit.requestClient.request(RequestResource.Method.GET, url, null, AvailableBank[].class);
     }
 
     /**
@@ -197,7 +197,7 @@ public class FixedVirtualAccount extends BaseModel {
      */
     public static FixedVirtualAccount getFixedVA(String id) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
-        return request(RequestResource.Method.GET, url, null, FixedVirtualAccount.class);
+        return Xendit.requestClient.request(RequestResource.Method.GET, url, null, FixedVirtualAccount.class);
     }
 
     /**
@@ -208,7 +208,7 @@ public class FixedVirtualAccount extends BaseModel {
      */
     public static FixedVirtualAccountPayment getPayment(String paymentId) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_account_payments/payment_id=", paymentId);
-        return request(RequestResource.Method.GET, url, null, FixedVirtualAccountPayment.class);
+        return Xendit.requestClient.request(RequestResource.Method.GET, url, null, FixedVirtualAccountPayment.class);
     }
 
     private static FixedVirtualAccount create(Map<String, Object> params, Boolean isClosed) throws XenditException {
@@ -232,7 +232,7 @@ public class FixedVirtualAccount extends BaseModel {
             amountValidation(suggestedAmount);
         }
 
-        return request(RequestResource.Method.POST, url, params, FixedVirtualAccount.class);
+        return Xendit.requestClient.request(RequestResource.Method.POST, url, params, FixedVirtualAccount.class);
     }
 
     private static void amountValidation(String amount) throws ParamException {

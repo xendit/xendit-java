@@ -235,7 +235,7 @@ public class Disbursement extends BaseModel {
      */
     public static AvailableBank[] getAvailableBank() throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
-        return request(RequestResource.Method.GET, url, null, AvailableBank[].class);
+        return Xendit.requestClient.request(RequestResource.Method.GET, url, null, AvailableBank[].class);
     }
 
     /**
@@ -246,7 +246,7 @@ public class Disbursement extends BaseModel {
      */
     public static Disbursement[] getByExternalId(String externalId) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/disbursements?external_id=", externalId);
-        return request(RequestResource.Method.GET, url, null, Disbursement[].class);
+        return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Disbursement[].class);
     }
 
     /**
@@ -257,7 +257,7 @@ public class Disbursement extends BaseModel {
      */
     public static Disbursement getById(String id) throws XenditException {
         String url = String.format("%s%s%s", Xendit.getUrl(), "/disbursements/", id);
-        return request(RequestResource.Method.GET, url, null, Disbursement.class);
+        return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Disbursement.class);
     }
 
     private static Disbursement createRequest(Map<String, Object> params) throws XenditException {
@@ -266,7 +266,7 @@ public class Disbursement extends BaseModel {
 
         amountValidation(amount);
 
-        return request(RequestResource.Method.POST, url, params, Disbursement.class);
+        return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Disbursement.class);
     }
 
     private static void amountValidation(String amount) throws ParamException {

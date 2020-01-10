@@ -1,7 +1,6 @@
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.Invoice;
-import com.xendit.network.BaseRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +8,6 @@ import java.util.Map;
 public class ExampleCreateInvoice {
     public static void main(String[] args) {
         Xendit.apiKey = "xnd_development_...";
-        Xendit.requestClient = new BaseRequest();
 
         try {
             /**
