@@ -6,158 +6,124 @@ import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Builder
+@Getter
+@Setter
 public class Invoice {
     @SerializedName("id")
-    @Getter
     private String id;
 
     @SerializedName("external_id")
-    @Getter
     private String externalId;
 
     @SerializedName("user_id")
-    @Getter
     private String userId;
 
     @SerializedName("status")
-    @Getter
     private String status;
 
     @SerializedName("merchant_name")
-    @Getter
     private String merchantName;
 
     @SerializedName("merchant_profile_picture_url")
-    @Getter
     private String merchantProfilePictureUrl;
 
     @SerializedName("bank_code")
-    @Getter
     private String bankCode;
 
     @SerializedName("amount")
-    @Getter
     private Number amount;
 
     @SerializedName("initial_amount")
-    @Getter
     private Number initialAmount;
 
     @SerializedName("payer_email")
-    @Getter
     private String payerEmail;
 
     @SerializedName("description")
-    @Getter
     private String description;
 
     @SerializedName("expiry_date")
-    @Getter
     private String expiryDate;
 
     @SerializedName("invoice_url")
-    @Getter
     private String invoiceUrl;
 
     @SerializedName("available_banks")
-    @Getter
     private AvailableBankInvoice[] availableBanks;
 
     @SerializedName("available_retail_outlets")
-    @Getter
     private AvailableRetailOutletInvoice[] availableRetailOutlets;
 
     @SerializedName("available_ewallets")
-    @Getter
     private AvailableEwalletInvoice[] availableEwallets;
 
     @SerializedName("paid_at")
-    @Getter
     private String paidAt;
 
     @SerializedName("paid_amount")
-    @Getter
     private Number paidAmount;
 
     @SerializedName("adjusted_received_amount")
-    @Getter
     private Number adjustedReceivedAmount;
 
     @SerializedName("should_exclude_credit_card")
-    @Getter
     private Boolean shouldExcludeCreditCard;
 
     @SerializedName("should_send_email")
-    @Getter
     private Boolean shouldSendEmail;
 
     @SerializedName("created")
-    @Getter
     private String created;
 
     @SerializedName("updated")
-    @Getter
     private String updated;
 
     @SerializedName("currency")
-    @Getter
     private String currency;
 
     @SerializedName("initial_currency")
-    @Getter
     private String initialCurrency;
 
     @SerializedName("on_demand_link")
-    @Getter
     private String onDemandLink;
 
     @SerializedName("on_demand_payload")
-    @Getter
     private Object onDemandPayload;
 
     @SerializedName("recurring_payment_id")
-    @Getter
     private String recurringPaymentId;
 
     @SerializedName("credit_card_charge_id")
-    @Getter
     private String creditCardChargeId;
 
     @SerializedName("mid_label")
-    @Getter
     private String midLabel;
 
     @SerializedName("payment_channel")
-    @Getter
     private String paymentChannel;
 
     @SerializedName("payment_method")
-    @Getter
     private String paymentMethod;
 
     @SerializedName("payment_destination")
-    @Getter
     private String paymentDestination;
 
     @SerializedName("success_redirect_url")
-    @Getter
     private String successRedirectUrl;
 
     @SerializedName("failure_redirect_url")
-    @Getter
     private String failureRedirectUrl;
 
     @SerializedName("items")
-    @Getter
     private ItemInvoice[] items;
 
     @SerializedName("fixed_va")
-    @Getter
     private Boolean fixedVa;
 
     /**

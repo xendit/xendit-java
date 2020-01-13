@@ -6,58 +6,50 @@ import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Disbursement {
     private static final BigInteger MINIMUM_AMOUNT = new BigInteger("10000");
     private static final BigInteger MAXIMUM_AMOUNT = new BigInteger("25000000");
 
     @SerializedName("id")
-    @Getter
     private String id;
 
     @SerializedName("user_id")
-    @Getter
     private String userId;
 
     @SerializedName("external_id")
-    @Getter
     private String externalId;
 
     @SerializedName("amount")
-    @Getter
     private BigInteger amount;
 
     @SerializedName("bank_code")
-    @Getter
     private String bankCode;
 
     @SerializedName("account_holder_name")
-    @Getter
     private String accountHolderName;
 
     @SerializedName("disbursement_description")
-    @Getter
     private String disbursementDescription;
 
     @SerializedName("status")
-    @Getter
     private String status;
 
     // optionals
     @SerializedName("email_to")
-    @Getter
     private String[] emailTo;
 
     @SerializedName("email_cc")
-    @Getter
     private String[] emailCC;
 
     @SerializedName("email_bcc")
-    @Getter
     private String[] emailBcc;
 
     /**
@@ -233,7 +225,7 @@ public class Disbursement {
      * @return
      * @throws XenditException
      */
-    public static AvailableBank[] getAvailableBank() throws XenditException {
+    public static AvailableBank[] getAvailableBanks() throws XenditException {
         String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
         return Xendit.requestClient.request(RequestResource.Method.GET, url, null, AvailableBank[].class);
     }
