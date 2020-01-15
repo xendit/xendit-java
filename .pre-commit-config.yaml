@@ -1,0 +1,5 @@
+repos:
+  -   repo: https://github.com/thlorenz/doctoc
+      rev: v1.4.0
+      hooks:
+        -   id: doctoc
