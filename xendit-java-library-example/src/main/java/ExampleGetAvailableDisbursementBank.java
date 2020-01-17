@@ -10,7 +10,7 @@ public class ExampleGetAvailableDisbursementBank {
         Xendit.apiKey = "xnd_development_...";
 
         try {
-            AvailableBank[] banks = Disbursement.getAvailableBank();
+            AvailableBank[] banks = Disbursement.getAvailableBanks();
             System.out.println(Arrays.toString(banks));
         } catch (XenditException e) {
             e.printStackTrace();

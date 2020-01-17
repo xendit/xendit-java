@@ -19,7 +19,7 @@ public class ExampleCreateDisbursement {
              * method. You can skip this step if your system is already familiar with our standard code.
              * In this example, we call available disbursement bank function.
              */
-            AvailableBank[] availableBanks = Disbursement.getAvailableBank();
+            AvailableBank[] availableBanks = Disbursement.getAvailableBanks();
 
             /**
              * Let's say that we want to disburse to the first bank in that list.
