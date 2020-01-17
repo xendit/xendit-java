@@ -1,4 +1,3 @@
 package com.xendit.network;
 
-public class RequestOptions {
-}
+public class RequestOptions {}

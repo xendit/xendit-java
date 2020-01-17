@@ -8,7 +8,6 @@ import com.xendit.exception.ApiException;
 import com.xendit.exception.AuthException;
 import com.xendit.exception.XenditException;
 import com.xendit.model.XenditError;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,183 +18,172 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class BaseRequest {
-    private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
+public class BaseRequest implements NetworkClient {
+  private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
 
-    public static <T> T request(
-            RequestResource.Method method,
-            String url,
-            Map<String, Object> params,
-            Class<T> clazz
-    ) throws XenditException {
-        return staticRequest(method, url, params, clazz);
+  public <T> T request(
+      RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
+      throws XenditException {
+    return staticRequest(method, url, params, clazz);
+  }
+
+  private static Map<String, String> getHeaders(String apiKey) throws XenditException {
+    Map<String, String> headers = new HashMap<>();
+
+    headers.put("User-Agent", "Xendit Java Library/v1");
+    headers.put("Accept", "application/json");
+
+    String base64Key = encodeBase64(apiKey + ":");
+    headers.put("Authorization", "Basic " + base64Key);
+
+    return headers;
+  }
+
+  private static <T> T staticRequest(
+      RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
+      throws XenditException {
+    XenditResponse response = rawRequest(method, url, params);
+
+    int responseCode = response.getStatusCode();
+    String responseBody = response.getBody();
+
+    if (responseCode < 200 || responseCode >= 300) {
+      handleApiError(response, params);
     }
 
-    private static Map<String, String> getHeaders(String apiKey) throws XenditException {
-        Map<String, String> headers = new HashMap<>();
-
-        headers.put("User-Agent", "Xendit Java Library/v1");
-        headers.put("Accept", "application/json");
-
-        String base64Key = encodeBase64(apiKey + ":");
-        headers.put("Authorization", "Basic " + base64Key);
-
-        return headers;
+    T resource = null;
+    try {
+      resource = new Gson().fromJson(responseBody, clazz);
+    } catch (JsonSyntaxException e) {
+      raiseMalformedJsonError(responseBody, responseCode);
     }
 
-    private static <T> T staticRequest(
-            RequestResource.Method method,
-            String url,
-            Map<String, Object> params,
-            Class<T> clazz
-    ) throws XenditException {
-        XenditResponse response = rawRequest(method, url, params);
+    return resource;
+  }
 
-        int responseCode = response.getStatusCode();
-        String responseBody = response.getBody();
+  private static XenditResponse rawRequest(
+      RequestResource.Method method, String url, Map<String, Object> params)
+      throws XenditException {
+    String apiKey = Xendit.getApiKey();
 
-        if (responseCode < 200 || responseCode >= 300) {
-            handleApiError(response, params);
-        }
-
-        T resource = null;
-        try {
-            resource = new Gson().fromJson(responseBody, clazz);
-        } catch (JsonSyntaxException e) {
-            raiseMalformedJsonError(responseBody, responseCode);
-        }
-
-        return resource;
+    if (apiKey == null || apiKey.trim().isEmpty()) {
+      throw new AuthException("No API key is provided yet.");
     }
 
-    private static XenditResponse rawRequest(
-            RequestResource.Method method,
-            String url,
-            Map<String, Object> params
-    ) throws XenditException {
-        String apiKey = Xendit.getApiKey();
+    String jsonParams = "";
 
-        if (apiKey == null || apiKey.trim().isEmpty()) {
-            throw new AuthException("No API key is provided yet.");
-        }
-
-        String jsonParams = "";
-
-        if (params != null) {
-            Gson gson = new GsonBuilder().create();
-            jsonParams = gson.toJson(params);
-        }
-
-        HttpURLConnection connection = null;
-
-        try {
-            allowMethods(method.getText());
-
-            connection = createXenditConnection(url, apiKey, jsonParams);
-
-            connection.setRequestMethod(method.getText());
-
-            if (method == RequestResource.Method.POST || method == RequestResource.Method.PATCH) {
-                connection.setDoOutput(true);
-                connection.setRequestProperty("Accept-Charset", "utf-8");
-                connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-                OutputStream stream = connection.getOutputStream();
-                stream.write(jsonParams.getBytes("utf-8"));
-                stream.close();
-            }
-
-            int responseCode = connection.getResponseCode();
-            String responseBody;
-
-            if (responseCode >= 200 && responseCode < 300) {
-                responseBody = getResponseBody(connection.getInputStream());
-            } else {
-                responseBody = getResponseBody(connection.getErrorStream());
-            }
-
-            return new XenditResponse(responseCode, responseBody);
-        } catch (IOException e) {
-            throw new XenditException("Connection error");
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
+    if (params != null) {
+      Gson gson = new GsonBuilder().create();
+      jsonParams = gson.toJson(params);
     }
 
-    private static void allowMethods(String... methods) {
-        try {
-            Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
+    HttpURLConnection connection = null;
 
-            Field modifiersField = Field.class.getDeclaredField("modifiers");
-            modifiersField.setAccessible(true);
-            modifiersField.setInt(methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
+    try {
+      allowMethods(method.getText());
 
-            methodsField.setAccessible(true);
+      connection = createXenditConnection(url, apiKey, jsonParams);
 
-            String[] oldMethods = (String[]) methodsField.get(null);
-            Set<String> methodsSet = new LinkedHashSet<>(Arrays.asList(oldMethods));
-            methodsSet.addAll(Arrays.asList(methods));
-            String[] newMethods = methodsSet.toArray(new String[0]);
+      connection.setRequestMethod(method.getText());
 
-            methodsField.set(null/*static field*/, newMethods);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new IllegalStateException(e);
-        }
+      if (method == RequestResource.Method.POST || method == RequestResource.Method.PATCH) {
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Accept-Charset", "utf-8");
+        connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+        OutputStream stream = connection.getOutputStream();
+        stream.write(jsonParams.getBytes("utf-8"));
+        stream.close();
+      }
+
+      int responseCode = connection.getResponseCode();
+      String responseBody;
+
+      if (responseCode >= 200 && responseCode < 300) {
+        responseBody = getResponseBody(connection.getInputStream());
+      } else {
+        responseBody = getResponseBody(connection.getErrorStream());
+      }
+
+      return new XenditResponse(responseCode, responseBody);
+    } catch (IOException e) {
+      throw new XenditException("Connection error");
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
+    }
+  }
+
+  private static void allowMethods(String... methods) {
+    try {
+      Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
+
+      Field modifiersField = Field.class.getDeclaredField("modifiers");
+      modifiersField.setAccessible(true);
+      modifiersField.setInt(methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
+
+      methodsField.setAccessible(true);
+
+      String[] oldMethods = (String[]) methodsField.get(null);
+      Set<String> methodsSet = new LinkedHashSet<>(Arrays.asList(oldMethods));
+      methodsSet.addAll(Arrays.asList(methods));
+      String[] newMethods = methodsSet.toArray(new String[0]);
+
+      methodsField.set(null /*static field*/, newMethods);
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  private static HttpURLConnection createXenditConnection(
+      String url, String apiKey, String jsonParams) throws IOException, XenditException {
+    URL xenditUrl = new URL(url);
+    HttpURLConnection connection = (HttpURLConnection) xenditUrl.openConnection();
+
+    connection.setConnectTimeout(DEFAULT_CONNECT_TIMEOUT);
+    connection.setUseCaches(false);
+
+    for (Map.Entry<String, String> header : getHeaders(apiKey).entrySet()) {
+      connection.setRequestProperty(header.getKey(), header.getValue());
     }
 
-    private static HttpURLConnection createXenditConnection(String url, String apiKey, String jsonParams)
-            throws IOException, XenditException {
-        URL xenditUrl = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) xenditUrl.openConnection();
+    return connection;
+  }
 
-        connection.setConnectTimeout(DEFAULT_CONNECT_TIMEOUT);
-        connection.setUseCaches(false);
-
-        for (Map.Entry<String, String> header : getHeaders(apiKey).entrySet()) {
-            connection.setRequestProperty(header.getKey(), header.getValue());
-        }
-
-        return connection;
+  private static String encodeBase64(String key) throws XenditException {
+    try {
+      byte[] keyData = key.getBytes(StandardCharsets.UTF_8);
+      return Base64.getEncoder().encodeToString(keyData);
+    } catch (Exception e) {
+      throw new XenditException("Failed to encode API key");
     }
+  }
 
-    private static String encodeBase64(String key) throws XenditException {
-        try {
-            byte[] keyData = key.getBytes(StandardCharsets.UTF_8);
-            return Base64.getEncoder().encodeToString(keyData);
-        } catch (Exception e) {
-            throw new XenditException("Failed to encode API key");
-        }
+  private static String getResponseBody(InputStream responseStream) throws IOException {
+    try (final Scanner scanner = new Scanner(responseStream, RequestResource.CHARSET)) {
+      // \A is the beginning of the stream boundary
+      final String responseBody = scanner.useDelimiter("\\A").next();
+      responseStream.close();
+      return responseBody;
     }
+  }
 
-    private static String getResponseBody(InputStream responseStream) throws IOException {
-        try (final Scanner scanner = new Scanner(responseStream, RequestResource.CHARSET)) {
-            // \A is the beginning of the stream boundary
-            final String responseBody = scanner.useDelimiter("\\A").next();
-            responseStream.close();
-            return responseBody;
-        }
+  private static void handleApiError(XenditResponse response, Map<String, Object> params)
+      throws ApiException {
+    Gson gson = new Gson();
+
+    try {
+      XenditError xenditError = gson.fromJson(response.getBody(), XenditError.class);
+      throw new ApiException(xenditError.getMessage(), xenditError.getErrorCode(), params);
+    } catch (JsonSyntaxException e) {
+      raiseMalformedJsonError(response.getBody(), response.getStatusCode());
     }
+  }
 
-    private static void handleApiError(XenditResponse response, Map<String, Object> params) throws ApiException {
-        Gson gson = new Gson();
-
-        try {
-            XenditError xenditError = gson.fromJson(response.getBody(), XenditError.class);
-            throw new ApiException(xenditError.getMessage(), xenditError.getErrorCode(), params);
-        } catch (JsonSyntaxException e) {
-            raiseMalformedJsonError(response.getBody(), response.getStatusCode());
-        }
-    }
-
-    private static void raiseMalformedJsonError(String body, int code) throws ApiException {
-        throw new ApiException(
-                String.format(
-                        "Invalid response from Xendit API: %s. HTTP response code: %d",
-                        body, code
-                ),
-                "500",
-                null
-        );
-    }
+  private static void raiseMalformedJsonError(String body, int code) throws ApiException {
+    throw new ApiException(
+        String.format("Invalid response from Xendit API: %s. HTTP response code: %d", body, code),
+        "500",
+        null);
+  }
 }

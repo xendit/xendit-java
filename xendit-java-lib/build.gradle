@@ -3,6 +3,7 @@ plugins {
     id 'maven'
     id 'maven-publish'
     id 'com.jfrog.bintray'
+    id "com.diffplug.gradle.spotless" version "3.27.1"
 }
 
 group 'com.xendit'
@@ -95,5 +96,14 @@ bintray {
                 //Optional. The passphrase for GPG signing'
             }
         }
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.diffplug.gradle.spotless'
+
+spotless {
+    java {
+        googleJavaFormat()
     }
 }
