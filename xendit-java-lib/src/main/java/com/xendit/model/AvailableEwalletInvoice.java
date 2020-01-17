@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AvailableEwalletInvoice {
-    @SerializedName("ewallet_type")
-    private String ewalletType;
+  @SerializedName("ewallet_type")
+  private String ewalletType;
 }

@@ -7,15 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AvailableRetailOutletInvoice {
-    @SerializedName("retail_outlet_name")
-    private String retailOutletName;
+  @SerializedName("retail_outlet_name")
+  private String retailOutletName;
 
-    @SerializedName("payment_code")
-    private String paymentCode;
+  @SerializedName("payment_code")
+  private String paymentCode;
 
-    @SerializedName("transfer_amount")
-    private Number transferAmount;
+  @SerializedName("transfer_amount")
+  private Number transferAmount;
 
-    @SerializedName("merchant_name")
-    private String merchantName;
+  @SerializedName("merchant_name")
+  private String merchantName;
 }

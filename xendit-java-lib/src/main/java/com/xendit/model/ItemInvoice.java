@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public class ItemInvoice {
-    @SerializedName("name")
-    @Getter
-    String name;
+  @SerializedName("name")
+  @Getter
+  String name;
 
-    @SerializedName("price")
-    @Getter
-    Number price;
+  @SerializedName("price")
+  @Getter
+  Number price;
 
-    @SerializedName("quantity")
-    @Getter
-    Number quantity;
+  @SerializedName("quantity")
+  @Getter
+  Number quantity;
 }

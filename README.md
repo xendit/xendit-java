@@ -1,5 +1,7 @@
 # Xendit Java Library
 
+This library is the abstraction of Xendit API for access from applications written with Java.
+
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -28,6 +30,8 @@
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
 - [Contributing](#contributing)
+  - [Tests](#tests)
+  - [Precommit](#precommit)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -43,14 +47,14 @@ Maven:
 <dependency>
   <groupId>com.xendit</groupId>
   <artifactId>xendit-java-lib</artifactId>
-  <version>1.3.0</version>
+  <version>SELECTED_VERSION</version>
   <type>pom</type>
 </dependency>
 ```
 
 Gradle:
 ```
-compile 'com.xendit:xendit-java-lib:1.3.0'
+compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 ```
 
 More information: https://bintray.com/xendit/android/xendit-java-lib
@@ -309,10 +313,16 @@ FixedVirtualAccountPayment payment = FixedVirtualAccount.getPayment("EXAMPLE_PAY
 
 ## Contributing
 
-Running test suite
+### Tests
+
+Make sure the the code passes all tests.
 
 ```
 ./gradlew test
 ```
+
+### Precommit
+
+This library uses [doctoc](https://github.com/thlorenz/doctoc) for generating README contents. Please install it first before making any commits.
 
 For any requests, bugs, or comments, please [open an issue](https://github.com/xendit/xendit-java-library/issues) or [submit a pull request](https://github.com/xendit/xendit-java-library/pulls).
