@@ -323,6 +323,6 @@ Make sure the the code passes all tests.
 
 ### Precommit
 
-This library uses [doctoc](https://github.com/thlorenz/doctoc) for generating README contents. Please install it first before making any commits.
+Before making any commits, please install pre-commit. To install pre-commit, follow the [installation steps](https://pre-commit.com/#install).
 
 For any requests, bugs, or comments, please [open an issue](https://github.com/xendit/xendit-java-library/issues) or [submit a pull request](https://github.com/xendit/xendit-java-library/pulls).
