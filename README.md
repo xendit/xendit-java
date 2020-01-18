@@ -29,6 +29,9 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get banks with available virtual account service](#get-banks-with-available-virtual-account-service)
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
+  - [Retail Outlet Services](#retail-outlet-services)
+    - [Create fixed payment code](#create-fixed-payment-code)
+    - [Update fixed payment code](#update-fixed-payment-code)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -149,6 +152,8 @@ Disbursement disbursement = Disbursement.getByExternalId("EXAMPLE_ID");
 Disbursement disbursement = Disbursement.getById("EXAMPLE_ID");
 ```
 
+[Back to top](#table-of-contents)
+
 ### Invoice services
 
 Example: Create an invoice
@@ -221,6 +226,8 @@ Invoice[] invoices = Invoice.getAll(params);
 ```java
 Invoice invoice = Invoice.expire("EXAMPLE_ID");
 ```
+
+[Back to top](#table-of-contents)
 
 ### Virtual Account Services
 
@@ -310,6 +317,37 @@ FixedVirtualAccount fpa = FixedVirtualAccount.getFixedVA("EXAMPLE_ID");
 ```java
 FixedVirtualAccountPayment payment = FixedVirtualAccount.getPayment("EXAMPLE_PAYMENT_ID");
 ```
+
+[Back to top](#table-of-contents)
+
+### Retail Outlet Services
+
+#### Create fixed payment code
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+```java
+RetailOutlet.create(
+    String externalId,
+    String retailOutletName,
+    String name,
+    Number expectedAmount
+);
+```
+
+```java
+RetailOutlet.create(
+    Map<String, Object> params
+);
+```
+
+#### Update fixed payment code
+
+```java
+FixedPaymentCode fpc = RetailOutlet.update("EXAMPLE_ID");
+```
+
+[Back to top](#table-of-contents)
 
 ## Contributing
 

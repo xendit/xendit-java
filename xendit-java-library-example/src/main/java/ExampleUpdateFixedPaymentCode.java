@@ -1,6 +1,7 @@
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.FixedPaymentCode;
+import com.xendit.model.RetailOutlet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class ExampleUpdateFixedPaymentCode {
             Map<String, Object> params = new HashMap<>();
             params.put("name", "LOREM IPSUM");
             params.put("expected_amount", 1234567);
-            FixedPaymentCode fpc = FixedPaymentCode.update(id, params);
+            FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode(id, params);
             System.out.println(fpc);
         } catch (XenditException e) {
             e.printStackTrace();
@@ -20,7 +21,7 @@ public class ExampleUpdateFixedPaymentCode {
 
     private static void updateWithoutParamObject(String id) {
         try {
-            FixedPaymentCode fpc = FixedPaymentCode.update(id, "LOREM IPSUM 2", 98765, null);
+            FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode(id, "LOREM IPSUM 2", 98765, null);
             System.out.println(fpc);
         } catch (XenditException e) {
             e.printStackTrace();
