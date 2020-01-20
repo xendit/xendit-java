@@ -99,4 +99,16 @@ public class Payout {
     String url = String.format("%s%s", Xendit.getUrl(), "/payouts");
     return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Payout.class);
   }
+
+  /**
+   * Get payout detail by ID
+   *
+   * @param id ID of the payout to retrieve
+   * @return Payout
+   * @throws XenditException XenditException
+   */
+  public static Payout get(String id) throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/payouts/", id);
+    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Payout.class);
+  }
 }
