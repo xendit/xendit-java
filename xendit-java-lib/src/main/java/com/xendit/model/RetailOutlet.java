@@ -5,7 +5,9 @@ import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Builder;
 
+@Builder
 public class RetailOutlet {
   /**
    * Create fixed payment code with all parameters as HashMap
