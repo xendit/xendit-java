@@ -111,4 +111,16 @@ public class Payout {
     String url = String.format("%s%s%s", Xendit.getUrl(), "/payouts/", id);
     return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Payout.class);
   }
+
+  /**
+   * Void a payout by ID
+   *
+   * @param id ID of the payout to void
+   * @return Payout
+   * @throws XenditException XenditException
+   */
+  public static Payout voidPayout(String id) throws XenditException {
+    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/payouts/", id, "/void");
+    return Xendit.requestClient.request(RequestResource.Method.POST, url, null, Payout.class);
+  }
 }
