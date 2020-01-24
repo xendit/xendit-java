@@ -80,7 +80,7 @@ public class BaseRequest implements NetworkClient {
     HttpURLConnection connection = null;
 
     try {
-      allowMethods(method.getText());
+      allowHttpMethods(method.getText());
 
       connection = createXenditConnection(url, apiKey, jsonParams);
 
@@ -114,7 +114,7 @@ public class BaseRequest implements NetworkClient {
     }
   }
 
-  private static void allowMethods(String... methods) {
+  private static void allowHttpMethods(String... methods) {
     try {
       Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
 

@@ -43,7 +43,8 @@ public class RetailOutletTest {
   public void createFixedPaymentCode_ThrowsException_IfInvalidParams() throws XenditException {
     when(Xendit.requestClient.request(
             RequestResource.Method.POST, URL, PARAMS, FixedPaymentCode.class))
-        .thenThrow(XenditException.class);
+        .thenThrow(
+            new XenditException("There was an error with the format submitted to the server."));
     RetailOutlet.createFixedPaymentCode(PARAMS);
   }
 
@@ -62,7 +63,7 @@ public class RetailOutletTest {
     String url = String.format("%s%s%s", URL, "/", "fake_id");
     when(Xendit.requestClient.request(
             RequestResource.Method.GET, url, null, FixedPaymentCode.class))
-        .thenThrow(XenditException.class);
+        .thenThrow(new XenditException("Fixed payment code not found"));
     RetailOutlet.getFixedPaymentCode("fake_id");
   }
 
@@ -89,7 +90,7 @@ public class RetailOutletTest {
     String url = String.format("%s%s%s", URL, "/", "fake_id");
     when(Xendit.requestClient.request(
             RequestResource.Method.PATCH, url, PARAMS, FixedPaymentCode.class))
-        .thenThrow(XenditException.class);
+        .thenThrow(new XenditException("Fixed payment code not found"));
     RetailOutlet.updateFixedPaymentCode("fake_id", PARAMS);
   }
 }
