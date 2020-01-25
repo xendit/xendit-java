@@ -14,7 +14,7 @@ public class ExampleCreatePayout {
             params.put("external_id", "my_test_id");
             params.put("amount", 100000);
 
-            Payout payout = Payout.create(params);
+            Payout payout = Payout.createPayout(params);
             System.out.println(payout.getId());
         } catch (XenditException e) {
             e.printStackTrace();

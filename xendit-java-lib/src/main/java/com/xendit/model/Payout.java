@@ -80,7 +80,7 @@ public class Payout {
    * @return Payout
    * @throws XenditException XenditException
    */
-  public static Payout create(String externalId, Number amount) throws XenditException {
+  public static Payout createPayout(String externalId, Number amount) throws XenditException {
     Map<String, Object> params = new HashMap<>();
     params.put("external_id", externalId);
     params.put("amount", amount);
@@ -95,7 +95,7 @@ public class Payout {
    * @return Payout
    * @throws XenditException XenditException
    */
-  public static Payout create(Map<String, Object> params) throws XenditException {
+  public static Payout createPayout(Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/payouts");
     return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Payout.class);
   }
@@ -107,7 +107,7 @@ public class Payout {
    * @return Payout
    * @throws XenditException XenditException
    */
-  public static Payout get(String id) throws XenditException {
+  public static Payout getPayout(String id) throws XenditException {
     String url = String.format("%s%s%s", Xendit.getUrl(), "/payouts/", id);
     return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Payout.class);
   }
