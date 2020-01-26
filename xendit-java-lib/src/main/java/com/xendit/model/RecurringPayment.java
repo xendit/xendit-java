@@ -113,4 +113,17 @@ public class RecurringPayment {
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, params, RecurringPayment.class);
   }
+
+  /**
+   * Get a recurring payment by ID
+   *
+   * @param id ID of the recurring payment to retrieve
+   * @return RecurringPayment
+   * @throws XenditException XenditException
+   */
+  public static RecurringPayment get(String id) throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/recurring_payments/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, null, RecurringPayment.class);
+  }
 }
