@@ -126,4 +126,17 @@ public class RecurringPayment {
     return Xendit.requestClient.request(
         RequestResource.Method.GET, url, null, RecurringPayment.class);
   }
+
+  /**
+   * Stop a recurring payment by ID
+   *
+   * @param id ID of the recurring payment to stop
+   * @return RecurringPayment
+   * @throws XenditException XenditException
+   */
+  public static RecurringPayment stop(String id) throws XenditException {
+    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/stop!");
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, null, RecurringPayment.class);
+  }
 }
