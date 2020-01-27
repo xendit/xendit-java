@@ -35,6 +35,9 @@ public class RecurringPayment {
   @SerializedName("interval_count")
   private Number intervalCount;
 
+  @SerializedName("status")
+  private String status;
+
   @SerializedName("total_recurrence")
   private Number totalRecurrence;
 
@@ -136,6 +139,19 @@ public class RecurringPayment {
    */
   public static RecurringPayment stop(String id) throws XenditException {
     String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/stop!");
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, null, RecurringPayment.class);
+  }
+
+  /**
+   * Pause a recurring payment by ID
+   *
+   * @param id ID of the recurring payment to pause
+   * @return RecurringPayment
+   * @throws XenditException XenditException
+   */
+  public static RecurringPayment pause(String id) throws XenditException {
+    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/pause!");
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, null, RecurringPayment.class);
   }
