@@ -10,7 +10,7 @@ public class ExampleGetAvailableVABank {
         Xendit.apiKey = "xnd_development_...";
 
         try {
-            AvailableBank[] banks = FixedVirtualAccount.getAvailableBank();
+            AvailableBank[] banks = FixedVirtualAccount.getAvailableBanks();
             System.out.println(Arrays.toString(banks));
         } catch (XenditException e) {
             e.printStackTrace();

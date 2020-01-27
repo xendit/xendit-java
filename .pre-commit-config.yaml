@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/thlorenz/doctoc
+    rev: v1.4.0
+    hooks:
+      - id: doctoc
+  - repo: local
+    hooks:
+      - id: spotless
+        name: spotless
+        description: Java code formatter.
+        entry: ./gradlew spotlessApply
+        language: script
+        pass_filenames: false

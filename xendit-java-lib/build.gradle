@@ -3,6 +3,7 @@ plugins {
     id 'maven'
     id 'maven-publish'
     id 'com.jfrog.bintray'
+    id "com.diffplug.gradle.spotless" version "3.27.1"
 }
 
 group 'com.xendit'
@@ -23,6 +24,11 @@ dependencies {
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.powermock:powermock-api-mockito2:2.0.2'
+    testCompile 'org.powermock:powermock-module-junit4-rule-agent:2.0.2'
+    testCompile 'org.powermock:powermock-module-junit4-rule:2.0.2'
+    testCompile 'org.powermock:powermock-module-junit4:2.0.2'
+    testImplementation group: "org.mockito", name: "mockito-core", version:"3.1.0"
 }
 
 install {
@@ -90,5 +96,14 @@ bintray {
                 //Optional. The passphrase for GPG signing'
             }
         }
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'com.diffplug.gradle.spotless'
+
+spotless {
+    java {
+        googleJavaFormat()
     }
 }
