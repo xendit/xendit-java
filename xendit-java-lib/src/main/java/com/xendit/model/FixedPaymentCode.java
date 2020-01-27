@@ -9,6 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FixedPaymentCode {
+  public enum RetailOutletName {
+    ALFAMART,
+    INDOMARET
+  }
+
   @SerializedName("id")
   private String id;
 
@@ -19,7 +24,7 @@ public class FixedPaymentCode {
   private String externalId;
 
   @SerializedName("retail_outlet_name")
-  private String retailOutletName;
+  private RetailOutletName retailOutletName;
 
   @SerializedName("prefix")
   private String prefix;

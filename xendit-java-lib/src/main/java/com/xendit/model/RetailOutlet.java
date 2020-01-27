@@ -36,7 +36,10 @@ public class RetailOutlet {
    * @throws XenditException XenditException
    */
   public static FixedPaymentCode createFixedPaymentCode(
-      String externalId, String retailOutletName, String name, Number expectedAmount)
+      String externalId,
+      FixedPaymentCode.RetailOutletName retailOutletName,
+      String name,
+      Number expectedAmount)
       throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/fixed_payment_code");
     Map<String, Object> params = new HashMap<>();

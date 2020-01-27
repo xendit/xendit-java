@@ -23,7 +23,7 @@ public class ExampleCreateFixedPaymentCode {
 
     private static void createWithoutParamObject() {
         try {
-            FixedPaymentCode fpc = RetailOutlet.createFixedPaymentCode("test", "ALFAMART", "Rika Sutanto", 10000);
+            FixedPaymentCode fpc = RetailOutlet.createFixedPaymentCode("test", FixedPaymentCode.RetailOutletName.ALFAMART, "Rika Sutanto", 10000);
             System.out.println(fpc);
         } catch (XenditException e) {
             e.printStackTrace();

@@ -28,7 +28,7 @@ public class RetailOutletTest {
   @Test
   public void createFixedPaymentCode_Success_IfParamsAreValid() throws XenditException {
     PARAMS.put("external_id", TEST_EXTERNAL_ID);
-    PARAMS.put("retail_outlet_name", "ALFAMART");
+    PARAMS.put("retail_outlet_name", FixedPaymentCode.RetailOutletName.ALFAMART);
     PARAMS.put("name", "Rika Sutanto");
     PARAMS.put("expected_amount", 10000);
 
