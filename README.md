@@ -31,6 +31,10 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
   - [Balance Service](#balance-service)
     - [Get balance](#get-balance)
+  - [Payout Services](#payout-services)
+    - [Create a payout](#create-a-payout)
+    - [Get a payout by ID](#get-a-payout-by-id)
+    - [Void a payout](#void-a-payout)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -327,6 +331,51 @@ Balance.get(String accountType);
 
 ```java
 Balance balance = Balance.get("CASH");
+```
+### Payout Services
+
+#### Create a payout
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+Payout.createPayout(
+    String externalId,
+    Number amount
+);
+</pre>
+</td>
+<td>
+<pre>
+Payout.createPayout(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("external_id", "my_test_id");
+params.put("amount", 100000);
+
+Payout payout = Payout.createPayout(params);
+```
+
+#### Get a payout by ID
+
+```java
+Payout payout = Payout.getPayout("EXAMPLE_ID");
+```
+
+#### Void a payout
+
+```java
+Payout payout = Payout.voidPayout("EXAMPLE_ID");
 ```
 
 ## Contributing
