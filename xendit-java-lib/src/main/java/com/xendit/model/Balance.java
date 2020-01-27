@@ -15,6 +15,12 @@ public class Balance {
   @SerializedName("balance")
   private Number balance;
 
+  public enum AccountType {
+    CASH,
+    HOLDING,
+    TAX
+  }
+
   /**
    * Get balance from your account
    *
@@ -33,7 +39,7 @@ public class Balance {
    * @return Balance
    * @throws XenditException XenditException
    */
-  public static Balance get(String accountType) throws XenditException {
+  public static Balance get(AccountType accountType) throws XenditException {
     String url = String.format("%s%s%s", Xendit.getUrl(), "/balance?account_type=", accountType);
     return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Balance.class);
   }
