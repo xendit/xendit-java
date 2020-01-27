@@ -184,9 +184,15 @@ public class RecurringPayment {
         RequestResource.Method.POST, url, null, RecurringPayment.class);
   }
 
+  /**
+   * Get list of payments by ID
+   *
+   * @param id ID of the recurring payment to get
+   * @return Invoices
+   * @throws XenditException XenditException
+   */
   public static Invoice[] getPaymentsById(String id) throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("recurring_payment_id", id);
-    return Invoice.getAll(params);
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?recurring_payment_id=", id);
+    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class);
   }
 }
