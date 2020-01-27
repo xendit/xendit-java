@@ -155,4 +155,17 @@ public class RecurringPayment {
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, null, RecurringPayment.class);
   }
+
+  /**
+   * Resume a recurring payment by ID
+   *
+   * @param id ID of the recurring payment to resume
+   * @return RecurringPayment
+   * @throws XenditException XenditException
+   */
+  public static RecurringPayment resume(String id) throws XenditException {
+    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/resume!");
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, null, RecurringPayment.class);
+  }
 }
