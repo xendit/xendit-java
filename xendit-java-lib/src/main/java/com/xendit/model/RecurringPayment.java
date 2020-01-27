@@ -118,6 +118,21 @@ public class RecurringPayment {
   }
 
   /**
+   * Edit a recurring payment by ID and given parameters
+   *
+   * @param id id of recurring you want to update
+   * @param params listed here https://xendit.github.io/apireference/#edit-recurring-payment
+   * @return RecurringPayment
+   * @throws XenditException XenditException
+   */
+  public static RecurringPayment edit(String id, Map<String, Object> params)
+      throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/recurring_payments/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.PATCH, url, params, RecurringPayment.class);
+  }
+
+  /**
    * Get a recurring payment by ID
    *
    * @param id ID of the recurring payment to retrieve
