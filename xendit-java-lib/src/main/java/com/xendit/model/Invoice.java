@@ -181,18 +181,28 @@ public class Invoice {
    */
   public static Invoice[] getAll(Map<String, Object> params) throws XenditException {
     String parameters = "";
-    if (params.containsKey("limit"))
-      parameters += String.format("%s%s", "&limit=", params.get("limit"));
-    if (params.containsKey("statuses"))
-      parameters += String.format("%s%s", "&statuses=", params.get("statuses"));
-    if (params.containsKey("last_invoice_id"))
-      parameters += String.format("%s%s", "&last_invoice_id=", params.get("last_invoice_id"));
-    if (params.containsKey("client_types"))
-      parameters += String.format("%s%s", "&client_types=", params.get("client_types"));
-    if (params.containsKey("after"))
-      parameters += String.format("%s%s", "&after=", params.get("after"));
-    if (params.containsKey("before"))
-      parameters += String.format("%s%s", "&before=", params.get("before"));
+    String[] paramList =
+        new String[] {
+          "statuses",
+          "limit",
+          "created_after",
+          "created_before",
+          "paid_after",
+          "paid_before",
+          "expired_after",
+          "expired_before",
+          "last_invoice_id",
+          "client_types",
+          "payment_channels",
+          "on_demand_link",
+          "recurring_payment_id",
+        };
+    for (int i = 0; i < paramList.length; i++) {
+      String key = paramList[i];
+      if (params.containsKey(key))
+        parameters += String.format("%s%s%s%s", "&", key, "=", params.get(key));
+    }
+
     String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?", parameters);
     return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class);
   }
