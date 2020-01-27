@@ -29,6 +29,14 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get banks with available virtual account service](#get-banks-with-available-virtual-account-service)
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
+  - [Recurring Payment Services](#recurring-payment-services)
+    - [Create a recurring payment](#create-a-recurring-payment)
+    - [Get a recurring payment](#get-a-recurring-payment)
+    - [Edit a recurring payment](#edit-a-recurring-payment)
+    - [Stop a recurring payment](#stop-a-recurring-payment)
+    - [Pause a recurring payment](#pause-a-recurring-payment)
+    - [Resume a recurring payment](#resume-a-recurring-payment)
+    - [List recurring payments by ID](#list-recurring-payments-by-id)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -310,6 +318,90 @@ FixedVirtualAccount fpa = FixedVirtualAccount.getFixedVA("EXAMPLE_ID");
 ```java
 FixedVirtualAccountPayment payment = FixedVirtualAccount.getPayment("EXAMPLE_PAYMENT_ID");
 ```
+
+### Recurring Payment Services
+
+#### Create a recurring payment
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RecurringPayment.create(
+   String externalId,
+   String payerEmail,
+   String interval,
+   Number intervalCount,
+   String description,
+   Number amount
+);
+</pre>
+</td>
+<td>
+<pre>
+RecurringPayment.create(
+   Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String , Object> params = new HashMap<>();
+params.put("external_id", "recurring_31451441");
+params.put("payer_email", "sample_email@xendit.co");
+params.put("interval", "MONTH");
+params.put("interval_count", 1);
+params.put("description", "Test desc");
+params.put("amount", 100000);
+
+RecurringPayment recurringPayment = RecurringPayment.create(params);
+```
+
+#### Get a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.get("5e2dd160f8a4d24146f5974c");
+```
+
+#### Edit a recurring payment
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("amount", 987654);
+params.put("interval", "WEEK");
+
+RecurringPayment recurringPayment = RecurringPayment.edit("5e2dd55ef8a4d24146f59775", params);
+```
+
+#### Stop a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.stop("5e2dd160f8a4d24146f5974c");
+```
+
+#### Pause a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.pause("5e2dd55ef8a4d24146f59775");
+```
+
+#### Resume a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.resume("5e2dd55ef8a4d24146f59775");
+```
+
+#### List recurring payments by ID
+
+```java
+Invoice[] invoices = RecurringPayment.getPaymentsById("5e2dd55ef8a4d24146f59775");
+```
+
+[Back to top](#table-of-contents)
 
 ## Contributing
 
