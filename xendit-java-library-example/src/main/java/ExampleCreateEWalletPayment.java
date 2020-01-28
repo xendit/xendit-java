@@ -9,6 +9,7 @@ public class ExampleCreateEWalletPayment {
             String externalId = "ovo-ewallet";
             Number amount = 4444;
             String phone = "081298498259";
+
             EWalletPayment payment = EWalletPayment.createOvoPayment(externalId, amount, phone);
             System.out.println(payment);
         } catch (XenditException e) {
@@ -28,6 +29,7 @@ public class ExampleCreateEWalletPayment {
             String phone = "081298498259";
             String callbackUrl = "https://yourwebsite.com/callback";
             String redirectUrl = "https://yourwebsite.com/order/123";
+
             EWalletPayment payment = EWalletPayment.createLinkajaPayment(externalId, amount, phone, array, callbackUrl, redirectUrl);
             System.out.println(payment);
         } catch (XenditException e) {
@@ -43,6 +45,7 @@ public class ExampleCreateEWalletPayment {
             String expirationDate = "2020-02-20T00:00:00.000Z";
             String callbackUrl = "https://my-shop.com/callbacks";
             String redirectUrl = "https://my-shop.com/home";
+
             EWalletPayment payment = EWalletPayment.createDanaPayment(externalId, amount, phone, expirationDate, callbackUrl, redirectUrl);
             System.out.println(payment);
         } catch (XenditException e) {
@@ -51,10 +54,8 @@ public class ExampleCreateEWalletPayment {
     }
 
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_O46JfOtygef9kMNsK+ZPGT+ZZ9b3ooF4w3Dn+R1k+2fT/7GlCAN3jg==:";
+        Xendit.apiKey = "xnd_development_...";
         createOvo();
-//        createLinkaja();
-//        createDana();
     }
 }
 

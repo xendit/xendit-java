@@ -9,6 +9,7 @@ public class ExampleGetEWalletPayment {
         try {
             String externalId = "ovo-ewallet";
             EWalletPayment.EWalletType ewalletType = EWalletPayment.EWalletType.OVO;
+            
             EWalletPayment payment = EWalletPayment.getPaymentStatus(externalId, ewalletType);
             System.out.println(payment);
         } catch (XenditException e) {

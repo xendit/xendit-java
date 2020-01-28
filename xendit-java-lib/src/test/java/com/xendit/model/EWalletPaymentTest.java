@@ -39,19 +39,19 @@ public class EWalletPaymentTest {
     EWalletLinkajaItem item2 =
         EWalletLinkajaItem.builder().id("test1").name("Charger").price(20000).quantity(1).build();
     EWalletLinkajaItem[] array = new EWalletLinkajaItem[] {item1, item2};
-
     PARAMS.put("amount", amount);
     PARAMS.put("items", array);
     PARAMS.put("ewallet_type", EWalletPayment.EWalletType.LINKAJA);
     PARAMS.put("callback_url", callbackUrl);
     PARAMS.put("redirect_url", redirectUrl);
+
     when(Xendit.requestClient.request(
             RequestResource.Method.POST, URL, PARAMS, EWalletPayment.class))
         .thenReturn(VALID_PAYMENT);
-
     EWalletPayment result =
         EWalletPayment.createLinkajaPayment(
             TEST_EXTERNAL_ID, amount, TEST_PHONE, array, callbackUrl, redirectUrl);
+
     assertEquals(result, VALID_PAYMENT);
   }
 
@@ -59,10 +59,12 @@ public class EWalletPaymentTest {
   public void createOvoPayment_Success_IfParamsAreValid() throws XenditException {
     PARAMS.put("amount", 4444);
     PARAMS.put("ewallet_type", EWalletPayment.EWalletType.OVO);
+
     when(Xendit.requestClient.request(
             RequestResource.Method.POST, URL, PARAMS, EWalletPayment.class))
         .thenReturn(VALID_PAYMENT);
     EWalletPayment result = EWalletPayment.createOvoPayment(TEST_EXTERNAL_ID, 4444, TEST_PHONE);
+
     assertEquals(result, VALID_PAYMENT);
   }
 
@@ -84,6 +86,7 @@ public class EWalletPaymentTest {
     EWalletPayment result =
         EWalletPayment.createDanaPayment(
             TEST_EXTERNAL_ID, amount, TEST_PHONE, expirationDate, callbackUrl, redirectUrl);
+
     assertEquals(result.getId(), VALID_PAYMENT.getId());
   }
 
@@ -97,10 +100,12 @@ public class EWalletPaymentTest {
             TEST_EXTERNAL_ID,
             "&ewallet_type=",
             EWalletPayment.EWalletType.DANA);
+
     when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, EWalletPayment.class))
         .thenReturn(VALID_PAYMENT);
     EWalletPayment eWalletPayment =
         EWalletPayment.getPaymentStatus(TEST_EXTERNAL_ID, EWalletPayment.EWalletType.DANA);
+
     assertEquals(eWalletPayment, VALID_PAYMENT);
   }
 
@@ -109,8 +114,10 @@ public class EWalletPaymentTest {
     String url =
         String.format(
             "%s%s%s", URL, "/?external_id=fake_id&ewallet_type=", EWalletPayment.EWalletType.DANA);
+
     when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, EWalletPayment.class))
         .thenThrow(new XenditException("Payment not found"));
+
     EWalletPayment.getPaymentStatus("fake_id", EWalletPayment.EWalletType.DANA);
   }
 }
