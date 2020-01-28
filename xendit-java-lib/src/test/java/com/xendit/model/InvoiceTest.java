@@ -44,7 +44,7 @@ public class InvoiceTest {
   }
 
   @Test
-  public void create_Success_IfParamsAreValid() throws Exception {
+  public void create_Success_IfParamsAreValid() throws XenditException {
     when(Xendit.requestClient.request(RequestResource.Method.POST, URL_V2, PARAMS, Invoice.class))
         .thenReturn(VALID_INVOICE);
     Invoice invoice = Invoice.create(TEST_EXTERNAL_ID, TEST_AMOUNT, TEST_EMAIL, TEST_DESC);

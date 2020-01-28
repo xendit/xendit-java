@@ -29,6 +29,10 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get banks with available virtual account service](#get-banks-with-available-virtual-account-service)
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
+  - [Retail Outlet Services](#retail-outlet-services)
+    - [Create fixed payment code](#create-fixed-payment-code)
+    - [Get fixed payment code](#get-fixed-payment-code)
+    - [Update fixed payment code](#update-fixed-payment-code)
   - [Balance Service](#balance-service)
     - [Get balance](#get-balance)
   - [Payout Services](#payout-services)
@@ -78,10 +82,6 @@ public class Example {
 }
 ```
 
-There are some examples provided for you [here](https://github.com/xendit/xendit-java-library/tree/master/xendit-java-library-example/src/main/java).
-
-### Disbursement Services
-
 Example: Create a disbursement
 
 ```java
@@ -113,11 +113,18 @@ public class ExampleCreateDisbursement {
 }
 ```
 
+There are some examples provided for you [here](https://github.com/xendit/xendit-java-library/tree/master/xendit-java-library-example/src/main/java).
+
+### Disbursement Services
+
 #### Create a disbursement
 
 You can choose whether want to put the attributes as parameters or to put in inside a Map object.
 
-```java
+<table>
+<tr>
+<td>
+<pre>
 Disbursement.create(
     String externalId,
     String bankCode,
@@ -129,12 +136,28 @@ Disbursement.create(
     String[] emailCc,
     String[] emailBcc
 );
-```
+</pre>
+</td>
+<td>
+<pre>
+Disbursement.create(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
 
 ```java
-Disbursement.create(
-    Map<String, Object> params
-);
+Map<String, Object> params = new HashMap<>();
+params.put("external_id", "my_external_id");
+params.put("bank_code", "BCA");
+params.put("account_holder_name", "John Doe");
+params.put("account_number", "123456789");
+params.put("description", "My Description");
+params.put("amount", "90000");
+
+Disbursement disbursement = Disbursement.create(params);
 ```
 
 #### Get banks with available disbursement service
@@ -155,55 +178,44 @@ Disbursement disbursement = Disbursement.getByExternalId("EXAMPLE_ID");
 Disbursement disbursement = Disbursement.getById("EXAMPLE_ID");
 ```
 
+[Back to top](#table-of-contents)
+
 ### Invoice services
-
-Example: Create an invoice
-
-```java
-import com.xendit.Xendit;
-import com.xendit.exception.XenditException;
-import com.xendit.model.Invoice;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class ExampleCreateInvoice {
-    public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_...";
-
-        try {
-            Map<String, Object> params = new HashMap<>();
-            params.put("external_id", "my_external_id");
-            params.put("amount", 1800000);
-            params.put("payer_email", "customer@domain.com");
-            params.put("description", "Invoice Demo #123");
-
-            Invoice invoice = Invoice.create(params);
-        } catch (XenditException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
 
 #### Create an invoice
 
 You can choose whether want to put the attributes as parameters or to put in inside a Map object.
 
-```java
+<table>
+<tr>
+<td>
+<pre>
 Invoice.create(
     String externalId,
     Number amount,
     String payerEmail,
     String description
 );
-```
+</pre>
+</td>
+<td>
+<pre>
+Invoice.create(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
 
 ```java
-Invoice.create(
-    Map<String, Object> params
-);
+Map<String, Object> params = new HashMap<>();
+params.put("external_id", "my_external_id");
+params.put("amount", 1800000);
+params.put("payer_email", "customer@domain.com");
+params.put("description", "Invoice Demo #123");
+
+Invoice invoice = Invoice.create(params);
 ```
 
 #### Get an invoice by ID
@@ -228,37 +240,9 @@ Invoice[] invoices = Invoice.getAll(params);
 Invoice invoice = Invoice.expire("EXAMPLE_ID");
 ```
 
+[Back to top](#table-of-contents)
+
 ### Virtual Account Services
-
-Example: Create a opened fixed virtual account
-
-```java
-import com.xendit.Xendit;
-import com.xendit.enums.BankCode;
-import com.xendit.exception.XenditException;
-import com.xendit.model.FixedVirtualAccount;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class ExampleCreateOpenVA {
-    public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_...";
-
-        try {
-            Map<String, Object> openVAMap = new HashMap<>();
-            openVAMap.put("external_id", "my_external_id");
-            openVAMap.put("bank_code", BankCode.BNI.getText());
-            openVAMap.put("name", "John Doe");
-
-            FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(openVAMap);
-        } catch (XenditException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-```
 
 #### Create a fixed virtual account
 
@@ -266,37 +250,60 @@ You can choose whether want to put the attributes as parameters or to put in ins
 
 ##### Closed virtual account
 
-```java
+<table>
+<tr>
+<td>
+<pre>
 FixedVirtualAccount.createClosed(
     String externalId,
     String bankCode,
     String name,
     Long expectedAmount,
-    Map<String, Object> additionalParam
+    Map&lt;String, Object&gt; additionalParam
 );
-```
-
-```java
+</pre>
+</td>
+<td>
+<pre>
 FixedVirtualAccount.createClosed(
-    Map<String, Object> params
+    Map&lt;String, Object&gt; params
 );
-```
+</pre>
+</td>
+</tr>
+</table>
 
 ##### Opened virtual account
 
-```java
+<table>
+<tr>
+<td>
+<pre>
 FixedVirtualAccount.createOpen(
     String externalId,
     String bankCode,
     String name,
-    Map<String, Object> additionalParam
+    Map&lt;String, Object&gt; additionalParam
 );
-```
+</pre>
+</td>
+<td>
+<pre>
+FixedVirtualAccount.createOpen(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
 
 ```java
-FixedVirtualAccount.createOpen(
-    Map<String, Object> params
-);
+Map<String, Object> params = new HashMap<>();
+params.put("external_id", "my_external_id");
+params.put("bank_code", BankCode.BNI.getText());
+params.put("name", "John Doe");
+
+FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(params);
 ```
 
 #### Get banks with available virtual account service
@@ -317,6 +324,87 @@ FixedVirtualAccount fpa = FixedVirtualAccount.getFixedVA("EXAMPLE_ID");
 FixedVirtualAccountPayment payment = FixedVirtualAccount.getPayment("EXAMPLE_PAYMENT_ID");
 ```
 
+[Back to top](#table-of-contents)
+
+### Retail Outlet Services
+
+#### Create fixed payment code
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RetailOutlet.createFixedPaymentCode(
+    String externalId,
+    String retailOutletName,
+    String name,
+    Number expectedAmount
+);
+</pre>
+</td>
+<td>
+<pre>
+RetailOutlet.createFixedPaymentCode(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```
+params.put("external_id", "test");
+params.put("retail_outlet_name", "ALFAMART");
+params.put("name", "Rika Sutanto");
+params.put("expected_amount", 10000);
+
+FixedPaymentCode fpc = RetailOutlet.createFixedPaymentCode(params);
+```
+
+#### Get fixed payment code
+
+```java
+FixedPaymentCode fpc = RetailOutlet.getFixedPaymentCode("EXAMPLE_ID");
+```
+
+#### Update fixed payment code
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RetailOutlet.updateFixedPaymentCode(
+    String id,
+    String name,
+    Number expectedAmount,
+    String expirationDate
+);
+</pre>
+</td>
+<td>
+<pre>
+RetailOutlet.updateFixedPaymentCode(
+    String id,
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("name", "Lorem Ipsum");
+
+FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
+```
+
+[Back to top](#table-of-contents)
+
 ### Balance Service
 
 #### Get balance
@@ -332,6 +420,9 @@ Balance.get(String accountType);
 ```java
 Balance balance = Balance.get("CASH");
 ```
+
+[Back to top](#table-of-contents)
+
 ### Payout Services
 
 #### Create a payout
@@ -377,6 +468,8 @@ Payout payout = Payout.getPayout("EXAMPLE_ID");
 ```java
 Payout payout = Payout.voidPayout("EXAMPLE_ID");
 ```
+
+[Back to top](#table-of-contents)
 
 ## Contributing
 

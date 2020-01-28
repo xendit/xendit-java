@@ -11,13 +11,12 @@ import com.xendit.model.XenditError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class BaseRequest implements NetworkClient {
   private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
@@ -81,11 +80,13 @@ public class BaseRequest implements NetworkClient {
     HttpURLConnection connection = null;
 
     try {
+      allowHttpMethods(method.getText());
+
       connection = createXenditConnection(url, apiKey, jsonParams);
 
       connection.setRequestMethod(method.getText());
 
-      if (method == RequestResource.Method.POST) {
+      if (method == RequestResource.Method.POST || method == RequestResource.Method.PATCH) {
         connection.setDoOutput(true);
         connection.setRequestProperty("Accept-Charset", "utf-8");
         connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
@@ -110,6 +111,27 @@ public class BaseRequest implements NetworkClient {
       if (connection != null) {
         connection.disconnect();
       }
+    }
+  }
+
+  private static void allowHttpMethods(String... methods) {
+    try {
+      Field methodsField = HttpURLConnection.class.getDeclaredField("methods");
+
+      Field modifiersField = Field.class.getDeclaredField("modifiers");
+      modifiersField.setAccessible(true);
+      modifiersField.setInt(methodsField, methodsField.getModifiers() & ~Modifier.FINAL);
+
+      methodsField.setAccessible(true);
+
+      String[] oldMethods = (String[]) methodsField.get(null);
+      Set<String> methodsSet = new LinkedHashSet<>(Arrays.asList(oldMethods));
+      methodsSet.addAll(Arrays.asList(methods));
+      String[] newMethods = methodsSet.toArray(new String[0]);
+
+      methodsField.set(null /*static field*/, newMethods);
+    } catch (NoSuchFieldException | IllegalAccessException e) {
+      throw new IllegalStateException(e);
     }
   }
 
