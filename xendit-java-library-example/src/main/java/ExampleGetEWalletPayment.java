@@ -4,11 +4,11 @@ import com.xendit.model.EWalletPayment;
 
 public class ExampleGetEWalletPayment {
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_O46JfOtygef9kMNsK+ZPGT+ZZ9b3ooF4w3Dn+R1k+2fT/7GlCAN3jg==:";
+        Xendit.apiKey = "xnd_development_...";
 
         try {
             String externalId = "ovo-ewallet";
-            String ewalletType = "OVO";
+            EWalletPayment.EWalletType ewalletType = EWalletPayment.EWalletType.OVO;
             EWalletPayment payment = EWalletPayment.getPaymentStatus(externalId, ewalletType);
             System.out.println(payment);
         } catch (XenditException e) {

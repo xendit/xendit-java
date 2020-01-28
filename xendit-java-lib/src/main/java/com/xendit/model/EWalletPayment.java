@@ -25,6 +25,9 @@ public class EWalletPayment {
   private static final BigInteger MINIMUM_AMOUNT = new BigInteger("1");
   private static final BigInteger MAXIMUM_AMOUNT = new BigInteger("10000000");
 
+  @SerializedName("id")
+  private String id;
+
   @SerializedName("external_id")
   private String externalId;
 
@@ -81,7 +84,7 @@ public class EWalletPayment {
     params.put("ewallet_type", EWalletType.LINKAJA);
     params.put("callback_url", callbackUrl);
     params.put("redirect_url", redirectUrl);
-    return createRequest(params);
+    return createPaymentRequest(params);
   }
 
   /**
@@ -101,7 +104,7 @@ public class EWalletPayment {
     params.put("amount", amount);
     params.put("phone", phone);
     params.put("ewallet_type", EWalletType.OVO);
-    return createRequest(params);
+    return createPaymentRequest(params);
   }
 
   /**
@@ -133,7 +136,7 @@ public class EWalletPayment {
     params.put("callback_url", callbackUrl);
     params.put("redirect_url", redirectUrl);
     params.put("ewallet_type", EWalletType.DANA);
-    return createRequest(params);
+    return createPaymentRequest(params);
   }
 
   /**
@@ -143,7 +146,7 @@ public class EWalletPayment {
    * @return EWalletPayment model.
    * @throws XenditException XenditException
    */
-  public static EWalletPayment getPaymentStatus(String externalId, String ewalletType)
+  public static EWalletPayment getPaymentStatus(String externalId, EWalletType ewalletType)
       throws XenditException {
     String url =
         String.format(
@@ -169,7 +172,8 @@ public class EWalletPayment {
     }
   }
 
-  private static EWalletPayment createRequest(Map<String, Object> params) throws XenditException {
+  private static EWalletPayment createPaymentRequest(Map<String, Object> params)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/ewallets");
     String amount = params.get("amount").toString();
 
