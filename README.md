@@ -33,6 +33,14 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create fixed payment code](#create-fixed-payment-code)
     - [Get fixed payment code](#get-fixed-payment-code)
     - [Update fixed payment code](#update-fixed-payment-code)
+  - [Recurring Payment Services](#recurring-payment-services)
+    - [Create a recurring payment](#create-a-recurring-payment)
+    - [Get a recurring payment](#get-a-recurring-payment)
+    - [Edit a recurring payment](#edit-a-recurring-payment)
+    - [Stop a recurring payment](#stop-a-recurring-payment)
+    - [Pause a recurring payment](#pause-a-recurring-payment)
+    - [Resume a recurring payment](#resume-a-recurring-payment)
+    - [List recurring payments by ID](#list-recurring-payments-by-id)
   - [Balance Service](#balance-service)
     - [Get balance](#get-balance)
   - [Payout Services](#payout-services)
@@ -401,6 +409,90 @@ Map<String, Object> params = new HashMap<>();
 params.put("name", "Lorem Ipsum");
 
 FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
+```
+
+[Back to top](#table-of-contents)
+
+### Recurring Payment Services
+
+#### Create a recurring payment
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RecurringPayment.create(
+   String externalId,
+   String payerEmail,
+   String interval,
+   Number intervalCount,
+   String description,
+   Number amount
+);
+</pre>
+</td>
+<td>
+<pre>
+RecurringPayment.create(
+   Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String , Object> params = new HashMap<>();
+params.put("external_id", "recurring_31451441");
+params.put("payer_email", "sample_email@xendit.co");
+params.put("interval", "MONTH");
+params.put("interval_count", 1);
+params.put("description", "Test desc");
+params.put("amount", 100000);
+
+RecurringPayment recurringPayment = RecurringPayment.create(params);
+```
+
+#### Get a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.get("5e2dd160f8a4d24146f5974c");
+```
+
+#### Edit a recurring payment
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("amount", 987654);
+params.put("interval", "WEEK");
+
+RecurringPayment recurringPayment = RecurringPayment.edit("5e2dd55ef8a4d24146f59775", params);
+```
+
+#### Stop a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.stop("5e2dd160f8a4d24146f5974c");
+```
+
+#### Pause a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.pause("5e2dd55ef8a4d24146f59775");
+```
+
+#### Resume a recurring payment
+
+```java
+RecurringPayment recurringPayment = RecurringPayment.resume("5e2dd55ef8a4d24146f59775");
+```
+
+#### List recurring payments by ID
+
+```java
+Invoice[] invoices = RecurringPayment.getPaymentsById("5e2dd55ef8a4d24146f59775");
 ```
 
 [Back to top](#table-of-contents)
