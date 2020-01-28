@@ -44,7 +44,7 @@ public class InvoiceTest {
   }
 
   @Test
-  public void create_Success_IfParamsAreValid() throws Exception {
+  public void create_Success_IfParamsAreValid() throws XenditException {
     when(Xendit.requestClient.request(RequestResource.Method.POST, URL_V2, PARAMS, Invoice.class))
         .thenReturn(VALID_INVOICE);
     Invoice invoice = Invoice.create(TEST_EXTERNAL_ID, TEST_AMOUNT, TEST_EMAIL, TEST_DESC);
@@ -98,26 +98,20 @@ public class InvoiceTest {
     String statuses = "[\"SETTLED\",\"EXPIRED\"]";
     String clientTypes = "[\"DASHBOARD\",\"API_GATEWAY\"]";
     String lastInvoiceId = "5ca186e407f3b83e34176eac";
-    String after = "2016-02-24T23:48:36.697Z";
-    String before = "2020-02-24T23:48:36.697Z";
 
     Map<String, Object> params = new HashMap<>();
     params.put("limit", limit);
     params.put("statuses", statuses);
     params.put("client_types", clientTypes);
     params.put("last_invoice_id", lastInvoiceId);
-    params.put("after", after);
-    params.put("before", before);
 
     String urlParams =
         String.format(
-            "%s%s%s%s%s%s",
-            String.format("%s%s", "&limit=", limit.toString()),
+            "%s%s%s%s",
             String.format("%s%s", "&statuses=", statuses),
+            String.format("%s%s", "&limit=", limit.toString()),
             String.format("%s%s", "&last_invoice_id=", lastInvoiceId),
-            String.format("%s%s", "&client_types=", clientTypes),
-            String.format("%s%s", "&after=", after),
-            String.format("%s%s", "&before=", before));
+            String.format("%s%s", "&client_types=", clientTypes));
     String url = String.format("%s%s%s", URL_V2, "?", urlParams);
 
     Invoice[] invoiceResult = {VALID_INVOICE};
