@@ -37,6 +37,8 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Pause a recurring payment](#pause-a-recurring-payment)
     - [Resume a recurring payment](#resume-a-recurring-payment)
     - [List recurring payments by ID](#list-recurring-payments-by-id)
+  - [Balance Service](#balance-service)
+    - [Get balance](#get-balance)
   - [Payout Services](#payout-services)
     - [Create a payout](#create-a-payout)
     - [Get a payout by ID](#get-a-payout-by-id)
@@ -406,6 +408,22 @@ Invoice[] invoices = RecurringPayment.getPaymentsById("5e2dd55ef8a4d24146f59775"
 ```
 
 [Back to top](#table-of-contents)
+
+### Balance Service
+
+#### Get balance
+
+The `accountType` parameter is optional.
+
+```java
+Balance.get();
+
+Balance.get(String accountType);
+```
+
+```java
+Balance balance = Balance.get("CASH");
+```
 
 ### Payout Services
 
