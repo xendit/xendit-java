@@ -29,6 +29,8 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get banks with available virtual account service](#get-banks-with-available-virtual-account-service)
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
+  - [Balance Service](#balance-service)
+    - [Get balance](#get-balance)
   - [Payout Services](#payout-services)
     - [Create a payout](#create-a-payout)
     - [Get a payout by ID](#get-a-payout-by-id)
@@ -315,6 +317,21 @@ FixedVirtualAccount fpa = FixedVirtualAccount.getFixedVA("EXAMPLE_ID");
 FixedVirtualAccountPayment payment = FixedVirtualAccount.getPayment("EXAMPLE_PAYMENT_ID");
 ```
 
+### Balance Service
+
+#### Get balance
+
+The `accountType` parameter is optional.
+
+```java
+Balance.get();
+
+Balance.get(String accountType);
+```
+
+```java
+Balance balance = Balance.get("CASH");
+```
 ### Payout Services
 
 #### Create a payout
