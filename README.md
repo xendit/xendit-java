@@ -47,6 +47,11 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create a payout](#create-a-payout)
     - [Get a payout by ID](#get-a-payout-by-id)
     - [Void a payout](#void-a-payout)
+  - [E-Wallet Services](#e-wallet-services)
+    - [Create a Linkaja payment](#create-a-linkaja-payment)
+    - [Create a Dana payment](#create-a-dana-payment)
+    - [Create an OVO payment](#create-an-ovo-payment)
+    - [Get an e-wallet payment](#get-an-e-wallet-payment)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -559,6 +564,52 @@ Payout payout = Payout.getPayout("EXAMPLE_ID");
 
 ```java
 Payout payout = Payout.voidPayout("EXAMPLE_ID");
+```
+
+[Back to top](#table-of-contents)
+
+### E-Wallet Services
+
+#### Create a Linkaja payment
+
+```java
+EWalletPayment.createLinkajaPayment(
+    String externalId,
+    Number amount,
+    String phone,
+    EWalletLinkajaItem[] items,
+    String callbackUrl,
+    String redirectUrl
+);
+```
+
+#### Create a Dana payment
+
+```java
+EWalletPayment.createDanaPayment(
+    String externalId,
+    Number amount,
+    String phone,
+    String expirationDate,
+    String callbackUrl,
+    String redirectUrl
+);
+```
+
+#### Create an OVO payment
+
+```java
+EWalletPayment.createOvoPayment(
+    String externalId,
+    Number amount,
+    String phone
+);
+```
+
+#### Get an e-wallet payment
+
+```java
+EWalletPayment payment = EWalletPayment.getPaymentStatus("ovo-ewallet", EWalletPayment.EWalletType.OVO);
 ```
 
 [Back to top](#table-of-contents)
