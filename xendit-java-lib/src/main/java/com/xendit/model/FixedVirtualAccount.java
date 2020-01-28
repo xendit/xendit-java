@@ -205,6 +205,13 @@ public class FixedVirtualAccount {
         RequestResource.Method.GET, url, null, FixedVirtualAccount.class);
   }
 
+  public static FixedVirtualAccount update(String id, Map<String, Object> params)
+      throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.PATCH, url, params, FixedVirtualAccount.class);
+  }
+
   /**
    * Get VA payment based on its payment ID
    *
