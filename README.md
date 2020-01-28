@@ -33,6 +33,8 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create fixed payment code](#create-fixed-payment-code)
     - [Get fixed payment code](#get-fixed-payment-code)
     - [Update fixed payment code](#update-fixed-payment-code)
+  - [Balance Service](#balance-service)
+    - [Get balance](#get-balance)
   - [Payout Services](#payout-services)
     - [Create a payout](#create-a-payout)
     - [Get a payout by ID](#get-a-payout-by-id)
@@ -399,6 +401,24 @@ Map<String, Object> params = new HashMap<>();
 params.put("name", "Lorem Ipsum");
 
 FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
+```
+
+[Back to top](#table-of-contents)
+
+### Balance Service
+
+#### Get balance
+
+The `accountType` parameter is optional.
+
+```java
+Balance.get();
+
+Balance.get(String accountType);
+```
+
+```java
+Balance balance = Balance.get("CASH");
 ```
 
 [Back to top](#table-of-contents)
