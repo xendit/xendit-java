@@ -12,6 +12,7 @@ public class ExampleUpdateVA {
     try {
       Map<String, Object> params = new HashMap<>();
       params.put("is_single_use", true);
+
       FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.update("5e2fd16370279c782d5f56a3", params);
       System.out.println(fixedVirtualAccount.getIsSingleUse());
     } catch (XenditException e) {
