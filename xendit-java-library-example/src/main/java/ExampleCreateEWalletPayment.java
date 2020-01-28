@@ -22,9 +22,7 @@ public class ExampleCreateEWalletPayment {
                 EWalletLinkajaItem.builder().id("123123").name("Phone Case").price(10000).quantity(1).build();
             EWalletLinkajaItem item1 =
                 EWalletLinkajaItem.builder().id("345678").name("Powerbank").price(200000).quantity(1).build();
-            EWalletLinkajaItem[] array = new EWalletLinkajaItem[2];
-            array[0] = item0;
-            array[1] = item1;
+            EWalletLinkajaItem[] array = new EWalletLinkajaItem[]{item0, item1};
             String externalId = "linkaja-ewallet";
             Number amount = 10000;
             String phone = "081298498259";
