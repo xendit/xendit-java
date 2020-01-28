@@ -35,16 +35,19 @@ public class FixedVirtualAccountTest {
   @Test
   public void createClosed_Success_IfParamsAreValid() throws XenditException {
     PARAMS.put("expected_amount", 200000000);
+
     when(Xendit.requestClient.request(
             RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
         .thenReturn(VALID_ACCOUNT);
     FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.createClosed(PARAMS);
+
     assertEquals(fixedVirtualAccount, VALID_ACCOUNT);
   }
 
   @Test(expected = XenditException.class)
   public void createClosed_ThrowsException_IfParamsAreInvalid() throws XenditException {
     PARAMS.put("expected_amount", 50000000001L);
+
     when(Xendit.requestClient.request(
             RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
         .thenThrow(new XenditException("Maximum amount is 50000000000"));
@@ -57,12 +60,14 @@ public class FixedVirtualAccountTest {
             RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
         .thenReturn(VALID_ACCOUNT);
     FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.createOpen(PARAMS);
+
     assertEquals(fixedVirtualAccount, VALID_ACCOUNT);
   }
 
   @Test(expected = XenditException.class)
   public void createOpen_ThrowsException_IfParamsAreInvalid() throws XenditException {
     PARAMS.put("bank_code", "XYZ");
+
     when(Xendit.requestClient.request(
             RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
         .thenThrow(new XenditException("That bank code is not currently supported"));
@@ -73,25 +78,30 @@ public class FixedVirtualAccountTest {
   public void getAvailableBanks_Success() throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/available_virtual_account_banks");
     AvailableBank[] availableBanks = new AvailableBank[] {};
+
     when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, AvailableBank[].class))
         .thenReturn(availableBanks);
     AvailableBank[] result = FixedVirtualAccount.getAvailableBanks();
+
     assertArrayEquals(availableBanks, result);
   }
 
   @Test
   public void getFixedVA_Success_IfIdIsAvailable() throws XenditException {
     String url = String.format("%s%s%s", URL, "/", TEST_ID);
+
     when(Xendit.requestClient.request(
             RequestResource.Method.GET, url, null, FixedVirtualAccount.class))
         .thenReturn(VALID_ACCOUNT);
     FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.getFixedVA(TEST_ID);
+
     assertEquals(fixedVirtualAccount, VALID_ACCOUNT);
   }
 
   @Test(expected = XenditException.class)
   public void getFixedVA_ThrowsException_IfIdIsAvailable() throws XenditException {
     String url = String.format("%s%s", URL, "/fake_id");
+
     when(Xendit.requestClient.request(
             RequestResource.Method.GET, url, null, FixedVirtualAccount.class))
         .thenThrow(new XenditException("Callback virtual account not found"));
@@ -104,12 +114,13 @@ public class FixedVirtualAccountTest {
         FixedVirtualAccount.builder().id(TEST_ID).isSingleUse(true).build();
     Map<String, Object> params = new HashMap<>();
     params.put("is_single_use", true);
-
     String url = String.format("%s%s%s", URL, "/", TEST_ID);
+
     when(Xendit.requestClient.request(
             RequestResource.Method.PATCH, url, params, FixedVirtualAccount.class))
         .thenReturn(fixedVirtualAccount);
     FixedVirtualAccount result = FixedVirtualAccount.update(TEST_ID, params);
+
     assertEquals(result, fixedVirtualAccount);
   }
 
@@ -117,17 +128,26 @@ public class FixedVirtualAccountTest {
   public void update_ThrowsException_IfIdIsNotAvailable() throws XenditException {
     Map<String, Object> params = new HashMap<>();
     String url = String.format("%s%s", URL, "/fake_id");
+
     when(Xendit.requestClient.request(
             RequestResource.Method.PATCH, url, params, FixedVirtualAccount.class))
         .thenThrow(new XenditException("Could not find callback virtual account"));
     FixedVirtualAccount.update("fake_id", params);
   }
 
-  //  @Test
-  //  public void getPayment_Success_IfIdIsAvailable() throws XenditException {
-  //    String url =
-  //        String.format(
-  //            "%s%s%s", Xendit.getUrl(), "/callback_virtual_account_payments/payment_id=",
-  // paymentId);
-  //  }
+  @Test
+  public void getPayment_Success_IfIdIsAvailable() throws XenditException {
+    FixedVirtualAccountPayment fixedVirtualAccountPayment =
+        FixedVirtualAccountPayment.builder().id("test_id").build();
+    String url =
+        String.format(
+            "%s%s", Xendit.getUrl(), "/callback_virtual_account_payments/payment_id=test_id");
+
+    when(Xendit.requestClient.request(
+            RequestResource.Method.GET, url, null, FixedVirtualAccountPayment.class))
+        .thenReturn(fixedVirtualAccountPayment);
+    FixedVirtualAccountPayment result = FixedVirtualAccount.getPayment("test_id");
+
+    assertEquals(result, fixedVirtualAccountPayment);
+  }
 }
