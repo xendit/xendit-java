@@ -26,6 +26,7 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create a fixed virtual account](#create-a-fixed-virtual-account)
       - [Closed virtual account](#closed-virtual-account)
       - [Opened virtual account](#opened-virtual-account)
+    - [Update a fixed virtual account by ID](#update-a-fixed-virtual-account-by-id)
     - [Get banks with available virtual account service](#get-banks-with-available-virtual-account-service)
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
@@ -317,6 +318,15 @@ params.put("bank_code", BankCode.BNI.getText());
 params.put("name", "John Doe");
 
 FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(params);
+```
+
+#### Update a fixed virtual account by ID
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("is_single_use", true);
+
+FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.update("EXAMPLE_ID", params);
 ```
 
 #### Get banks with available virtual account service

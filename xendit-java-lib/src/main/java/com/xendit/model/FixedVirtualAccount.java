@@ -8,9 +8,11 @@ import com.xendit.network.RequestResource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 public class FixedVirtualAccount {
@@ -203,6 +205,21 @@ public class FixedVirtualAccount {
     String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
     return Xendit.requestClient.request(
         RequestResource.Method.GET, url, null, FixedVirtualAccount.class);
+  }
+
+  /**
+   * Update fixed VA based on its ID
+   *
+   * @param id ID of the fixed virtual account to update
+   * @param params listed here https://xendit.github.io/apireference/#update-fixed-virtual-account
+   * @return FixedVirtualAccount
+   * @throws XenditException XenditException
+   */
+  public static FixedVirtualAccount update(String id, Map<String, Object> params)
+      throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.PATCH, url, params, FixedVirtualAccount.class);
   }
 
   /**
