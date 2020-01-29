@@ -130,4 +130,23 @@ public class CreditCard {
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, params, CreditCardReverseAuth.class);
   }
+
+  /**
+   * Capture a charge by charge ID
+   *
+   * @param chargeId Charge ID of authorization
+   * @param amount Amount to be captured. Can be up to amount of authorization but not more
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge captureCharge(String chargeId, Number amount)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("amount", amount);
+    String url =
+        String.format("%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", chargeId, "/capture");
+
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+  }
 }
