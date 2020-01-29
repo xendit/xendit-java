@@ -43,4 +43,14 @@ public class CreditCardEnum {
     PROCESSOR_ERROR,
     BIN_BLOCK
   }
+
+  public enum RefundStatus {
+    SUCCEEDED,
+    FAILED
+  }
+
+  public enum RefundFailureReason {
+    INSUFFICIENT_BALANCE,
+    REFUND_FAILED
+  }
 }

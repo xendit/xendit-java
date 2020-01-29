@@ -162,4 +162,25 @@ public class CreditCard {
     return Xendit.requestClient.request(
         RequestResource.Method.GET, url, null, CreditCardCharge.class);
   }
+
+  /**
+   * Create a refund
+   *
+   * @param id Charge ID of the payment that will be refunded
+   * @param amount The amount to be refunded
+   * @param externalId A unique identifier of your choice. Max 64 characters.
+   * @return CreditCardRefund
+   * @throws XenditException XenditException
+   */
+  public static CreditCardRefund createRefund(String id, Number amount, String externalId)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("amount", amount);
+    params.put("external_id", externalId);
+    String url =
+        String.format("%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", id, "/refunds");
+
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, params, CreditCardRefund.class);
+  }
 }
