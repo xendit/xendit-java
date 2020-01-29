@@ -636,7 +636,7 @@ CreditCardCharge.createAuthorization(
     String externalId,
     Number amount,
     String authenticationId,
-    String cardCvn,
+    String cardCVN,
     Boolean capture
 );
 </pre>
@@ -668,7 +668,7 @@ CreditCardCharge.createCharge(
     String externalId,
     Number amount,
     String authenticationId,
-    String cardCvn,
+    String cardCVN,
     String descriptor
 );
 </pre>

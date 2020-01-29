@@ -8,7 +8,7 @@ public class ExampleCreateAuthorizationCard {
     Xendit.apiKey = "xnd_development_...";
 
     try {
-      CreditCardCharge creditCardCharge = CreditCard.createAuthorization("...", "test_id", 75000, "...", "123", false);
+      CreditCardCharge creditCardCharge = CreditCard.createAuthorization("token_id", "external_id", 75000, "auth_id", "123", false);
       System.out.println(creditCardCharge.getId());
     } catch (XenditException e) {
       e.printStackTrace();

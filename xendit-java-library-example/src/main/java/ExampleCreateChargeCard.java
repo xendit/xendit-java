@@ -8,7 +8,7 @@ public class ExampleCreateChargeCard {
     Xendit.apiKey = "xnd_development_...";
 
     try {
-      CreditCardCharge creditCardCharge = CreditCard.createCharge("...", "test_id", 75000, "...", "123", "lorem ipsum");
+      CreditCardCharge creditCardCharge = CreditCard.createCharge("token_id", "external_id", 75000, "auth_id", "123", "lorem ipsum");
       System.out.println(creditCardCharge.getId());
     } catch (XenditException e) {
       e.printStackTrace();
