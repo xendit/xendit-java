@@ -32,16 +32,7 @@ public class BalanceTest {
     String url = String.format("%s%s", URL, "?account_type=CASH");
     when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Balance.class))
         .thenReturn(VALID_BALANCE);
-    Balance balance = Balance.get("CASH");
+    Balance balance = Balance.get(Balance.AccountType.CASH);
     assertEquals(balance, VALID_BALANCE);
-  }
-
-  @Test(expected = XenditException.class)
-  public void get_ThrowsException_IfParamIsInvalid() throws XenditException {
-    String url = String.format("%s%s", URL, "?account_type=WRONG_TYPE");
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Balance.class))
-        .thenThrow(
-            new XenditException("There was an error with the format submitted to the server."));
-    Balance.get("WRONG_TYPE");
   }
 }
