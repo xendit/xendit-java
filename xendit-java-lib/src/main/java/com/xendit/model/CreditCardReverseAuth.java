@@ -10,32 +10,32 @@ import lombok.Setter;
 @Setter
 public class CreditCardReverseAuth {
   @SerializedName("id")
-  private static String id;
+  private String id;
 
   @SerializedName("external_id")
-  private static String externalId;
+  private String externalId;
 
   @SerializedName("business_id")
-  private static String businessId;
+  private String businessId;
 
   @SerializedName("merchant_reference_code")
-  private static String merchantReferenceCode;
+  private String merchantReferenceCode;
 
   @SerializedName("masked_card_number")
-  private static String maskedCardNumber;
+  private String maskedCardNumber;
 
   @SerializedName("charge_type")
-  private static CreditCardEnum.ChargeType chargeType;
+  private CreditCardEnum.ChargeType chargeType;
 
   @SerializedName("card_brand")
-  private static String cardBrand;
+  private String cardBrand;
 
   @SerializedName("authorized_amount")
-  private static String authorizedAmount;
+  private String authorizedAmount;
 
   @SerializedName("status")
-  private static CreditCardEnum.ChargeStatus status;
+  private CreditCardEnum.ChargeStatus status;
 
   @SerializedName("created")
-  private static String created;
+  private String created;
 }

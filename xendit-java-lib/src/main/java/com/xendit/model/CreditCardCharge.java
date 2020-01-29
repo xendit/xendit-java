@@ -10,53 +10,53 @@ import lombok.Setter;
 @Setter
 public class CreditCardCharge {
   @SerializedName("id")
-  private static String id;
+  private String id;
 
   @SerializedName("external_id")
-  private static String externalId;
+  private String externalId;
 
   @SerializedName("created")
-  private static String created;
+  private String created;
 
   @SerializedName("status")
-  private static CreditCardEnum.ChargeStatus status;
+  private CreditCardEnum.ChargeStatus status;
 
   @SerializedName("business_id")
-  private static String businessId;
+  private String businessId;
 
   @SerializedName("authorized_amount")
-  private static Number authorizedAmount;
+  private Number authorizedAmount;
 
   @SerializedName("merchant_id")
-  private static String merchantId;
+  private String merchantId;
 
   @SerializedName("merchant_reference_code")
-  private static String merchantReferenceCode;
+  private String merchantReferenceCode;
 
   @SerializedName("card_type")
-  private static CreditCardEnum.CardType cardType;
+  private CreditCardEnum.CardType cardType;
 
   @SerializedName("masked_card_number")
-  private static String maskedCardNumber;
+  private String maskedCardNumber;
 
   @SerializedName("charge_type")
-  private static CreditCardEnum.ChargeType chargeType;
+  private CreditCardEnum.ChargeType chargeType;
 
   @SerializedName("card_brand")
-  private static String cardBrand;
+  private String cardBrand;
 
   @SerializedName("bank_reconciliation_id")
-  private static String bankReconciliationId;
+  private String bankReconciliationId;
 
   @SerializedName("eci")
-  private static CreditCardEnum.EciCode eci;
+  private CreditCardEnum.EciCode eci;
 
   @SerializedName("capture_amount")
-  private static Number captureAmount;
+  private Number captureAmount;
 
   @SerializedName("descriptor")
-  private static String descriptor;
+  private String descriptor;
 
   @SerializedName("failure_reason")
-  private static CreditCardEnum.FailureReason failureReason;
+  private CreditCardEnum.FailureReason failureReason;
 }
