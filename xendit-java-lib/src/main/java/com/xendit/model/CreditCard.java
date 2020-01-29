@@ -64,6 +64,55 @@ public class CreditCard {
   }
 
   /**
+   * Create charge with given parameters
+   *
+   * @param tokenId The token ID used to charge the card.
+   * @param externalId A unique identifier of your choice. Max 64 characters.
+   * @param amount The charge amount
+   * @param authenticationId Authentication ID for authenticating charge. Optional only if charge
+   *     was already authenticated with a single-use token, or if optional authentication is enabled
+   *     for your account.
+   * @param cardCvn 3 or 4 digit CVN (CVC) code. Optional but highly recommended. Required for cards
+   *     issued in Europe.
+   * @param descriptor Spesific descriptor to define merchant's identity
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge createCharge(
+      String tokenId,
+      String externalId,
+      Number amount,
+      String authenticationId,
+      String cardCvn,
+      String descriptor)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("token_id", tokenId);
+    params.put("external_id", externalId);
+    params.put("amount", amount);
+    params.put("authentication_id", authenticationId);
+    params.put("card_cvn", cardCvn);
+    params.put("descriptor", descriptor);
+    String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
+
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+  }
+
+  /**
+   * Create charge with parameters in a HashMap
+   *
+   * @param params listed here https://xendit.github.io/apireference/#create-charge
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge createCharge(Map<String, Object> params) throws XenditException {
+    String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+  }
+
+  /**
    * Reverse authorization by external ID
    *
    * @param externalId Charge reference
