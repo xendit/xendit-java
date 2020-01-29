@@ -52,6 +52,13 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create a Dana payment](#create-a-dana-payment)
     - [Create an OVO payment](#create-an-ovo-payment)
     - [Get an e-wallet payment](#get-an-e-wallet-payment)
+  - [Credit Card Services](#credit-card-services)
+    - [Create an authorization](#create-an-authorization)
+    - [Create a charge](#create-a-charge)
+    - [Reverse an authorization](#reverse-an-authorization)
+    - [Capture a charge](#capture-a-charge)
+    - [Get a charge by ID](#get-a-charge-by-id)
+    - [Create a refund](#create-a-refund)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -610,6 +617,104 @@ EWalletPayment.createOvoPayment(
 
 ```java
 EWalletPayment payment = EWalletPayment.getPaymentStatus("ovo-ewallet", EWalletPayment.EWalletType.OVO);
+```
+
+[Back to top](#table-of-contents)
+
+### Credit Card Services
+
+#### Create an authorization
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+CreditCardCharge.createAuthorization(
+    String tokenId,
+    String externalId,
+    Number amount,
+    String authenticationId,
+    String cardCvn,
+    Boolean capture
+);
+</pre>
+</td>
+<td>
+<pre>
+CreditCardCharge.createAuthorization(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+CreditCardCharge creditCardCharge = CreditCard.createAuthorization("...", "test_id", 75000, "...", "123", false);
+```
+
+#### Create a charge
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+CreditCardCharge.createCharge(
+    String tokenId,
+    String externalId,
+    Number amount,
+    String authenticationId,
+    String cardCvn,
+    String descriptor
+);
+</pre>
+</td>
+<td>
+<pre>
+CreditCardCharge.createCharge(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+CreditCardCharge creditCardCharge = CreditCard.createCharge("...", "test_id", 75000, "...", "123", "lorem ipsum");
+```
+
+#### Reverse an authorization
+
+```java
+CreditCard.reverseAuthorization(String chargeId, String externalId);
+
+CreditCardReverseAuth creditCardReverseAuth = CreditCard.reverseAuthorization("1234567", "external_id");
+```
+
+#### Capture a charge
+
+```java
+CreditCard.captureCharge(String chargeId, Number amount);
+
+CreditCardCharge creditCardCharge = CreditCard.captureCharge("12345678", 55000);
+```
+
+#### Get a charge by ID
+
+```java
+CreditCardCharge creditCardCharge = CreditCard.getCharge("1234567");
+```
+
+#### Create a refund
+
+```java
+CreditCard.createRefund(String id, Number amount, String externalId);
+
+CreditCardRefund creditCardRefund = CreditCard.createRefund("1234567", 50000, "external_id");
 ```
 
 [Back to top](#table-of-contents)
