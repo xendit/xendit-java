@@ -149,4 +149,17 @@ public class CreditCard {
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, params, CreditCardCharge.class);
   }
+
+  /**
+   * Get a charge by ID
+   *
+   * @param id Charge ID of the payment that have been authorized
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge getCharge(String id) throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/credit_card_charges/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, null, CreditCardCharge.class);
+  }
 }
