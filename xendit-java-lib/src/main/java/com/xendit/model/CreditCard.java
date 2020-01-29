@@ -22,7 +22,7 @@ public class CreditCard {
    * @param authenticationId Authentication ID for authenticating charge. Optional only if charge
    *     was already authenticated with a single-use token, or if optional authentication is enabled
    *     for your account.
-   * @param cardCvn 3 or 4 digit CVN (CVC) code. Optional but highly recommended. Required for cards
+   * @param cardCVN 3 or 4 digit CVN (CVC) code. Optional but highly recommended. Required for cards
    *     issued in Europe.
    * @param capture Whether or not to capture immediately.
    * @return CreditCardCharge
@@ -33,7 +33,7 @@ public class CreditCard {
       String externalId,
       Number amount,
       String authenticationId,
-      String cardCvn,
+      String cardCVN,
       Boolean capture)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
@@ -41,7 +41,7 @@ public class CreditCard {
     params.put("external_id", externalId);
     params.put("amount", amount);
     params.put("authentication_id", authenticationId);
-    params.put("card_cvn", cardCvn);
+    params.put("card_cvn", cardCVN);
     params.put("capture", capture);
     String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
 
@@ -72,7 +72,7 @@ public class CreditCard {
    * @param authenticationId Authentication ID for authenticating charge. Optional only if charge
    *     was already authenticated with a single-use token, or if optional authentication is enabled
    *     for your account.
-   * @param cardCvn 3 or 4 digit CVN (CVC) code. Optional but highly recommended. Required for cards
+   * @param cardCVN 3 or 4 digit CVN (CVC) code. Optional but highly recommended. Required for cards
    *     issued in Europe.
    * @param descriptor Spesific descriptor to define merchant's identity
    * @return CreditCardCharge
@@ -83,7 +83,7 @@ public class CreditCard {
       String externalId,
       Number amount,
       String authenticationId,
-      String cardCvn,
+      String cardCVN,
       String descriptor)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
@@ -91,7 +91,7 @@ public class CreditCard {
     params.put("external_id", externalId);
     params.put("amount", amount);
     params.put("authentication_id", authenticationId);
-    params.put("card_cvn", cardCvn);
+    params.put("card_cvn", cardCVN);
     params.put("descriptor", descriptor);
     String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
 
