@@ -60,6 +60,10 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Capture a charge](#capture-a-charge)
     - [Get a charge by ID](#get-a-charge-by-id)
     - [Create a refund](#create-a-refund)
+  - [Batch Disbursement Services](#batch-disbursement-services)
+    - [Batch Disbursement Item](#batch-disbursement-item)
+    - [Create a batch disbursement](#create-a-batch-disbursement)
+    - [Get banks with available disbursement service](#get-banks-with-available-disbursement-service-1)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -725,6 +729,42 @@ CreditCardCharge creditCardCharge = CreditCard.getCharge("1234567");
 CreditCard.createRefund(String id, Number amount, String externalId);
 
 CreditCardRefund creditCardRefund = CreditCard.createRefund("1234567", 50000, "external_id");
+```
+
+[Back to top](#table-of-contents)
+
+### Batch Disbursement Services
+
+#### Batch Disbursement Item
+
+```java
+BatchDisbursementItem item =
+    BatchDisbursementItem.builder()
+        .amount(10000)
+        .bankCode("ABC")
+        .bankAccountName("Lorem Ipsum")
+        .bankAccountNumber("1234567890")
+        .description("Lorem ipsum dolor sit amet")
+        .externalId("test_id")
+        .emailTo(["email1", "email2"])
+        .emailCC(["email1", "email2"])
+        .emailBcc(["email1", "email2"])
+        .build();
+```
+
+#### Create a batch disbursement
+
+```java
+BatchDisbursement.create(
+    String reference,
+    BatchDisbursementItem[] disbursements
+);
+```
+
+#### Get banks with available disbursement service
+
+```java
+AvailableBank[] banks = BatchDisbursement.getAvailableBanks();
 ```
 
 [Back to top](#table-of-contents)
