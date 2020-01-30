@@ -23,4 +23,7 @@ public class CardlessCreditItem {
 
   @SerializedName("url")
   private String url;
+
+  @SerializedName("quantity")
+  private Number quantity;
 }

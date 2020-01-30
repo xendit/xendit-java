@@ -40,13 +40,17 @@ public class CardlessCredit {
     PaymentType(String val) {
       this.val = val;
     }
+
+    public String getVal() {
+      return this.val;
+    }
   }
 
   public static CardlessCredit create(
       String cardlessCreditType,
       String externalId,
       Number amount,
-      PaymentType paymentType,
+      String paymentType,
       CardlessCreditItem[] items,
       CardlessCreditCustomer customerDetails,
       CardlessCreditShippingAddress shippingAddress,
@@ -65,6 +69,12 @@ public class CardlessCredit {
     params.put("callback_url", callbackUrl);
     String url = String.format("%s%s", Xendit.getUrl(), "/cardless-credit");
 
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, params, CardlessCredit.class);
+  }
+
+  public static CardlessCredit create(Map<String, Object> params) throws XenditException {
+    String url = String.format("%s%s", Xendit.getUrl(), "/cardless-credit");
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, params, CardlessCredit.class);
   }
