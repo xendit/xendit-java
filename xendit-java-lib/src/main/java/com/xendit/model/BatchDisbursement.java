@@ -51,4 +51,16 @@ public class BatchDisbursement {
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, params, BatchDisbursement.class);
   }
+
+  /**
+   * Get disbursement available bank
+   *
+   * @return AvailableBank[]
+   * @throws XenditException XenditException
+   */
+  public static AvailableBank[] getAvailableBanks() throws XenditException {
+    String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, null, AvailableBank[].class);
+  }
 }
