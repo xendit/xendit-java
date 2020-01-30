@@ -8,9 +8,11 @@ import com.xendit.network.RequestResource;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 public class Disbursement {
