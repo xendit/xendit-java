@@ -61,9 +61,14 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get a charge by ID](#get-a-charge-by-id)
     - [Create a refund](#create-a-refund)
   - [Batch Disbursement Services](#batch-disbursement-services)
-    - [Batch Disbursement Item](#batch-disbursement-item)
+    - [Batch disbursement item](#batch-disbursement-item)
     - [Create a batch disbursement](#create-a-batch-disbursement)
     - [Get banks with available disbursement service](#get-banks-with-available-disbursement-service-1)
+  - [Cardless Credit Services](#cardless-credit-services)
+    - [Cardless credit item](#cardless-credit-item)
+    - [Cardless credit customer details](#cardless-credit-customer-details)
+    - [Cardless credit shipping address](#cardless-credit-shipping-address)
+    - [Create a cardless credit payment](#create-a-cardless-credit-payment)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Precommit](#precommit)
@@ -95,7 +100,7 @@ compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 More information: https://bintray.com/xendit/android/xendit-java-lib
 
 ## Usage
-You need to use secret API key in order to use functionality in this library. The key can be obtained from your [Xendit Dasboard](https://dashboard.xendit.co/settings/developers#api-keys).
+You need to use secret API key in order to use functionality in this library. The key can be obtained from your [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
 
 ```java
 import com.xendit.Xendit;
@@ -735,7 +740,7 @@ CreditCardRefund creditCardRefund = CreditCard.createRefund("1234567", 50000, "e
 
 ### Batch Disbursement Services
 
-#### Batch Disbursement Item
+#### Batch disbursement item
 
 ```java
 BatchDisbursementItem item =
@@ -765,6 +770,96 @@ BatchDisbursement.create(
 
 ```java
 AvailableBank[] banks = BatchDisbursement.getAvailableBanks();
+```
+
+[Back to top](#table-of-contents)
+
+### Cardless Credit Services
+
+#### Cardless credit item
+
+```java
+CardlessCreditItem item =
+    CardlessCreditItem.builder()
+        .id("123")
+        .name("Phone Case")
+        .price(200000)
+        .type("Smartphone")
+        .url("https://www.example.org")
+        .quantity(1)
+        .build();
+```
+
+#### Cardless credit customer details
+
+```java
+CardlessCreditCustomer customer =
+    CardlessCreditCustomer.builder()
+        .firstName("Lorem")
+        .lastName("Ipsum")
+        .email("email@example.com")
+        .phone("08129748247684")
+        .build();
+```
+
+#### Cardless credit shipping address
+
+```java
+CardlessCreditShippingAddress address =
+    CardlessCreditShippingAddress.builder()
+        .firstName("Lorem")
+        .lastName("Ipsum")
+        .address("Jalan teknologi")
+        .city("Jakarta")
+        .postalCode("12345")
+        .countryCode("IDN")
+        .phone("08129748247684")
+        .build();
+```
+
+#### Create a cardless credit payment
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+CardlessCredit.create(
+    String cardlessCreditType,
+    String externalId,
+    Number amount,
+    String paymentType,
+    CardlessCreditItem[] items,
+    CardlessCreditCustomer customerDetails,
+    CardlessCreditShippingAddress shippingAddress,
+    String redirectUrl,
+    String callbackUrl
+);
+</pre>
+</td>
+<td>
+<pre>
+CardlessCredit.create(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+CardlessCredit cardlessCredit = CardlessCredit.create(
+    "KREDIVO",
+    "external_id",
+    200000,
+    CardlessCredit.PaymentType.THREE_MONTHS.getVal(),
+    items,
+    customer,
+    address,
+    "www.example.com",
+    "www.example.com"
+);
 ```
 
 [Back to top](#table-of-contents)
