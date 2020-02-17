@@ -76,3 +76,6 @@ build/
 local.properties
 
 .DS_Store
+
+#VS Code Configuration
+.vscode
