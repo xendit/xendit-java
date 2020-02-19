@@ -79,3 +79,6 @@ local.properties
 
 #VS Code Configuration
 .vscode
+
+#Bin
+bin
