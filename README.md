@@ -84,18 +84,64 @@ Please check [Xendit API Reference](https://xendit.github.io/apireference/).
 JDK 1.7 or later.
 
 ## Installation
-Maven:
+####Maven
+
+Add this line of code in your `pom.xml`
 ```
 <dependency>
   <groupId>com.xendit</groupId>
   <artifactId>xendit-java-lib</artifactId>
   <version>SELECTED_VERSION</version>
-  <type>pom</type>
 </dependency>
+
+<repositories>
+  <repository>
+    <snapshots>
+      <enabled>
+        false
+      </enabled>
+    </snapshots>
+    <id>
+      bintray-xendit-android
+    </id>
+    <name>
+      bintray
+    </name>
+    <url>
+      https://dl.bintray.com/xendit/android
+    </url>
+  </repository>
+</repositories>
+<pluginRepositories>
+  <pluginRepository>
+    <snapshots>
+      <enabled>
+        false
+      </enabled>
+    </snapshots>
+    <id>
+      bintray-xendit-android
+    </id>
+    <name>
+      bintray-plugins
+    </name>
+    <url>
+      https://dl.bintray.com/xendit/android
+    </url>
+  </pluginRepository>
+</pluginRepositories>
 ```
 
-Gradle:
+####Gradle
+Add this line in your gradle build
 ```
+...
+repositories {
+	maven {
+		url  "https://dl.bintray.com/xendit/android"
+	}
+}
+...
 compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 ```
 
