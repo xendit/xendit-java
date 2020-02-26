@@ -84,7 +84,7 @@ Please check [Xendit API Reference](https://xendit.github.io/apireference/).
 JDK 1.7 or later.
 
 ## Installation
-####Maven
+#### Maven
 
 Add these lines of code in your `pom.xml`
 ```
@@ -132,7 +132,7 @@ Add these lines of code in your `pom.xml`
 </pluginRepositories>
 ```
 
-####Gradle
+#### Gradle
 
 Add these lines in your `build.gradle`
 ```
