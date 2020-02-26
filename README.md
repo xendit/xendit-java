@@ -914,6 +914,7 @@ CardlessCredit cardlessCredit = CardlessCredit.create(
 [Back to top](#table-of-contents)
 
 ## Contributing
+You can go to the [contributing guidelines](https://github.com/xendit/xendit-java/blob/master/CONTRIBUTING.md) to learn on how to contribute this project.
 
 ### Tests
 
