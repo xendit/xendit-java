@@ -86,7 +86,7 @@ JDK 1.7 or later.
 ## Installation
 ####Maven
 
-Add this line of code in your `pom.xml`
+Add these lines of code in your `pom.xml`
 ```
 <dependency>
   <groupId>com.xendit</groupId>
@@ -134,7 +134,7 @@ Add this line of code in your `pom.xml`
 
 ####Gradle
 
-Add this line in your `build.gradle`
+Add these lines in your `build.gradle`
 ```
 ...
 repositories {
