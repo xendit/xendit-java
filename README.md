@@ -133,7 +133,8 @@ Add this line of code in your `pom.xml`
 ```
 
 ####Gradle
-Add this line in your gradle build
+
+Add this line in your `build.gradle`
 ```
 ...
 repositories {
