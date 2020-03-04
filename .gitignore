@@ -79,3 +79,8 @@ local.properties
 
 #VS Code Configuration
 .vscode
+
+.classpath
+.project
+bin/
+.settings/
