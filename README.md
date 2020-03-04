@@ -1,5 +1,7 @@
 # Xendit Java Library
 
+[ ![Download from JCenter](https://api.bintray.com/packages/xendit/android/xendit-java-lib/images/download.svg?) ](https://bintray.com/xendit/android/xendit-java-lib/latest/link)
+
 This library is the abstraction of Xendit API for access from applications written with Java.
 
 ## Table of Contents
@@ -82,18 +84,65 @@ Please check [Xendit API Reference](https://xendit.github.io/apireference/).
 JDK 1.7 or later.
 
 ## Installation
-Maven:
+#### Maven
+
+Add these lines of code in your `pom.xml`
 ```
 <dependency>
   <groupId>com.xendit</groupId>
   <artifactId>xendit-java-lib</artifactId>
   <version>SELECTED_VERSION</version>
-  <type>pom</type>
 </dependency>
+
+<repositories>
+  <repository>
+    <snapshots>
+      <enabled>
+        false
+      </enabled>
+    </snapshots>
+    <id>
+      bintray-xendit-android
+    </id>
+    <name>
+      bintray
+    </name>
+    <url>
+      https://dl.bintray.com/xendit/android
+    </url>
+  </repository>
+</repositories>
+<pluginRepositories>
+  <pluginRepository>
+    <snapshots>
+      <enabled>
+        false
+      </enabled>
+    </snapshots>
+    <id>
+      bintray-xendit-android
+    </id>
+    <name>
+      bintray-plugins
+    </name>
+    <url>
+      https://dl.bintray.com/xendit/android
+    </url>
+  </pluginRepository>
+</pluginRepositories>
 ```
 
-Gradle:
+#### Gradle
+
+Add these lines in your `build.gradle`
 ```
+...
+repositories {
+	maven {
+		url  "https://dl.bintray.com/xendit/android"
+	}
+}
+...
 compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 ```
 
@@ -865,6 +914,7 @@ CardlessCredit cardlessCredit = CardlessCredit.create(
 [Back to top](#table-of-contents)
 
 ## Contributing
+You can go to the [contributing guidelines](https://github.com/xendit/xendit-java/blob/master/CONTRIBUTING.md) to learn on how to contribute this project.
 
 ### Tests
 

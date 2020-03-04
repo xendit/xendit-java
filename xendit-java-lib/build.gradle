@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'com.xendit'
-version '1.4.0'
+version '1.5.1'
 
 sourceCompatibility = 1.8
 
@@ -31,39 +31,41 @@ dependencies {
     testImplementation group: "org.mockito", name: "mockito-core", version:"3.1.0"
 }
 
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                groupId this.group
-                artifactId artifact
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
 
-                // Add your description here
-                name libraryName
-                description libraryDescription
-                url siteUrl
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId this.group
+            artifactId artifact
 
-                // Set your license
+            from components.java
+            artifact sourceJar {
+                classifier "sources"
+            }
+            pom {
+                name = libraryName
+                description = libraryDescription
+                url = siteUrl
                 licenses {
                     license {
-                        name licenseName
-                        url licenseUrl
+                        name = licenseName
+                        url = licenseUrl
                     }
                 }
                 developers {
                     developer {
-                        id developerId
-                        name developerName
-                        email developerEmail
+                        id = developerId
+                        name = developerName
+                        email = developerEmail
                     }
                 }
                 scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-
+                    connection = gitUrl
+                    developerConnection = gitUrl
+                    url = siteUrl
                 }
             }
         }
