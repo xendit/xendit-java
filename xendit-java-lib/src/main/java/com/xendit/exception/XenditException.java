@@ -15,4 +15,12 @@ public class XenditException extends Exception {
     this.code = code;
     this.context = context;
   }
+
+  public String getErrorCode() {
+    return this.code;
+  }
+
+  public Map<String, Object> getContext() {
+    return this.context;
+  }
 }

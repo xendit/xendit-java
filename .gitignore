@@ -93,6 +93,13 @@ fabric.properties
 .vscode
 
 
+#VS Code Configuration
+.vscode
+
+.classpath
+.project
+bin/
+.settings/
 ##############################
 ## OS X
 ##############################
