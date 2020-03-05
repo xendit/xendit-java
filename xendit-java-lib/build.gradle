@@ -72,11 +72,13 @@ publishing {
     }
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def bintrayUser = System.getenv('BINTRAY_USER')
+def bintrayAPIKey = System.getenv('BINTRAY_API_KEY')
+def bintrayGPGPassword = System.getenv('BINTRAY_GPG_PASSWORD')
+
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    user = bintrayUser
+    key = bintrayAPIKey
 
     configurations = ['archives']
     publish = true
@@ -94,7 +96,7 @@ bintray {
             desc = libraryDescription
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase = properties.getProperty("bintray.gpg.password")
+                passphrase = bintrayGPGPassword
                 //Optional. The passphrase for GPG signing'
             }
         }
