@@ -16,8 +16,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FixedVirtualAccount {
-  private static final Long MINIMUM_AMOUNT = 10000L;
-  private static final Long MAXIMUM_AMOUNT = 50000000000L;
 
   @SerializedName("id")
   private String id;
@@ -247,35 +245,7 @@ public class FixedVirtualAccount {
       throw new ParamException("Suggested amount is not supported for closed VA");
     }
 
-    if (params.containsKey("expected_amount")) {
-      String expectedAmount = params.get("expected_amount").toString();
-
-      amountValidation(expectedAmount);
-    }
-
-    if (params.containsKey("suggested_amount")) {
-      String suggestedAmount = params.get("suggested_amount").toString();
-
-      amountValidation(suggestedAmount);
-    }
-
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, params, FixedVirtualAccount.class);
-  }
-
-  private static void amountValidation(String amount) throws ParamException {
-    try {
-      Long longAmount = new Long(amount);
-
-      if (longAmount < MINIMUM_AMOUNT) {
-        throw new ParamException(String.format("Minimum amount is %s", MINIMUM_AMOUNT));
-      }
-
-      if (longAmount > MAXIMUM_AMOUNT) {
-        throw new ParamException(String.format("Maximum amount is %s", MAXIMUM_AMOUNT));
-      }
-    } catch (NumberFormatException e) {
-      throw new ParamException("Invalid amount format");
-    }
   }
 }
