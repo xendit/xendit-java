@@ -72,7 +72,20 @@ public class FixedVirtualAccount {
    */
   public static FixedVirtualAccount createClosed(Map<String, Object> params)
       throws XenditException {
-    return create(params, true);
+    return create(new HashMap<>(), params, true);
+  }
+
+  /**
+   * Create closed VA with complete object
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
+   * @return FixedVirtualAccount model.
+   * @throws XenditException
+   */
+  public static FixedVirtualAccount createClosed(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
+    return create(headers, params, true);
   }
 
   /**
@@ -94,7 +107,7 @@ public class FixedVirtualAccount {
     params.put("name", name);
     params.put("expected_amount", expectedAmount);
 
-    return create(params, true);
+    return create(new HashMap<>(), params, true);
   }
 
   /**
@@ -124,7 +137,7 @@ public class FixedVirtualAccount {
     params.put("expected_amount", expectedAmount);
     params.putAll(additionalParam);
 
-    return create(params, true);
+    return create(new HashMap<>(), params, true);
   }
 
   /**
@@ -135,7 +148,20 @@ public class FixedVirtualAccount {
    * @throws XenditException
    */
   public static FixedVirtualAccount createOpen(Map<String, Object> params) throws XenditException {
-    return create(params, false);
+    return create(new HashMap<>(), params, false);
+  }
+
+  /**
+   * Create closed VA with complete object
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-fixed-virtual-accounts.
+   * @return FixedVirtualAccount model.
+   * @throws XenditException
+   */
+  public static FixedVirtualAccount createOpen(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
+    return create(headers, params, false);
   }
 
   /**
@@ -155,7 +181,7 @@ public class FixedVirtualAccount {
     params.put("bank_code", bankCode);
     params.put("name", name);
 
-    return create(params, false);
+    return create(new HashMap<>(), params, false);
   }
 
   /**
@@ -179,7 +205,7 @@ public class FixedVirtualAccount {
     params.put("name", name);
     params.putAll(additionalParam);
 
-    return create(params, false);
+    return create(new HashMap<>(), params, false);
   }
 
   /**
@@ -235,7 +261,8 @@ public class FixedVirtualAccount {
         RequestResource.Method.GET, url, null, FixedVirtualAccountPayment.class);
   }
 
-  private static FixedVirtualAccount create(Map<String, Object> params, Boolean isClosed)
+  private static FixedVirtualAccount create(
+      Map<String, String> headers, Map<String, Object> params, Boolean isClosed)
       throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/callback_virtual_accounts");
 
@@ -246,6 +273,6 @@ public class FixedVirtualAccount {
     }
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, FixedVirtualAccount.class);
+        RequestResource.Method.POST, url, headers, params, FixedVirtualAccount.class);
   }
 }

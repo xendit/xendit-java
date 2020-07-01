@@ -1,7 +1,8 @@
 package com.xendit.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
@@ -15,6 +16,7 @@ import org.junit.Test;
 public class CardlessCreditTest {
   private static String URL = String.format("%s%s", Xendit.getUrl(), "/cardless-credit");
   private static Map<String, Object> PARAMS = new HashMap<>();
+  private static Map<String, String> HEADERS = new HashMap<>();
   private static CardlessCreditItem VALID_ITEM =
       CardlessCreditItem.builder()
           .id("123")
@@ -61,7 +63,7 @@ public class CardlessCreditTest {
   @Test
   public void create_Success_IfParamsAreValid() throws XenditException {
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, CardlessCredit.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, CardlessCredit.class))
         .thenReturn(VALID_CREDIT);
     CardlessCredit cardlessCredit = CardlessCredit.create(PARAMS);
 
@@ -73,7 +75,7 @@ public class CardlessCreditTest {
     PARAMS.clear();
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, CardlessCredit.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, CardlessCredit.class))
         .thenThrow(
             new XenditException("There was an error with the format submitted to the server."));
     CardlessCredit.create(PARAMS);

@@ -112,9 +112,22 @@ public class RecurringPayment {
    * @throws XenditException XenditException
    */
   public static RecurringPayment create(Map<String, Object> params) throws XenditException {
+    return create(new HashMap<>(), params);
+  }
+
+  /**
+   * Create recurring payment with given parameters as a HashMap object
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-a-recurring-payment
+   * @return RecurringPayment
+   * @throws XenditException XenditException
+   */
+  public static RecurringPayment create(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/recurring_payments");
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, RecurringPayment.class);
+        RequestResource.Method.POST, url, headers, params, RecurringPayment.class);
   }
 
   /**

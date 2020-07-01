@@ -70,7 +70,8 @@ public class InvoiceTest {
   @Test(expected = XenditException.class)
   public void create_ThrowsException_IfInvalidParams() throws XenditException {
     Map<String, Object> params = new HashMap<>();
-    when(Xendit.requestClient.request(RequestResource.Method.POST, URL_V2, params, Invoice.class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.POST, URL_V2, new HashMap<>(), params, Invoice.class))
         .thenThrow(XenditException.class);
     Invoice.create(params);
   }

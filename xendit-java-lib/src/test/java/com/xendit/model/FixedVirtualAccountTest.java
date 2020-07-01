@@ -1,7 +1,9 @@
 package com.xendit.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.enums.BankCode;
@@ -14,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class FixedVirtualAccountTest {
+  private static Map<String, String> HEADERS = new HashMap<>();
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static String URL = String.format("%s%s", Xendit.getUrl(), "/callback_virtual_accounts");
   private static String TEST_ID = "test_id";
@@ -37,7 +40,7 @@ public class FixedVirtualAccountTest {
     PARAMS.put("expected_amount", 200000000);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, FixedVirtualAccount.class))
         .thenReturn(VALID_ACCOUNT);
     FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.createClosed(PARAMS);
 
@@ -49,7 +52,7 @@ public class FixedVirtualAccountTest {
     PARAMS.put("expected_amount", 50000000001L);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, FixedVirtualAccount.class))
         .thenThrow(new XenditException("Maximum amount is 50000000000"));
     FixedVirtualAccount.createClosed(PARAMS);
   }
@@ -57,7 +60,7 @@ public class FixedVirtualAccountTest {
   @Test
   public void createOpen_Success_IfParamsAreValid() throws XenditException {
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, FixedVirtualAccount.class))
         .thenReturn(VALID_ACCOUNT);
     FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.createOpen(PARAMS);
 
@@ -69,7 +72,7 @@ public class FixedVirtualAccountTest {
     PARAMS.put("bank_code", "XYZ");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, FixedVirtualAccount.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, FixedVirtualAccount.class))
         .thenThrow(new XenditException("That bank code is not currently supported"));
     FixedVirtualAccount.createOpen(PARAMS);
   }

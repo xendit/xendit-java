@@ -1,7 +1,8 @@
 package com.xendit.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
@@ -14,6 +15,7 @@ import org.junit.Test;
 
 public class RetailOutletTest {
   private static final String URL = String.format("%s%s", Xendit.getUrl(), "/fixed_payment_code");
+  private static Map<String, String> HEADERS = new HashMap<>();
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static String TEST_ID = "5e0cb0bbf4d38b20d5421b72";
   private static String TEST_EXTERNAL_ID = "test_id";
@@ -33,7 +35,7 @@ public class RetailOutletTest {
     PARAMS.put("expected_amount", 10000);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, FixedPaymentCode.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, FixedPaymentCode.class))
         .thenReturn(VALID_FPC);
     FixedPaymentCode fpc = RetailOutlet.createFixedPaymentCode(PARAMS);
     assertEquals(fpc, VALID_FPC);
@@ -42,7 +44,7 @@ public class RetailOutletTest {
   @Test(expected = XenditException.class)
   public void createFixedPaymentCode_ThrowsException_IfInvalidParams() throws XenditException {
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, FixedPaymentCode.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, FixedPaymentCode.class))
         .thenThrow(
             new XenditException("There was an error with the format submitted to the server."));
     RetailOutlet.createFixedPaymentCode(PARAMS);
@@ -52,7 +54,7 @@ public class RetailOutletTest {
   public void getFixedPaymentCode_Success_IfIdIsAvailable() throws XenditException {
     String url = String.format("%s%s%s", URL, "/", TEST_ID);
     when(Xendit.requestClient.request(
-            RequestResource.Method.GET, url, null, FixedPaymentCode.class))
+            RequestResource.Method.GET, url, HEADERS, null, FixedPaymentCode.class))
         .thenReturn(VALID_FPC);
     FixedPaymentCode fpc = RetailOutlet.getFixedPaymentCode(TEST_ID);
     assertEquals(fpc.getId(), VALID_FPC.getId());
@@ -62,7 +64,7 @@ public class RetailOutletTest {
   public void getFixedPaymentCode_ThrowsException_IfIdIsNotAvailable() throws XenditException {
     String url = String.format("%s%s%s", URL, "/", "fake_id");
     when(Xendit.requestClient.request(
-            RequestResource.Method.GET, url, null, FixedPaymentCode.class))
+            RequestResource.Method.GET, url, HEADERS, null, FixedPaymentCode.class))
         .thenThrow(new XenditException("Fixed payment code not found"));
     RetailOutlet.getFixedPaymentCode("fake_id");
   }
@@ -79,7 +81,7 @@ public class RetailOutletTest {
             .build();
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.PATCH, url, PARAMS, FixedPaymentCode.class))
+            RequestResource.Method.PATCH, url, HEADERS, PARAMS, FixedPaymentCode.class))
         .thenReturn(result);
     FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode(TEST_ID, PARAMS);
     assertEquals(fpc, result);
@@ -89,7 +91,7 @@ public class RetailOutletTest {
   public void updateFixedPaymentCode_ThrowsException_IfIdIsNotAvailable() throws XenditException {
     String url = String.format("%s%s%s", URL, "/", "fake_id");
     when(Xendit.requestClient.request(
-            RequestResource.Method.PATCH, url, PARAMS, FixedPaymentCode.class))
+            RequestResource.Method.PATCH, url, HEADERS, PARAMS, FixedPaymentCode.class))
         .thenThrow(new XenditException("Fixed payment code not found"));
     RetailOutlet.updateFixedPaymentCode("fake_id", PARAMS);
   }

@@ -43,13 +43,29 @@ public class BatchDisbursement {
    */
   public static BatchDisbursement create(String reference, BatchDisbursementItem[] disbursements)
       throws XenditException {
+    return create(new HashMap<>(), reference, disbursements);
+  }
+
+  /**
+   * Create a batch disbursement.
+   *
+   * @param headers
+   * @param reference ID of the batch disbursement in your system, used to reconcile disbursements
+   *     after they have been completed
+   * @param disbursements List of disbursements in the batch
+   * @return BatchDisbursement
+   * @throws XenditException XenditException
+   */
+  public static BatchDisbursement create(
+      Map<String, String> headers, String reference, BatchDisbursementItem[] disbursements)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/batch_disbursements");
     Map<String, Object> params = new HashMap<>();
     params.put("reference", reference);
     params.put("disbursements", disbursements);
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, BatchDisbursement.class);
+        RequestResource.Method.POST, url, headers, params, BatchDisbursement.class);
   }
 
   /**

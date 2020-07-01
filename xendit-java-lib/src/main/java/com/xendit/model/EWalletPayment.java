@@ -84,7 +84,7 @@ public class EWalletPayment {
     params.put("ewallet_type", EWalletType.LINKAJA);
     params.put("callback_url", callbackUrl);
     params.put("redirect_url", redirectUrl);
-    return createPaymentRequest(params);
+    return createPaymentRequest(new HashMap<>(), params);
   }
 
   /**
@@ -104,7 +104,7 @@ public class EWalletPayment {
     params.put("amount", amount);
     params.put("phone", phone);
     params.put("ewallet_type", EWalletType.OVO);
-    return createPaymentRequest(params);
+    return createPaymentRequest(new HashMap<>(), params);
   }
 
   /**
@@ -136,7 +136,20 @@ public class EWalletPayment {
     params.put("callback_url", callbackUrl);
     params.put("redirect_url", redirectUrl);
     params.put("ewallet_type", EWalletType.DANA);
-    return createPaymentRequest(params);
+    return createPaymentRequest(new HashMap<>(), params);
+  }
+
+  /**
+   * Create new ewallet payment with all parameters as HashMap
+   *
+   * @param headers
+   * @param params mount end-customer will pay.
+   * @return EWalletPayment
+   * @throws XenditException XenditException
+   */
+  public static EWalletPayment createEWalletPayment(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
+    return createPaymentRequest(headers, params);
   }
 
   /**
@@ -172,14 +185,14 @@ public class EWalletPayment {
     }
   }
 
-  private static EWalletPayment createPaymentRequest(Map<String, Object> params)
-      throws XenditException {
+  private static EWalletPayment createPaymentRequest(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/ewallets");
     String amount = params.get("amount").toString();
 
     amountValidation(amount);
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, EWalletPayment.class);
+        RequestResource.Method.POST, url, headers, params, EWalletPayment.class);
   }
 }

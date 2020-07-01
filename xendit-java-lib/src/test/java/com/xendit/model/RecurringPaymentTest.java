@@ -1,7 +1,9 @@
 package com.xendit.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
@@ -14,6 +16,7 @@ import org.junit.Test;
 
 public class RecurringPaymentTest {
   private static String URL = String.format("%s%s", Xendit.getUrl(), "/recurring_payments");
+  private static Map<String, String> HEADERS = new HashMap<>();
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static String TEST_ID = "5e2dd55ef8a4d24146f59775";
   private static String TEST_EXTERNAL_ID = "test_id";
@@ -47,7 +50,7 @@ public class RecurringPaymentTest {
   @Test
   public void create_Success_IfParamsAreValid() throws XenditException {
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, RecurringPayment.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, RecurringPayment.class))
         .thenReturn(VALID_PAYMENT);
     RecurringPayment recurringPayment = RecurringPayment.create(PARAMS);
     assertEquals(recurringPayment, VALID_PAYMENT);
@@ -57,7 +60,7 @@ public class RecurringPaymentTest {
   public void create_ThrowsException_IfParamsAreInvalid() throws XenditException {
     PARAMS.remove("external_id");
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, RecurringPayment.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, RecurringPayment.class))
         .thenThrow(
             new XenditException("There was an error with the format submitted to the server."));
     RecurringPayment.create(PARAMS);
