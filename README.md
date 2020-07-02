@@ -89,46 +89,31 @@ JDK 1.7 or later.
 Add these lines of code in your `pom.xml`
 ```
 <dependency>
-  <groupId>com.xendit</groupId>
-  <artifactId>xendit-java-lib</artifactId>
-  <version>SELECTED_VERSION</version>
+    <groupId>com.xendit</groupId>
+    <artifactId>xendit-java-lib</artifactId>
+    <version>SELECTED_VERSION</version>
 </dependency>
 
 <repositories>
-  <repository>
-    <snapshots>
-      <enabled>
-        false
-      </enabled>
-    </snapshots>
-    <id>
-      bintray-xendit-android
-    </id>
-    <name>
-      bintray
-    </name>
-    <url>
-      https://dl.bintray.com/xendit/android
-    </url>
-  </repository>
+    <repository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>bintray-xendit-android</id>
+        <name>bintray</name>
+        <url>https://dl.bintray.com/xendit/android</url>
+    </repository>
 </repositories>
+
 <pluginRepositories>
-  <pluginRepository>
-    <snapshots>
-      <enabled>
-        false
-      </enabled>
-    </snapshots>
-    <id>
-      bintray-xendit-android
-    </id>
-    <name>
-      bintray-plugins
-    </name>
-    <url>
-      https://dl.bintray.com/xendit/android
-    </url>
-  </pluginRepository>
+    <pluginRepository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>bintray-xendit-android</id>
+        <name>bintray-plugins</name>
+        <url>https://dl.bintray.com/xendit/android</url>
+    </pluginRepository>
 </pluginRepositories>
 ```
 
