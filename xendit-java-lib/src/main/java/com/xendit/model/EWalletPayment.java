@@ -140,19 +140,6 @@ public class EWalletPayment {
   }
 
   /**
-   * Create new ewallet payment with all parameters as HashMap
-   *
-   * @param headers
-   * @param params mount end-customer will pay.
-   * @return EWalletPayment
-   * @throws XenditException XenditException
-   */
-  public static EWalletPayment createEWalletPayment(
-      Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    return createPaymentRequest(headers, params);
-  }
-
-  /**
    * @param externalId An ID of your choice. Often it is unique identifier like a phone number,
    *     email or transaction ID.
    * @param ewalletType The type of ewallet to be paid. Must be in capital letters.
@@ -185,7 +172,7 @@ public class EWalletPayment {
     }
   }
 
-  private static EWalletPayment createPaymentRequest(
+  public static EWalletPayment createPaymentRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/ewallets");
     String amount = params.get("amount").toString();
