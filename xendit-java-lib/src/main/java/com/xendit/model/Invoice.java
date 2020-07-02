@@ -156,8 +156,22 @@ public class Invoice {
    * @throws XenditException XenditException
    */
   public static Invoice create(Map<String, Object> params) throws XenditException {
+    return create(new HashMap<>(), params);
+  }
+
+  /**
+   * Create invoice with all parameters as HashMap
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-invoice.
+   * @return Invoice
+   * @throws XenditException XenditException
+   */
+  public static Invoice create(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/v2/invoices");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Invoice.class);
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, headers, params, Invoice.class);
   }
 
   /**

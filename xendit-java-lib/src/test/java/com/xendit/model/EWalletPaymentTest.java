@@ -18,6 +18,7 @@ public class EWalletPaymentTest {
   private static String TEST_EXTERNAL_ID = "test_external_id";
   private static String TEST_PHONE = "081298498259";
   private static Map<String, Object> PARAMS = new HashMap<>();
+  private static Map<String, String> HEADERS = new HashMap<>();
   private static EWalletPayment VALID_PAYMENT =
       EWalletPayment.builder().id(TEST_ID).externalId(TEST_EXTERNAL_ID).build();
 
@@ -46,7 +47,7 @@ public class EWalletPaymentTest {
     PARAMS.put("redirect_url", redirectUrl);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, EWalletPayment.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, EWalletPayment.class))
         .thenReturn(VALID_PAYMENT);
     EWalletPayment result =
         EWalletPayment.createLinkajaPayment(
@@ -61,7 +62,7 @@ public class EWalletPaymentTest {
     PARAMS.put("ewallet_type", EWalletPayment.EWalletType.OVO);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, EWalletPayment.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, EWalletPayment.class))
         .thenReturn(VALID_PAYMENT);
     EWalletPayment result = EWalletPayment.createOvoPayment(TEST_EXTERNAL_ID, 4444, TEST_PHONE);
 
@@ -81,7 +82,7 @@ public class EWalletPaymentTest {
     PARAMS.put("ewallet_type", EWalletPayment.EWalletType.DANA);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, EWalletPayment.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, EWalletPayment.class))
         .thenReturn(VALID_PAYMENT);
     EWalletPayment result =
         EWalletPayment.createDanaPayment(

@@ -58,9 +58,22 @@ public class CreditCard {
    */
   public static CreditCardCharge createAuthorization(Map<String, Object> params)
       throws XenditException {
+    return createAuthorization(new HashMap<>(), params);
+  }
+
+  /**
+   * Create authorization with parameters in a HashMap
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-charge
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge createAuthorization(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+        RequestResource.Method.POST, url, headers, params, CreditCardCharge.class);
   }
 
   /**
@@ -107,9 +120,21 @@ public class CreditCard {
    * @throws XenditException XenditException
    */
   public static CreditCardCharge createCharge(Map<String, Object> params) throws XenditException {
+    return createCharge(new HashMap<>(), params);
+  }
+  /**
+   * Create charge with parameters in a HashMap
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-charge
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge createCharge(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+        RequestResource.Method.POST, url, headers, params, CreditCardCharge.class);
   }
 
   /**
@@ -121,6 +146,19 @@ public class CreditCard {
    */
   public static CreditCardReverseAuth reverseAuthorization(String chargeId, String externalId)
       throws XenditException {
+    return reverseAuthorization(new HashMap<>(), chargeId, externalId);
+  }
+
+  /**
+   * Reverse authorization by external ID
+   *
+   * @param headers
+   * @param externalId Charge reference
+   * @return CreditCardReverseAuth
+   * @throws XenditException XenditException
+   */
+  public static CreditCardReverseAuth reverseAuthorization(
+      Map<String, String> headers, String chargeId, String externalId) throws XenditException {
     String url =
         String.format(
             "%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", chargeId, "/auth_reversal");
@@ -128,7 +166,7 @@ public class CreditCard {
     params.put("external_id", externalId);
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardReverseAuth.class);
+        RequestResource.Method.POST, url, headers, params, CreditCardReverseAuth.class);
   }
 
   /**
@@ -141,13 +179,27 @@ public class CreditCard {
    */
   public static CreditCardCharge captureCharge(String chargeId, Number amount)
       throws XenditException {
+    return captureCharge(new HashMap<>(), chargeId, amount);
+  }
+
+  /**
+   * Capture a charge by charge ID
+   *
+   * @param headers
+   * @param chargeId Charge ID of authorization
+   * @param amount Amount to be captured. Can be up to amount of authorization but not more
+   * @return CreditCardCharge
+   * @throws XenditException XenditException
+   */
+  public static CreditCardCharge captureCharge(
+      Map<String, String> headers, String chargeId, Number amount) throws XenditException {
     Map<String, Object> params = new HashMap<>();
     params.put("amount", amount);
     String url =
         String.format("%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", chargeId, "/capture");
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+        RequestResource.Method.POST, url, headers, params, CreditCardCharge.class);
   }
 
   /**
@@ -174,6 +226,22 @@ public class CreditCard {
    */
   public static CreditCardRefund createRefund(String id, Number amount, String externalId)
       throws XenditException {
+    return createRefund(new HashMap<>(), id, amount, externalId);
+  }
+
+  /**
+   * Create a refund
+   *
+   * @param headers
+   * @param id Charge ID of the payment that will be refunded
+   * @param amount The amount to be refunded
+   * @param externalId A unique identifier of your choice. Max 64 characters.
+   * @return CreditCardRefund
+   * @throws XenditException XenditException
+   */
+  public static CreditCardRefund createRefund(
+      Map<String, String> headers, String id, Number amount, String externalId)
+      throws XenditException {
     Map<String, Object> params = new HashMap<>();
     params.put("amount", amount);
     params.put("external_id", externalId);
@@ -181,6 +249,6 @@ public class CreditCard {
         String.format("%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", id, "/refunds");
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardRefund.class);
+        RequestResource.Method.POST, url, headers, params, CreditCardRefund.class);
   }
 }

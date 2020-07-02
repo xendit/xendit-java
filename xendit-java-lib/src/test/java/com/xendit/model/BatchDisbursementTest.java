@@ -1,7 +1,9 @@
 package com.xendit.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
@@ -39,7 +41,7 @@ public class BatchDisbursementTest {
     String url = String.format("%s%s", Xendit.getUrl(), "/batch_disbursements");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, params, BatchDisbursement.class))
+            RequestResource.Method.POST, url, new HashMap<>(), params, BatchDisbursement.class))
         .thenReturn(VALID_BATCH);
     BatchDisbursement batchDisbursement = BatchDisbursement.create(TEST_REFERENCE, items);
 
@@ -54,7 +56,7 @@ public class BatchDisbursementTest {
     String url = String.format("%s%s", Xendit.getUrl(), "/batch_disbursements");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, params, BatchDisbursement.class))
+            RequestResource.Method.POST, url, new HashMap<>(), params, BatchDisbursement.class))
         .thenThrow(
             new XenditException("There was an error with the format submitted to the server."));
     BatchDisbursement.create(TEST_REFERENCE, null);

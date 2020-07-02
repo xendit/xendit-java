@@ -1,7 +1,8 @@
 package com.xendit.model;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
@@ -21,6 +22,7 @@ public class CreditCardTest {
   private static String TEST_AUTHENTICATION_ID = "test";
   private static String TEST_CARD_CVN = "123";
   private static Map<String, Object> PARAMS = new HashMap<>();
+  private static Map<String, String> HEADERS = new HashMap<>();
   private static CreditCardCharge VALID_CHARGE = CreditCardCharge.builder().build();
 
   @Before
@@ -43,7 +45,7 @@ public class CreditCardTest {
     PARAMS.put("descriptor", "lorem ipsum");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, CreditCardCharge.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, CreditCardCharge.class))
         .thenReturn(VALID_CHARGE);
     CreditCardCharge creditCardCharge = CreditCard.createCharge(PARAMS);
 
@@ -56,7 +58,7 @@ public class CreditCardTest {
     PARAMS.put("external_id", "fake_id");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, CreditCardCharge.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, CreditCardCharge.class))
         .thenThrow(new XenditException("Token id is invalid"));
     CreditCard.createCharge(PARAMS);
   }
@@ -67,7 +69,7 @@ public class CreditCardTest {
     PARAMS.put("capture", false);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, CreditCardCharge.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, CreditCardCharge.class))
         .thenReturn(VALID_CHARGE);
     CreditCardCharge creditCardCharge = CreditCard.createAuthorization(PARAMS);
 
@@ -80,7 +82,7 @@ public class CreditCardTest {
     PARAMS.put("external_id", "fake_id");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, CreditCardCharge.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, CreditCardCharge.class))
         .thenThrow(new XenditException("Token id is invalid"));
     CreditCard.createCharge(PARAMS);
   }
@@ -92,7 +94,7 @@ public class CreditCardTest {
     CreditCardReverseAuth creditCardReverseAuth = CreditCardReverseAuth.builder().build();
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, PARAMS, CreditCardReverseAuth.class))
+            RequestResource.Method.POST, url, HEADERS, PARAMS, CreditCardReverseAuth.class))
         .thenReturn(creditCardReverseAuth);
     CreditCardReverseAuth result = CreditCard.reverseAuthorization(TEST_ID, TEST_EXTERNAL_ID);
 
@@ -105,7 +107,7 @@ public class CreditCardTest {
     PARAMS.put("external_id", TEST_EXTERNAL_ID);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, PARAMS, CreditCardReverseAuth.class))
+            RequestResource.Method.POST, url, HEADERS, PARAMS, CreditCardReverseAuth.class))
         .thenThrow(new XenditException("Could not find credit card charge"));
     CreditCard.reverseAuthorization("fake_id", TEST_EXTERNAL_ID);
   }
@@ -116,7 +118,7 @@ public class CreditCardTest {
     PARAMS.put("amount", TEST_AMOUNT);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, PARAMS, CreditCardCharge.class))
+            RequestResource.Method.POST, url, HEADERS, PARAMS, CreditCardCharge.class))
         .thenReturn(VALID_CHARGE);
     CreditCardCharge creditCardCharge = CreditCard.captureCharge(TEST_ID, TEST_AMOUNT);
 
@@ -129,7 +131,7 @@ public class CreditCardTest {
     PARAMS.put("amount", TEST_AMOUNT);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, PARAMS, CreditCardCharge.class))
+            RequestResource.Method.POST, url, HEADERS, PARAMS, CreditCardCharge.class))
         .thenThrow(new XenditException("Could not find one credit card charge"));
     CreditCard.captureCharge("fake_id", TEST_AMOUNT);
   }
@@ -164,7 +166,7 @@ public class CreditCardTest {
     CreditCardRefund creditCardRefund = CreditCardRefund.builder().build();
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, PARAMS, CreditCardRefund.class))
+            RequestResource.Method.POST, url, HEADERS, PARAMS, CreditCardRefund.class))
         .thenReturn(creditCardRefund);
     CreditCardRefund result = CreditCard.createRefund(TEST_ID, TEST_AMOUNT, TEST_EXTERNAL_ID);
 
@@ -178,7 +180,7 @@ public class CreditCardTest {
     PARAMS.put("external_id", TEST_EXTERNAL_ID);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.POST, url, PARAMS, CreditCardRefund.class))
+            RequestResource.Method.POST, url, HEADERS, PARAMS, CreditCardRefund.class))
         .thenThrow(new XenditException("Refundable credit card charge not found"));
     CreditCard.createRefund("fake_id", TEST_AMOUNT, TEST_EXTERNAL_ID);
   }

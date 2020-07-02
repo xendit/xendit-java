@@ -74,8 +74,13 @@ public class CardlessCredit {
   }
 
   public static CardlessCredit create(Map<String, Object> params) throws XenditException {
+    return create(new HashMap<>(), params);
+  }
+
+  public static CardlessCredit create(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/cardless-credit");
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CardlessCredit.class);
+        RequestResource.Method.POST, url, headers, params, CardlessCredit.class);
   }
 }

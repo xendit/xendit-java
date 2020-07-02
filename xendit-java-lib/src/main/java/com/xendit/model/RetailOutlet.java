@@ -18,9 +18,22 @@ public class RetailOutlet {
    */
   public static FixedPaymentCode createFixedPaymentCode(Map<String, Object> params)
       throws XenditException {
+    return createFixedPaymentCode(new HashMap<>(), params);
+  }
+
+  /**
+   * Create fixed payment code with all parameters as HashMap
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#update-fixed-payment-code
+   * @return FixedPaymentCodeRetailOutlet
+   * @throws XenditException XenditException
+   */
+  public static FixedPaymentCode createFixedPaymentCode(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/fixed_payment_code");
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, FixedPaymentCode.class);
+        RequestResource.Method.POST, url, headers, params, FixedPaymentCode.class);
   }
 
   /**
@@ -59,9 +72,22 @@ public class RetailOutlet {
    * @throws XenditException XenditException
    */
   public static FixedPaymentCode getFixedPaymentCode(String id) throws XenditException {
+    return getFixedPaymentCode(id, new HashMap<>());
+  }
+
+  /**
+   * Get fixed payment code by ID
+   *
+   * @param id ID of the fixed payment code to retrieve
+   * @param headers
+   * @return FixedPaymentCode
+   * @throws XenditException XenditException
+   */
+  public static FixedPaymentCode getFixedPaymentCode(String id, Map<String, String> headers)
+      throws XenditException {
     String url = String.format("%s%s%s", Xendit.getUrl(), "/fixed_payment_code/", id);
     return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, FixedPaymentCode.class);
+        RequestResource.Method.GET, url, headers, null, FixedPaymentCode.class);
   }
 
   /**
@@ -74,9 +100,23 @@ public class RetailOutlet {
    */
   public static FixedPaymentCode updateFixedPaymentCode(String id, Map<String, Object> params)
       throws XenditException {
+    return updateFixedPaymentCode(id, new HashMap<>(), params);
+  }
+
+  /**
+   * Update fixed payment code by ID and with all parameters as HashMap
+   *
+   * @param id ID of the fixed payment code to be updated
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#update-fixed-payment-code
+   * @return FixedPaymentCode
+   * @throws XenditException XenditException
+   */
+  public static FixedPaymentCode updateFixedPaymentCode(
+      String id, Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s%s", Xendit.getUrl(), "/fixed_payment_code/", id);
     return Xendit.requestClient.request(
-        RequestResource.Method.PATCH, url, params, FixedPaymentCode.class);
+        RequestResource.Method.PATCH, url, headers, params, FixedPaymentCode.class);
   }
 
   /**

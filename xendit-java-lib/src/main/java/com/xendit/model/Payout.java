@@ -96,8 +96,22 @@ public class Payout {
    * @throws XenditException XenditException
    */
   public static Payout createPayout(Map<String, Object> params) throws XenditException {
+    return createPayout(new HashMap<>(), params);
+  }
+
+  /**
+   * Create payout with all parameters as HashMap
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-payout
+   * @return Payout
+   * @throws XenditException XenditException
+   */
+  public static Payout createPayout(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/payouts");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Payout.class);
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, headers, params, Payout.class);
   }
 
   /**

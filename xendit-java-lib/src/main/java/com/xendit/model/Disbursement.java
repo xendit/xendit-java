@@ -61,7 +61,20 @@ public class Disbursement {
    * @throws XenditException
    */
   public static Disbursement create(Map<String, Object> params) throws XenditException {
-    return createRequest(params);
+    return createRequest(new HashMap<>(), params);
+  }
+
+  /**
+   * Create disbursement with all parameter as HashMap
+   *
+   * @param headers
+   * @param params listed here https://xendit.github.io/apireference/#create-disbursement.
+   * @return Disbursement
+   * @throws XenditException
+   */
+  public static Disbursement create(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    return createRequest(headers, params);
   }
 
   /**
@@ -94,7 +107,7 @@ public class Disbursement {
     params.put("account_number", accountNumber);
     params.put("description", description);
     params.put("amount", amount);
-    return createRequest(params);
+    return createRequest(new HashMap<>(), params);
   }
 
   /**
@@ -131,7 +144,7 @@ public class Disbursement {
     params.put("description", description);
     params.put("amount", amount);
     params.put("email_to", emailTo);
-    return createRequest(params);
+    return createRequest(new HashMap<>(), params);
   }
 
   /**
@@ -173,7 +186,7 @@ public class Disbursement {
     params.put("amount", amount);
     params.put("email_to", emailTo);
     params.put("email_cc", emailCc);
-    return createRequest(params);
+    return createRequest(new HashMap<>(), params);
   }
 
   /**
@@ -220,7 +233,7 @@ public class Disbursement {
     params.put("email_to", emailTo);
     params.put("email_cc", emailCc);
     params.put("email_bcc", emailBcc);
-    return createRequest(params);
+    return createRequest(new HashMap<>(), params);
   }
 
   /**
@@ -261,14 +274,15 @@ public class Disbursement {
     return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Disbursement.class);
   }
 
-  private static Disbursement createRequest(Map<String, Object> params) throws XenditException {
+  private static Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/disbursements");
     String amount = params.get("amount").toString();
 
     amountValidation(amount);
 
     return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, Disbursement.class);
+        RequestResource.Method.POST, url, headers, params, Disbursement.class);
   }
 
   private static void amountValidation(String amount) throws ParamException {

@@ -24,25 +24,48 @@ public class BaseRequest implements NetworkClient {
   public <T> T request(
       RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
       throws XenditException {
-    return staticRequest(method, url, params, clazz);
+    return staticRequest(method, url, new HashMap<>(), params, clazz);
   }
 
-  private static Map<String, String> getHeaders(String apiKey) throws XenditException {
+  @Override
+  public <T> T request(
+      RequestResource.Method method,
+      String url,
+      Map<String, String> headers,
+      Map<String, Object> params,
+      Class<T> clazz)
+      throws XenditException {
+    return staticRequest(method, url, headers, params, clazz);
+  }
+
+  private static Map<String, String> getHeaders(String apiKey, Map<String, String> customHeaders)
+      throws XenditException {
     Map<String, String> headers = new HashMap<>();
+
+    for (Map.Entry<String, String> header : customHeaders.entrySet()) {
+      headers.put(header.getKey(), header.getValue());
+    }
 
     headers.put("User-Agent", "Xendit Java Library/v1");
     headers.put("Accept", "application/json");
 
+    // Override apiKey with Authorization key
+    // Can be used as workaround for https://github.com/xendit/xendit-java/issues/30
     String base64Key = encodeBase64(apiKey + ":");
-    headers.put("Authorization", "Basic " + base64Key);
+    String authorization = customHeaders.getOrDefault("Authorization", "Basic " + base64Key);
+    headers.put("Authorization", authorization);
 
     return headers;
   }
 
   private static <T> T staticRequest(
-      RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
+      RequestResource.Method method,
+      String url,
+      Map<String, String> headers,
+      Map<String, Object> params,
+      Class<T> clazz)
       throws XenditException {
-    XenditResponse response = rawRequest(method, url, params);
+    XenditResponse response = rawRequest(method, url, headers, params);
 
     int responseCode = response.getStatusCode();
     String responseBody = response.getBody();
@@ -62,7 +85,10 @@ public class BaseRequest implements NetworkClient {
   }
 
   private static XenditResponse rawRequest(
-      RequestResource.Method method, String url, Map<String, Object> params)
+      RequestResource.Method method,
+      String url,
+      Map<String, String> headers,
+      Map<String, Object> params)
       throws XenditException {
     String apiKey = Xendit.getApiKey();
 
@@ -82,7 +108,7 @@ public class BaseRequest implements NetworkClient {
     try {
       allowHttpMethods(method.getText());
 
-      connection = createXenditConnection(url, apiKey, jsonParams);
+      connection = createXenditConnection(url, apiKey, headers);
 
       connection.setRequestMethod(method.getText());
 
@@ -136,14 +162,14 @@ public class BaseRequest implements NetworkClient {
   }
 
   private static HttpURLConnection createXenditConnection(
-      String url, String apiKey, String jsonParams) throws IOException, XenditException {
+      String url, String apiKey, Map<String, String> headers) throws IOException, XenditException {
     URL xenditUrl = new URL(url);
     HttpURLConnection connection = (HttpURLConnection) xenditUrl.openConnection();
 
     connection.setConnectTimeout(DEFAULT_CONNECT_TIMEOUT);
     connection.setUseCaches(false);
 
-    for (Map.Entry<String, String> header : getHeaders(apiKey).entrySet()) {
+    for (Map.Entry<String, String> header : getHeaders(apiKey, headers).entrySet()) {
       connection.setRequestProperty(header.getKey(), header.getValue());
     }
 
