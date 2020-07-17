@@ -24,7 +24,7 @@ public class BaseRequest implements NetworkClient {
   public <T> T request(
       RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
       throws XenditException {
-    return staticRequest(method, url, new HashMap<>(), params, clazz);
+    return request(method, url, new HashMap<>(), params, clazz);
   }
 
   @Override

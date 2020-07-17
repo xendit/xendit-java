@@ -239,13 +239,41 @@ public class Disbursement {
   /**
    * Get disbursement available bank
    *
+   * @param headers
+   * @return
+   * @throws XenditException
+   */
+  public static AvailableBank[] getAvailableBanks(Map<String, String> headers)
+      throws XenditException {
+    String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, headers, null, AvailableBank[].class);
+  }
+
+  /**
+   * Get disbursement available bank
+   *
    * @return
    * @throws XenditException
    */
   public static AvailableBank[] getAvailableBanks() throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
+    return getAvailableBanks(new HashMap<>());
+  }
+
+  /**
+   * Get array of object disbursements by external id
+   *
+   * @param headers
+   * @param externalId
+   * @return
+   * @throws XenditException
+   */
+  public static Disbursement[] getByExternalId(Map<String, String> headers, String externalId)
+      throws XenditException {
+    String url =
+        String.format("%s%s%s", Xendit.getUrl(), "/disbursements?external_id=", externalId);
     return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, AvailableBank[].class);
+        RequestResource.Method.GET, url, headers, null, Disbursement[].class);
   }
 
   /**
@@ -256,10 +284,22 @@ public class Disbursement {
    * @throws XenditException
    */
   public static Disbursement[] getByExternalId(String externalId) throws XenditException {
-    String url =
-        String.format("%s%s%s", Xendit.getUrl(), "/disbursements?external_id=", externalId);
+    return getByExternalId(new HashMap<>(), externalId);
+  }
+
+  /**
+   * Get object disbursement by id
+   *
+   * @param headers
+   * @param id
+   * @return
+   * @throws XenditException
+   */
+  public static Disbursement getById(Map<String, String> headers, String id)
+      throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/disbursements/", id);
     return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, Disbursement[].class);
+        RequestResource.Method.GET, url, headers, null, Disbursement.class);
   }
 
   /**
@@ -270,8 +310,7 @@ public class Disbursement {
    * @throws XenditException
    */
   public static Disbursement getById(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/disbursements/", id);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Disbursement.class);
+    return getById(new HashMap<>(), id);
   }
 
   private static Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
