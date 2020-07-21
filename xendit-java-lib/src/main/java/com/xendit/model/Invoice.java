@@ -177,23 +177,38 @@ public class Invoice {
   /**
    * Get invoice detail by ID
    *
+   * @param headers
+   * @param id ID of the invoice to retrieve
+   * @return Invoice
+   * @throws XenditException XenditException
+   */
+  public static Invoice getById(Map<String, String> headers, String id) throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, headers, null, Invoice.class);
+  }
+
+  /**
+   * Get invoice detail by ID
+   *
    * @param id ID of the invoice to retrieve
    * @return Invoice
    * @throws XenditException XenditException
    */
   public static Invoice getById(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices/", id);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice.class);
+    return getById(new HashMap<>(), id);
   }
 
   /**
    * Get all invoices by given parameters
    *
+   * @param headers
    * @param params listed here https://xendit.github.io/apireference/#list-all-invoices
    * @return Array of invoices
    * @throws XenditException XenditException
    */
-  public static Invoice[] getAll(Map<String, Object> params) throws XenditException {
+  public static Invoice[] getAll(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
     String parameters = "";
     String[] paramList =
         new String[] {
@@ -218,7 +233,32 @@ public class Invoice {
     }
 
     String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?", parameters);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class);
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, headers, null, Invoice[].class);
+  }
+
+  /**
+   * Get all invoices by given parameters
+   *
+   * @param params listed here https://xendit.github.io/apireference/#list-all-invoices
+   * @return Array of invoices
+   * @throws XenditException XenditException
+   */
+  public static Invoice[] getAll(Map<String, Object> params) throws XenditException {
+    return getAll(new HashMap<>(), params);
+  }
+
+  /**
+   * Expire an already created invoice
+   *
+   * @param headers
+   * @param id ID of the invoice to be expired / canceled
+   * @return Invoice
+   * @throws XenditException XenditException
+   */
+  public static Invoice expire(Map<String, String> headers, String id) throws XenditException {
+    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/invoices/", id, "/expire!");
+    return Xendit.requestClient.request(RequestResource.Method.POST, url, null, Invoice.class);
   }
 
   /**
@@ -229,7 +269,6 @@ public class Invoice {
    * @throws XenditException XenditException
    */
   public static Invoice expire(String id) throws XenditException {
-    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/invoices/", id, "/expire!");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, null, Invoice.class);
+    return expire(new HashMap<>(), id);
   }
 }

@@ -79,7 +79,8 @@ public class InvoiceTest {
   @Test
   public void getById_Success_IfIdIsAvailable() throws XenditException {
     String url = String.format("%s%s%s", URL_V2, "/", TEST_ID);
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice.class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.GET, url, new HashMap<>(), null, Invoice.class))
         .thenReturn(VALID_INVOICE);
     Invoice invoice = Invoice.getById(TEST_ID);
     assertEquals(invoice.getId(), VALID_INVOICE.getId());
@@ -88,7 +89,8 @@ public class InvoiceTest {
   @Test(expected = XenditException.class)
   public void getById_ThrowsException_IfIdIsNotAvailable() throws XenditException {
     String url = String.format("%s%s%s", URL_V2, "/", "fake_id");
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice.class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.GET, url, new HashMap<>(), null, Invoice.class))
         .thenThrow(XenditException.class);
     Invoice.getById("fake_id");
   }
@@ -117,7 +119,8 @@ public class InvoiceTest {
 
     Invoice[] invoiceResult = {VALID_INVOICE};
 
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.GET, url, new HashMap<>(), null, Invoice[].class))
         .thenReturn(invoiceResult);
     Invoice[] invoices = Invoice.getAll(params);
     assertEquals(invoices[0], VALID_INVOICE);
@@ -129,7 +132,8 @@ public class InvoiceTest {
     Invoice[] invoiceResult = {VALID_INVOICE};
     String url = String.format("%s%s", URL_V2, "?");
 
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.GET, url, new HashMap<>(), null, Invoice[].class))
         .thenReturn(invoiceResult);
     Invoice[] invoices = Invoice.getAll(new HashMap<>());
     assertEquals(invoices[0], VALID_INVOICE);
