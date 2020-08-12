@@ -71,6 +71,9 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Cardless credit customer details](#cardless-credit-customer-details)
     - [Cardless credit shipping address](#cardless-credit-shipping-address)
     - [Create a cardless credit payment](#create-a-cardless-credit-payment)
+  - [QR Codes](#qr-codes)
+    - [Create QR Code](#create-qr-code)
+    - [Get QR Code](#get-qr-code)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -895,6 +898,25 @@ CardlessCredit cardlessCredit = CardlessCredit.create(
     "www.example.com",
     "www.example.com"
 );
+```
+
+### QR Code
+
+#### Create QR Code
+
+```java
+QRCode qrCode = QRCode.create(
+    "external_id",
+    QRCode.QRCodeType.DYNAMIC,
+    "https://callback.site",
+    10000
+);
+```
+
+#### Get QR Code
+
+```java
+QRCode qrCode = QRCode.getQRCode("external_id");
 ```
 
 [Back to top](#table-of-contents)
