@@ -72,6 +72,7 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Cardless credit shipping address](#cardless-credit-shipping-address)
     - [Create a cardless credit payment](#create-a-cardless-credit-payment)
 - [Contributing](#contributing)
+  - [Lint](#lint)
   - [Tests](#tests)
   - [Precommit](#precommit)
 
@@ -900,6 +901,9 @@ CardlessCredit cardlessCredit = CardlessCredit.create(
 
 ## Contributing
 You can go to the [contributing guidelines](https://github.com/xendit/xendit-java/blob/master/CONTRIBUTING.md) to learn on how to contribute this project.
+
+### Lint
+Run `./gradlew spotlessApply` to apply linter.
 
 ### Tests
 
