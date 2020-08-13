@@ -71,7 +71,11 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Cardless credit customer details](#cardless-credit-customer-details)
     - [Cardless credit shipping address](#cardless-credit-shipping-address)
     - [Create a cardless credit payment](#create-a-cardless-credit-payment)
+  - [QR Codes](#qr-codes)
+    - [Create QR Code](#create-qr-code)
+    - [Get QR Code](#get-qr-code)
 - [Contributing](#contributing)
+  - [Lint](#lint)
   - [Tests](#tests)
   - [Precommit](#precommit)
 
@@ -896,10 +900,32 @@ CardlessCredit cardlessCredit = CardlessCredit.create(
 );
 ```
 
+### QR Code
+
+#### Create QR Code
+
+```java
+QRCode qrCode = QRCode.create(
+    "external_id",
+    QRCode.QRCodeType.DYNAMIC,
+    "https://callback.site",
+    10000
+);
+```
+
+#### Get QR Code
+
+```java
+QRCode qrCode = QRCode.getQRCode("external_id");
+```
+
 [Back to top](#table-of-contents)
 
 ## Contributing
 You can go to the [contributing guidelines](https://github.com/xendit/xendit-java/blob/master/CONTRIBUTING.md) to learn on how to contribute this project.
+
+### Lint
+Run `./gradlew spotlessApply` to apply linter.
 
 ### Tests
 
