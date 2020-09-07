@@ -9,7 +9,8 @@ public enum BankCode {
   BRI("BRI"),
   BCA("BCA"),
   PERMATA("PERMATA"),
-  SINARMAS("SINARMAS");
+  SINARMAS("SINARMAS"),
+  SAHABAT_SAMPOERNA("SAHABAT_SAMPOERNA");
 
   private String text;
 
