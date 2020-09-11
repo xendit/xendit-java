@@ -2,7 +2,6 @@ package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
-import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
 import java.math.BigInteger;
@@ -16,8 +15,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Disbursement {
-  private static final BigInteger MINIMUM_AMOUNT = new BigInteger("10000");
-  private static final BigInteger MAXIMUM_AMOUNT = new BigInteger("25000000");
 
   @SerializedName("id")
   private String id;
@@ -316,27 +313,8 @@ public class Disbursement {
   private static Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/disbursements");
-    String amount = params.get("amount").toString();
-
-    amountValidation(amount);
 
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, headers, params, Disbursement.class);
-  }
-
-  private static void amountValidation(String amount) throws ParamException {
-    try {
-      BigInteger bigInteger = new BigInteger(amount);
-
-      if (bigInteger.compareTo(MINIMUM_AMOUNT) == -1) {
-        throw new ParamException(String.format("Minimum amount is %s", MINIMUM_AMOUNT));
-      }
-
-      if (bigInteger.compareTo(MAXIMUM_AMOUNT) == 1) {
-        throw new ParamException(String.format("Maximum amount is %s", MAXIMUM_AMOUNT));
-      }
-    } catch (NumberFormatException e) {
-      throw new ParamException("Invalid amount format");
-    }
   }
 }
