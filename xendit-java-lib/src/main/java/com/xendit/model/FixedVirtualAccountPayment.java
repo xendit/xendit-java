@@ -38,4 +38,7 @@ public class FixedVirtualAccountPayment {
 
   @SerializedName("currency")
   String currency;
+
+  @SerializedName("sender_name")
+  String senderName;
 }
