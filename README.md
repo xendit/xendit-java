@@ -520,6 +520,7 @@ params.put("interval", "MONTH");
 params.put("interval_count", 1);
 params.put("description", "Test desc");
 params.put("amount", 100000);
+params.put("currency", "IDR"); //Optional param
 
 RecurringPayment recurringPayment = RecurringPayment.create(params);
 ```
