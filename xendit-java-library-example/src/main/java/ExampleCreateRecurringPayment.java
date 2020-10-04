@@ -17,6 +17,7 @@ public class ExampleCreateRecurringPayment {
       params.put("interval_count", 1);
       params.put("description", "Test desc");
       params.put("amount", 100000);
+      params.put("currency", "IDR");
 
       RecurringPayment recurringPayment = RecurringPayment.create(params);
       System.out.println(recurringPayment.getId());

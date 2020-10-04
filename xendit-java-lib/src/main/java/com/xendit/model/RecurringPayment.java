@@ -68,6 +68,9 @@ public class RecurringPayment {
   @SerializedName("charge_immediately")
   private Boolean chargeImmediately;
 
+  @SerializedName("currency")
+  private String currency;
+
   /**
    * Create recurring payment with given parameters
    *
