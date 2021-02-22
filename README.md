@@ -13,6 +13,8 @@ This library is the abstraction of Xendit API for access from applications writt
 - [API Documentation](#api-documentation)
 - [Requirements](#requirements)
 - [Installation](#installation)
+    - [Maven](#maven)
+    - [Gradle](#gradle)
 - [Usage](#usage)
   - [Disbursement Services](#disbursement-services)
     - [Create a disbursement](#create-a-disbursement)
@@ -51,10 +53,8 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get a payout by ID](#get-a-payout-by-id)
     - [Void a payout](#void-a-payout)
   - [E-Wallet Services](#e-wallet-services)
-    - [Create a Linkaja payment](#create-a-linkaja-payment)
-    - [Create a Dana payment](#create-a-dana-payment)
-    - [Create an OVO payment](#create-an-ovo-payment)
-    - [Get an e-wallet payment](#get-an-e-wallet-payment)
+    - [Create an e-wallet charge](#create-an-e-wallet-charge)
+    - [Get an e-wallet charge status](#get-an-e-wallet-charge-status)
   - [Credit Card Services](#credit-card-services)
     - [Create an authorization](#create-an-authorization)
     - [Create a charge](#create-a-charge)
@@ -71,7 +71,7 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Cardless credit customer details](#cardless-credit-customer-details)
     - [Cardless credit shipping address](#cardless-credit-shipping-address)
     - [Create a cardless credit payment](#create-a-cardless-credit-payment)
-  - [QR Codes](#qr-codes)
+  - [QR Code](#qr-code)
     - [Create QR Code](#create-qr-code)
     - [Get QR Code](#get-qr-code)
 - [Contributing](#contributing)
@@ -635,46 +635,54 @@ Payout payout = Payout.voidPayout("EXAMPLE_ID");
 
 ### E-Wallet Services
 
-#### Create a Linkaja payment
+#### Create an e-wallet charge
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+EWalletCharge.createEWalletCharge(
+    String referenceId,
+    String currency,
+    Number amount,
+    String checkoutMethod,
+    String channelCode,
+    Map&lt;String, String&gt; channelProperties,
+    String customerId,
+    EWalletBasketItem[] basket,
+    Map&lt;String, Object&gt; metadata
+);
+</pre>
+</td>
+<td>
+<pre>
+EWalletCharge.createEWalletCharge(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
 
 ```java
-EWalletPayment.createLinkajaPayment(
-    String externalId,
-    Number amount,
-    String phone,
-    EWalletLinkajaItem[] items,
-    String callbackUrl,
-    String redirectUrl
-);
+Map<String, String> channelProperties = new HashMap<>();
+channelProperties.put("success_redirect_url", "https://yourwebsite.com/order/123");
+
+Map<String, Object> params = new HashMap<>();
+params.put("reference_id", "test-reference-id");
+params.put("currency", "IDR");
+params.put("amount", 50000);
+params.put("checkout_method", "ONE_TIME_PAYMENT");
+params.put("channel_code", "ID_SHOPEEPAY");
+params.put("channel_properties", channelProperties);
+
+EWalletCharge charge = EWalletCharge.createEWalletCharge(params);
 ```
 
-#### Create a Dana payment
+#### Get an e-wallet charge status
 
 ```java
-EWalletPayment.createDanaPayment(
-    String externalId,
-    Number amount,
-    String phone,
-    String expirationDate,
-    String callbackUrl,
-    String redirectUrl
-);
-```
-
-#### Create an OVO payment
-
-```java
-EWalletPayment.createOvoPayment(
-    String externalId,
-    Number amount,
-    String phone
-);
-```
-
-#### Get an e-wallet payment
-
-```java
-EWalletPayment payment = EWalletPayment.getPaymentStatus("ovo-ewallet", EWalletPayment.EWalletType.OVO);
+EWalletCharge charge = EWalletCharge.getEWalletChargeStatus("ewc_c8630205-3e7a-4511-8250-26a084480c4c");
 ```
 
 [Back to top](#table-of-contents)
