@@ -196,3 +196,11 @@ uploadArchives {
         }
     }
 }
+
+nexusStaging {
+    serverUrl = 'https://s01.oss.sonatype.org/service/local/'
+    username = ossrhUser
+    password = ossrhPassword
+    repositoryDescription = 'Closed and released using gradle script'
+    packageGroup = this.group
+}
