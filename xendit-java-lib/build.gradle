@@ -127,7 +127,7 @@ spotless {
 publishing {
     publications {
         Production(MavenPublication) {
-            artifact("$buildDir/outputs/aar/xendit-java-release.aar") // replace with your library name
+            artifact("$buildDir/outputs/jar/xendit-java-release.jar") // replace with your library name
             groupId this.group
             artifactId 'xendit-java' // replace with your library artifact id
             version this.version
@@ -167,7 +167,7 @@ uploadArchives {
 
              pom.project {
                 name bintrayName
-                packaging 'aar'
+                packaging 'jar'
                 // optionally artifactId can be defined here
                 description libraryDescription
                 url siteUrl
