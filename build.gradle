@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,14 +30,16 @@ ext {
 
     libraryDescription = 'Easily connect to Xendit with this library.'
 
-    siteUrl = 'https://github.com/xendit/xendit-java-library'
-    gitUrl = 'https://github.com/xendit/xendit-java-library.git'
+    siteUrl = 'https://github.com/xendit/xendit-java'
+    gitUrl = 'https://github.com/xendit/xendit-java.git'
 
-    developerId = 'hakiemaul'
-    developerName = 'Aulia Hakiem.'
-    developerEmail = 'hakiem@xendit.co'
+    developerId = '0505gonzalez'
+    developerName = 'Juan Gonzalez.'
+    developerEmail = 'juan@xendit.co'
 
     licenseName = 'MIT'
-    licenseUrl = ''
+    licenseUrl = 'https://opensource.org/licenses/MIT'
     allLicenses = ["MIT"]
 }
+
+apply plugin: 'io.codearte.nexus-staging'
