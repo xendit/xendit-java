@@ -32,5 +32,5 @@ jobs:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
       run: ./gradlew uploadArchives -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-    - name: Close release
+    - name: Close and release repository
       run: ./gradlew closeAndReleaseRepository
