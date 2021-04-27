@@ -103,7 +103,6 @@ Add these lines of code in your `pom.xml`
 
 Add these lines in your `build.gradle`
 ```
-...
 compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 ```
 
