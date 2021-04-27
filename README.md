@@ -97,40 +97,12 @@ Add these lines of code in your `pom.xml`
     <artifactId>xendit-java-lib</artifactId>
     <version>SELECTED_VERSION</version>
 </dependency>
-
-<repositories>
-    <repository>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-        <id>bintray-xendit-android</id>
-        <name>bintray</name>
-        <url>https://dl.bintray.com/xendit/android</url>
-    </repository>
-</repositories>
-
-<pluginRepositories>
-    <pluginRepository>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-        <id>bintray-xendit-android</id>
-        <name>bintray-plugins</name>
-        <url>https://dl.bintray.com/xendit/android</url>
-    </pluginRepository>
-</pluginRepositories>
 ```
 
 #### Gradle
 
 Add these lines in your `build.gradle`
 ```
-...
-repositories {
-	maven {
-		url  "https://dl.bintray.com/xendit/android"
-	}
-}
 ...
 compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 ```
