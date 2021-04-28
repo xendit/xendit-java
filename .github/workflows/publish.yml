@@ -22,15 +22,14 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - id: install-secret-key
-      name: Install gpg secret key
-      run: |
-        cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-        gpg --list-secret-keys --keyid-format LONG
+      name: Add secring.gpg
+      run: echo ${{ secrets.OSSRH_GPG }} | base64 -d > securing.gpg
     - id: publish-to-central
       name: Publish to central repository
       env:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      run: ./gradlew uploadArchives -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+      run: ./gradlew uploadArchives -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} -Psigning.secretKeyRingFile=../securing.gpg -Psigning.keyId=${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
     - name: Close and release repository
       run: ./gradlew closeAndReleaseRepository
