@@ -24,7 +24,7 @@ jobs:
     - id: install-secret-key
       name: Add secring.gpg
       run: echo ${{ secrets.OSSRH_GPG }} | base64 -d > secring.gpg
-    - id: Build and Sign
+    - id: build-and-sign
       name: Build and Sign with Gradle
       run: ./gradlew build -x signArchives
     - id: publish-to-central
