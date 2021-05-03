@@ -35,6 +35,6 @@ jobs:
         MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
         MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-      run: ./gradlew uploadArchives -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} -Psigning.secretKeyRingFile=../secring.gpg -Psigning.keyId=${{ secrets.OSSRH_GPG_SECRET_KEY_ID }} --stacktrace --info
+      run: ./gradlew --stop && ./gradlew uploadArchives -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} -Psigning.secretKeyRingFile=../secring.gpg -Psigning.keyId=${{ secrets.OSSRH_GPG_SECRET_KEY_ID }} --stacktrace --info
     - name: Close and release repository
       run: ./gradlew closeAndReleaseRepository
