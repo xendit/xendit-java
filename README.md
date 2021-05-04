@@ -106,7 +106,7 @@ Add these lines in your `build.gradle`
 compile 'com.xendit:xendit-java-lib:{SELECTED_VERSION}'
 ```
 
-More information: https://bintray.com/xendit/android/xendit-java-lib
+More information: https://search.maven.org/artifact/com.xendit/xendit-java-lib
 
 ## Usage
 You need to use secret API key in order to use functionality in this library. The key can be obtained from your [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
