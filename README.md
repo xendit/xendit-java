@@ -1,7 +1,5 @@
 # Xendit Java Library
 
-[ ![Download](https://api.bintray.com/packages/xendit/android/xendit-java-lib/images/download.svg) ](https://bintray.com/xendit/android/xendit-java-lib/_latestVersion)
-
 This library is the abstraction of Xendit API for access from applications written with Java.
 
 ## Table of Contents
