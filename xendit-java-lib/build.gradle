@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven'
+    id 'signing'
     id 'maven-publish'
     id 'com.jfrog.bintray'
     id "com.diffplug.gradle.spotless" version "3.27.1"
@@ -31,8 +32,19 @@ dependencies {
     testImplementation group: "org.mockito", name: "mockito-core", version:"3.1.0"
 }
 
-task sourceJar(type: Jar) {
-    from sourceSets.main.allJava
+task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+    archives packageJavadoc
 }
 
 publishing {
@@ -42,7 +54,7 @@ publishing {
             artifactId artifact
 
             from components.java
-            artifact sourceJar {
+            artifact sourcesJar {
                 classifier "sources"
             }
             pom {
@@ -75,6 +87,13 @@ publishing {
 def bintrayUser = System.getenv('BINTRAY_USER')
 def bintrayAPIKey = System.getenv('BINTRAY_API_KEY')
 def bintrayGPGPassword = System.getenv('BINTRAY_GPG_PASSWORD')
+
+String ossrhUser = System.getenv('OSSRH_USERNAME')
+String ossrhPassword = System.getenv('OSSRH_PASSWORD')
+
+signing {
+    sign configurations.archives
+}
 
 bintray {
     user = bintrayUser
@@ -110,4 +129,85 @@ spotless {
     java {
         googleJavaFormat()
     }
+}
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+            artifact("$buildDir/outputs/jar/xendit-java-release.jar") // replace with your library name
+            groupId this.group
+            artifactId 'xendit-java' // replace with your library artifact id
+            version this.version
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                // Iterate over the implementation dependencies (we don't want the test ones),
+                // adding a <dependency> node for each
+                configurations.implementation.allDependencies.each {
+                    // Ensure dependencies such as fileTree are not included in the pom.
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUser, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUser, password: ossrhPassword)
+            }
+
+             pom.project {
+                name bintrayName
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description libraryDescription
+                url siteUrl
+
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url gitUrl
+                }
+
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+            }
+        }
+    }
+}
+
+nexusStaging {
+    serverUrl = 'https://s01.oss.sonatype.org/service/local/'
+    username = ossrhUser
+    password = ossrhPassword
+    repositoryDescription = 'Closed and released using gradle script'
+    packageGroup = this.group
 }
