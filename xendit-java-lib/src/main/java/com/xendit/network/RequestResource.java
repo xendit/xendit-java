@@ -8,7 +8,8 @@ public abstract class RequestResource {
   public enum Method {
     GET("GET"),
     POST("POST"),
-    PATCH("PATCH");
+    PATCH("PATCH"),
+    DELETE("DELETE");
 
     private String text;
 
