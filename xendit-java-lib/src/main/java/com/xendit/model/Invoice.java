@@ -258,7 +258,8 @@ public class Invoice {
    */
   public static Invoice expire(Map<String, String> headers, String id) throws XenditException {
     String url = String.format("%s%s%s%s", Xendit.getUrl(), "/invoices/", id, "/expire!");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, null, Invoice.class);
+    return Xendit.requestClient.request(
+        RequestResource.Method.POST, url, headers, null, Invoice.class);
   }
 
   /**

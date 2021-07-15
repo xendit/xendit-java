@@ -221,14 +221,27 @@ public class FixedVirtualAccount {
   /**
    * Get fixed VA based on its ID
    *
+   * @param headers Optional request headers
+   * @param id ID of the fixed virtual account to retrieve
+   * @return FixedVirtualAccount model.
+   * @throws XenditException
+   */
+  public static FixedVirtualAccount getFixedVA(Map<String, String> headers, String id)
+      throws XenditException {
+    String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
+    return Xendit.requestClient.request(
+        RequestResource.Method.GET, url, headers, null, FixedVirtualAccount.class);
+  }
+
+  /**
+   * Get fixed VA based on its ID
+   *
    * @param id ID of the fixed virtual account to retrieve
    * @return FixedVirtualAccount model.
    * @throws XenditException
    */
   public static FixedVirtualAccount getFixedVA(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, FixedVirtualAccount.class);
+    return getFixedVA(new HashMap<>(), id);
   }
 
   /**

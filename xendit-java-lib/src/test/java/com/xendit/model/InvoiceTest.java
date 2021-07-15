@@ -143,7 +143,8 @@ public class InvoiceTest {
   @Test
   public void expire_Success_IfIdIsAvailable() throws XenditException {
     String url = String.format("%s%s%s%s", URL_V1, "/", TEST_ID, "/expire!");
-    when(Xendit.requestClient.request(RequestResource.Method.POST, url, null, Invoice.class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.POST, url, new HashMap<>(), null, Invoice.class))
         .thenReturn(VALID_INVOICE);
     Invoice invoice = Invoice.expire("5e0cb0bbf4d38b20d5421b72");
     assertEquals(invoice, VALID_INVOICE);
@@ -152,7 +153,8 @@ public class InvoiceTest {
   @Test(expected = XenditException.class)
   public void expire_ThrowsException_IfIdIsNotAvailable() throws XenditException {
     String url = String.format("%s%s", URL_V1, "/fake_id/expire!");
-    when(Xendit.requestClient.request(RequestResource.Method.POST, url, null, Invoice.class))
+    when(Xendit.requestClient.request(
+            RequestResource.Method.POST, url, new HashMap<>(), null, Invoice.class))
         .thenThrow(XenditException.class);
     Invoice.expire("fake_id");
   }
