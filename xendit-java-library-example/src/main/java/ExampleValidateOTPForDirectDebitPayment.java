@@ -42,7 +42,7 @@ public class ExampleValidateOTPForDirectDebitPayment {
 	}
 
 	public static void main(String[] args) {
-		Xendit.apiKey = "xnd_development_5UzVsvB2dkak6WEQx2ilRXLpLxenfOBiztC6UHh5R5SeXxSmt3lk6fR12pv2dR9";
+		Xendit.apiKey = "xnd_development_...";
 		validateOTP();
 		validateOTP2();
 	}
