@@ -75,6 +75,18 @@ This library is the abstraction of Xendit API for access from applications writt
   - [Customer](#customer)
     - [Create Customer](#create-customer)
     - [Get Customer by Reference ID](#get-customer-by-reference-id)
+  - [Direct Debit](#direct-debit)
+    - [Initialize linked account tokenization](#initialize-linked-account-tokenization)
+    - [Validate OTP for Linked Account Token](#validate-otp-for-linked-account-token)
+    - [Retrieve accessible accounts by linked account token](#retrieve-accessible-accounts-by-linked-account-token)
+    - [Unbind linked account token](#unbind-linked-account-token)
+    - [Create payment method](#create-payment-method)
+    - [Get payment methods by customer ID](#get-payment-methods-by-customer-id)
+    - [Create recurring payment](#create-recurring-payment)
+    - [Create direct debit payment](#create-direct-debit-payment)
+    - [Validate OTP for direct debit payment](#validate-otp-for-direct-debit-payment)
+    - [Get direct debit payment by ID](#get-direct-debit-payment-by-id)
+    - [Get direct debit payment by reference ID](#get-direct-debit-payment-by-reference-id)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -954,6 +966,306 @@ Customer customer = Customer.createCustomer(params);
 
 ```java
 Customer[] customers = Customer.getCustomerByReferenceId("test-reference-id");
+```
+
+### Direct Debit
+
+#### Initialize linked account tokenization
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+InitializedLinkedAccount.initializeLinkedAccountTokenization(
+    String customerId,
+    LinkedAccountEnum.ChannelCode channelCode,
+    Map&lt;String, Object&gt; properties,
+    Map&lt;String, Object&gt; metadata
+);
+</pre>
+</td>
+<td>
+<pre>
+InitializedLinkedAccount.initializeLinkedAccountTokenization(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> properties = new HashMap<>();
+properties.put("account_mobile_number", "+62818555988");
+properties.put("card_last_four", "8888");
+properties.put("card_expiry", "06/24");
+properties.put("account_email", "test.email@xendit.co");
+
+Map<String, Object> metadata = new HashMap<>();
+metadata.put("tes", "123");
+
+String customerId = "791ac956-397a-400f-9fda-4958894e61b5";
+ChannelCode channelCode = ChannelCode.DC_BRI;
+
+InitializedLinkedAccount linkedAccount = InitializedLinkedAccount.initializeLinkedAccountTokenization(
+    customerId,
+    channelCode,
+    properties,
+    metadata
+);
+```
+
+#### Validate OTP for Linked Account Token
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+ValidatedLinkedAccount.validateOTP(
+    String tokenId,
+    String otpCode
+);
+</pre>
+</td>
+<td>
+<pre>
+ValidatedLinkedAccount.validateOTP(String tokenId, Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("otp_code", "333000");
+
+String tokenId = "lat-ba3c5645-f134-432a-b4f4-f8972685aa03";
+
+ValidatedLinkedAccount linkedAccount = ValidatedLinkedAccount.validateOTP(tokenId, params);
+```
+
+#### Retrieve accessible accounts by linked account token
+
+```java
+AccessibleLinkedAccount[] linkedAccounts = AccessibleLinkedAccount.getAccessibleLinkedAccounts(
+    "lat-960e709c-bdd6-4b4a-a361-243186379c45");
+System.out.println(Arrays.toString(linkedAccounts));
+```
+
+#### Unbind linked account token
+
+```java
+UnbindedLinkedAccount linkedAccount = UnbindedLinkedAccount.unbindLinkedAccountToken("lat-a08fba1b-100c-445b-b788-aaeaf8215e8f");
+```
+
+#### Create payment method
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+PaymentMethod.createPaymentMethod(
+    String customerId,
+    LinkedAccountEnum.AccountType type,
+    Map&lt;String, Object&gt; properties,
+    Map&lt;String, Object&gt; metadata
+);
+</pre>
+</td>
+<td>
+<pre>
+PaymentMethod.createPaymentMethod(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> properties = new HashMap<>();
+properties.put("id", "la-052d3e2d-bc4d-4c98-8072-8d232a552299");
+Map<String, Object> metadata = new HashMap<>();
+metadata.put("halo", "hello");
+metadata.put("tes", "123");
+Map<String, Object> params = new HashMap<>();
+params.put("customer_id", "4b7b6050-0830-440a-903b-37d527dbbaa9");
+params.put("type", "DEBIT_CARD");
+params.put("properties", properties);
+params.put("metadata", metadata);
+
+PaymentMethod paymentMethod = PaymentMethod.createPaymentMethod(params);
+```
+
+#### Get payment methods by customer ID
+
+```java
+PaymentMethod[] paymentMethods = PaymentMethod.getPaymentMethodsByCustomerId("4b7b6050-0830-440a-903b-37d527dbbaa9");
+System.out.println(Arrays.toString(paymentMethods));
+```
+
+#### Create recurring payment
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RecurringPayment.create(
+    String externalId,
+    String payerEmail,
+    String interval,
+    Number intervalCount,
+    String description,
+    Number amount
+);
+</pre>
+</td>
+<td>
+<pre>
+RecurringPayment.create(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String , Object> params = new HashMap<>();
+params.put("external_id", "recurring_31451441");
+params.put("payer_email", "sample_email@xendit.co");
+params.put("interval", "MONTH");
+params.put("interval_count", 1);
+params.put("description", "Test desc");
+params.put("amount", 100000);
+params.put("currency", "IDR");
+
+RecurringPayment recurringPayment = RecurringPayment.create(params);
+```
+
+#### Create direct debit payment
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+DirectDebitPayment.createDirectDebitPayment(
+    String referenceId,
+    String paymentMethodId,
+    String currency,
+    Number amount,
+    String callbackUrl,
+    Boolean enableOtp,
+    String description,
+    DirectDebitBasketItem[] basket,
+    DirectDebitDevice device,
+    String successRedirectUrl,
+    String failureRedirectUrl,
+    Map&lt;String, Object&gt; metadata,
+    String idempotencyKey
+);
+</pre>
+</td>
+<td>
+<pre>
+DirectDebitPayment.createDirectDebitPayment(Map&lt;String, Object&gt; params, String idempotencyKey);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+DirectDebitBasketItem basketItem =  DirectDebitBasketItem.builder()
+        .referenceId("basket-product-ref-id")
+        .name("product-name")
+        .category("mechanics")
+        .market("ID")
+        .price(50000)
+        .quantity(5)
+        .type("product type")
+        .subCategory("product sub category")
+        .description("product description")
+        .url("https://product.url")
+        .build();
+DirectDebitBasketItem[] basketItemArray = new DirectDebitBasketItem[]{basketItem};
+
+DirectDebitDevice device = DirectDebitDevice.builder()
+        .id("device-id")
+        .ipAddress("0.0.0.0")
+        .userAgent("user-agent")
+        .adId("ad-id")
+        .imei("123a456b789c")
+        .build();
+
+Map<String, Object> metadata = new HashMap<>();
+metadata.put("halo", "hello");
+metadata.put("tes", "123");
+
+Map<String, Object> params = new HashMap<>();
+params.put("reference_id", "test-direct-debit-ref-4");
+params.put("payment_method_id", "pm-ebb1c863-c7b5-4f20-b116-b3071b1d3aef");
+params.put("currency", "IDR");
+params.put("amount", 15000);
+params.put("callback_url", "http://webhook.site/");
+params.put("enable_otp", true);
+params.put("description", "test description");
+params.put("basket", basketItemArray);
+params.put("success_redirect_url", "https://success-redirect.url");
+params.put("failure_redirect_url", "https://failure-redirect.url");
+params.put("device", device);
+params.put("metadata", metadata);
+
+String idempotencyKey = "idempotency-key-4";
+
+DirectDebitPayment directDebitPayment = DirectDebitPayment.createDirectDebitPayment(params, idempotencyKey);
+```
+
+#### Validate OTP for direct debit payment
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+DirectDebitPayment.validateOTP(
+    String directDebitPaymentId,
+    String otpCode
+);
+</pre>
+</td>
+<td>
+<pre>
+DirectDebitPayment.validateOTP(String directDebitPaymentId, Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("otp_code", "222000");
+
+String directDebitPaymentId = "ddpy-b150da90-2121-44a6-a836-5eebf0d7ab55";
+
+DirectDebitPayment directDebitPayment = DirectDebitPayment.validateOTP(directDebitPaymentId, params);
+```
+
+#### Get direct debit payment by ID
+
+```java
+DirectDebitPayment directDebitPayment = DirectDebitPayment.getDirectDebitPaymentById("ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c");
+```
+
+#### Get direct debit payment by reference ID
+
+```java
+DirectDebitPayment[] directDebitPayments = DirectDebitPayment.getDirectDebitPaymentByReferenceId("test-direct-debit-ref-4");
+System.out.println(Arrays.toString(directDebitPayments));
 ```
 
 [Back to top](#table-of-contents)
