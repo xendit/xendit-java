@@ -33,8 +33,8 @@ public class AccessibleLinkedAccount {
    * @return AccessibleLinkedAccount
    * @throws XenditException XenditException
    */
-  public static AccessibleLinkedAccount[] getAccessibleLinkedAccounts(String linkedAccountTokenId)
-      throws XenditException {
+  public static AccessibleLinkedAccount[] retrieveAccessibleLinkedAccounts(
+      String linkedAccountTokenId) throws XenditException {
     String url =
         String.format(
             "%s%s%s%s",

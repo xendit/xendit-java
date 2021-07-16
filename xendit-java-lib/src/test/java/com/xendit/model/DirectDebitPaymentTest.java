@@ -298,19 +298,19 @@ public class DirectDebitPaymentTest {
   }
 
   @Test
-  public void getDirectDebitPaymentById_Success_IfIdIsAvailable() throws XenditException {
+  public void getDirectDebitPaymentStatusById_Success_IfIdIsAvailable() throws XenditException {
     when(Xendit.requestClient.request(
             RequestResource.Method.GET, GET_BY_ID_URL, null, DirectDebitPayment.class))
         .thenReturn(VALID_DIRECT_DEBIT_PAYMENT);
 
     DirectDebitPayment directDebitPayment =
-        DirectDebitPayment.getDirectDebitPaymentById(DIRECT_DEBIT_PAYMENT_ID);
+        DirectDebitPayment.getDirectDebitPaymentStatusById(DIRECT_DEBIT_PAYMENT_ID);
 
     assertEquals(VALID_DIRECT_DEBIT_PAYMENT, directDebitPayment);
   }
 
   @Test(expected = XenditException.class)
-  public void getDirectDebitPaymentById_ThrowsException_IfIdIsNotAvailable()
+  public void getDirectDebitPaymentStatusById_ThrowsException_IfIdIsNotAvailable()
       throws XenditException {
     String NOT_AVAILABLE_ID = "not-available-id";
     GET_BY_ID_URL = String.format("%s%s%s%s", URL, "/", NOT_AVAILABLE_ID, "/");
@@ -319,24 +319,24 @@ public class DirectDebitPaymentTest {
             RequestResource.Method.GET, GET_BY_ID_URL, null, DirectDebitPayment.class))
         .thenThrow(new XenditException("Direct debit payment not found"));
 
-    DirectDebitPayment.getDirectDebitPaymentById(NOT_AVAILABLE_ID);
+    DirectDebitPayment.getDirectDebitPaymentStatusById(NOT_AVAILABLE_ID);
   }
 
   @Test
-  public void getDirectDebitPaymentByReferenceId_Success_IfReferenceIdIsAvailable()
+  public void getDirectDebitPaymentStatusByReferenceId_Success_IfReferenceIdIsAvailable()
       throws XenditException {
     when(Xendit.requestClient.request(
             RequestResource.Method.GET, GET_BY_REFERENCE_ID_URL, null, DirectDebitPayment[].class))
         .thenReturn(DIRECT_DEBIT_PAYMENT_ARRAY);
 
     DirectDebitPayment[] directDebitPayments =
-        DirectDebitPayment.getDirectDebitPaymentByReferenceId(REFERENCE_ID);
+        DirectDebitPayment.getDirectDebitPaymentStatusByReferenceId(REFERENCE_ID);
 
     assertEquals(DIRECT_DEBIT_PAYMENT_ARRAY, directDebitPayments);
   }
 
   @Test(expected = XenditException.class)
-  public void getDirectDebitPaymentByReferenceId_ThrowsException_IfReferenceIdIsNotAvailable()
+  public void getDirectDebitPaymentStatusByReferenceId_ThrowsException_IfReferenceIdIsNotAvailable()
       throws XenditException {
     String NOT_AVAILABLE_REFERENCE_ID = "not-available-reference-id";
     GET_BY_REFERENCE_ID_URL =
@@ -346,6 +346,6 @@ public class DirectDebitPaymentTest {
             RequestResource.Method.GET, GET_BY_REFERENCE_ID_URL, null, DirectDebitPayment[].class))
         .thenThrow(new XenditException("Direct debit payments not found"));
 
-    DirectDebitPayment.getDirectDebitPaymentByReferenceId(NOT_AVAILABLE_REFERENCE_ID);
+    DirectDebitPayment.getDirectDebitPaymentStatusByReferenceId(NOT_AVAILABLE_REFERENCE_ID);
   }
 }

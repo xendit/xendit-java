@@ -211,13 +211,13 @@ public class DirectDebitPayment {
   }
 
   /**
-   * Get direct debit payment by id
+   * Get direct debit payment status by id
    *
    * @param directDebitPaymentId Xendit identifier for specified direct debit transaction
    * @return DirectDebitPayment
    * @throws XenditException XenditException
    */
-  public static DirectDebitPayment getDirectDebitPaymentById(String directDebitPaymentId)
+  public static DirectDebitPayment getDirectDebitPaymentStatusById(String directDebitPaymentId)
       throws XenditException {
     String url =
         String.format("%s%s%s%s", Xendit.getUrl(), "/direct_debits/", directDebitPaymentId, "/");
@@ -226,13 +226,13 @@ public class DirectDebitPayment {
   }
 
   /**
-   * Get direct debit payment by reference id
+   * Get direct debit payment status by reference id
    *
    * @param referenceId Direct debit payment reference ID
    * @return DirectDebitPayment
    * @throws XenditException XenditException
    */
-  public static DirectDebitPayment[] getDirectDebitPaymentByReferenceId(String referenceId)
+  public static DirectDebitPayment[] getDirectDebitPaymentStatusByReferenceId(String referenceId)
       throws XenditException {
     String url =
         String.format("%s%s%s", Xendit.getUrl(), "/direct_debits?reference_id=", referenceId);

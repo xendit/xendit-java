@@ -4,12 +4,12 @@ import com.xendit.model.DirectDebitPayment;
 
 import java.util.Arrays;
 
-public class ExampleGetDirectDebitPaymentByReferenceId {
+public class ExampleGetDirectDebitPaymentStatusByReferenceId {
 	public static void main(String[] args) {
 		Xendit.apiKey = "xnd_development_...";
 
 		try {
-			DirectDebitPayment[] directDebitPayments = DirectDebitPayment.getDirectDebitPaymentByReferenceId("test-direct-debit-ref-4");
+			DirectDebitPayment[] directDebitPayments = DirectDebitPayment.getDirectDebitPaymentStatusByReferenceId("test-direct-debit-ref-4");
 			System.out.println(Arrays.toString(directDebitPayments));
 		} catch (XenditException e) {
 			e.printStackTrace();

@@ -231,19 +231,19 @@ public class LinkedAccountTest {
   }
 
   @Test
-  public void getAccessibleAccounts_Success_IfTokenIdIsAvailable() throws XenditException {
+  public void retrieveAccessibleAccounts_Success_IfTokenIdIsAvailable() throws XenditException {
     when(Xendit.requestClient.request(
             RequestResource.Method.GET, GET_ACCESSIBLE_URL, null, AccessibleLinkedAccount[].class))
         .thenReturn(ACCESSIBLE_LINKED_ACCOUNT_ARRAY);
 
     AccessibleLinkedAccount[] accessibleLinkedAccounts =
-        AccessibleLinkedAccount.getAccessibleLinkedAccounts(TOKEN_ID);
+        AccessibleLinkedAccount.retrieveAccessibleLinkedAccounts(TOKEN_ID);
 
     assertEquals(ACCESSIBLE_LINKED_ACCOUNT_ARRAY, accessibleLinkedAccounts);
   }
 
   @Test(expected = XenditException.class)
-  public void getAccessibleAccounts_ThrowsException_IfTokenIdIsNotAvailable()
+  public void retrieveAccessibleAccounts_ThrowsException_IfTokenIdIsNotAvailable()
       throws XenditException {
     String NOT_AVAILABLE_TOKEN_ID = "not-available-token-id";
     GET_ACCESSIBLE_URL =
@@ -255,7 +255,7 @@ public class LinkedAccountTest {
             RequestResource.Method.GET, GET_ACCESSIBLE_URL, null, AccessibleLinkedAccount[].class))
         .thenThrow(new XenditException("Linked accounts not found"));
 
-    AccessibleLinkedAccount.getAccessibleLinkedAccounts(NOT_AVAILABLE_TOKEN_ID);
+    AccessibleLinkedAccount.retrieveAccessibleLinkedAccounts(NOT_AVAILABLE_TOKEN_ID);
   }
 
   @Test
