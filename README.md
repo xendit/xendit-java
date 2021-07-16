@@ -85,8 +85,8 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Create recurring payment](#create-recurring-payment)
     - [Create direct debit payment](#create-direct-debit-payment)
     - [Validate OTP for direct debit payment](#validate-otp-for-direct-debit-payment)
-    - [Get direct debit payment by ID](#get-direct-debit-payment-by-id)
-    - [Get direct debit payment by reference ID](#get-direct-debit-payment-by-reference-id)
+    - [Get direct debit payment status by ID](#get-direct-debit-payment-status-by-id)
+    - [Get direct debit payment status by reference ID](#get-direct-debit-payment-status-by-reference-id)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -1049,7 +1049,7 @@ ValidatedLinkedAccount linkedAccount = ValidatedLinkedAccount.validateOTP(tokenI
 #### Retrieve accessible accounts by linked account token
 
 ```java
-AccessibleLinkedAccount[] linkedAccounts = AccessibleLinkedAccount.getAccessibleLinkedAccounts(
+AccessibleLinkedAccount[] linkedAccounts = AccessibleLinkedAccount.retrieveAccessibleLinkedAccounts(
     "lat-960e709c-bdd6-4b4a-a361-243186379c45");
 System.out.println(Arrays.toString(linkedAccounts));
 ```
@@ -1255,16 +1255,16 @@ String directDebitPaymentId = "ddpy-b150da90-2121-44a6-a836-5eebf0d7ab55";
 DirectDebitPayment directDebitPayment = DirectDebitPayment.validateOTP(directDebitPaymentId, params);
 ```
 
-#### Get direct debit payment by ID
+#### Get direct debit payment status by ID
 
 ```java
-DirectDebitPayment directDebitPayment = DirectDebitPayment.getDirectDebitPaymentById("ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c");
+DirectDebitPayment directDebitPayment = DirectDebitPayment.getDirectDebitPaymentStatusById("ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c");
 ```
 
-#### Get direct debit payment by reference ID
+#### Get direct debit payment status by reference ID
 
 ```java
-DirectDebitPayment[] directDebitPayments = DirectDebitPayment.getDirectDebitPaymentByReferenceId("test-direct-debit-ref-4");
+DirectDebitPayment[] directDebitPayments = DirectDebitPayment.getDirectDebitPaymentStatusByReferenceId("test-direct-debit-ref-4");
 System.out.println(Arrays.toString(directDebitPayments));
 ```
 
