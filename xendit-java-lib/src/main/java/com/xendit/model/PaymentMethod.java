@@ -103,7 +103,7 @@ public class PaymentMethod {
         RequestResource.Method.GET, url, null, PaymentMethod[].class);
   }
 
-  public static PaymentMethod createPaymentMethodRequest(
+  private static PaymentMethod createPaymentMethodRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/payment_methods");
 

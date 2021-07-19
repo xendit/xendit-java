@@ -83,7 +83,7 @@ public class InitializedLinkedAccount {
     return initializeLinkedAccountTokenizationRequest(headers, params);
   }
 
-  public static InitializedLinkedAccount initializeLinkedAccountTokenizationRequest(
+  private static InitializedLinkedAccount initializeLinkedAccountTokenizationRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/linked_account_tokens/auth");
 

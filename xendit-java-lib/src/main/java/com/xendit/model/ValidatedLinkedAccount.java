@@ -68,7 +68,7 @@ public class ValidatedLinkedAccount {
     return validateOTPRequest(tokenId, headers, params);
   }
 
-  public static ValidatedLinkedAccount validateOTPRequest(
+  private static ValidatedLinkedAccount validateOTPRequest(
       String tokenId, Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url =

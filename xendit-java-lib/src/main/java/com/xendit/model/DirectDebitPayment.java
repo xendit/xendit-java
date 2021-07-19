@@ -240,7 +240,7 @@ public class DirectDebitPayment {
         RequestResource.Method.GET, url, null, DirectDebitPayment[].class);
   }
 
-  public static DirectDebitPayment createDirectDebitPaymentRequest(
+  private static DirectDebitPayment createDirectDebitPaymentRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/direct_debits");
 
@@ -248,7 +248,7 @@ public class DirectDebitPayment {
         RequestResource.Method.POST, url, headers, params, DirectDebitPayment.class);
   }
 
-  public static DirectDebitPayment validateOTPRequest(
+  private static DirectDebitPayment validateOTPRequest(
       String directDebitPaymentId, Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url =
