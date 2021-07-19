@@ -35,7 +35,7 @@ public class ExampleInitializeLinkedAccountTokenization {
 		}
 	}
 
-	private static void initializeLinkedAccountTokenization2() {
+	private static void initializeLinkedAccountTokenization_withAllParametersAsHashmap() {
 		try {
 			Map<String, Object> properties = new HashMap<>();
 			properties.put("success_redirect_url", "https://success-redirect-url.com");
@@ -63,6 +63,6 @@ public class ExampleInitializeLinkedAccountTokenization {
 	public static void main(String[] args) {
 		Xendit.apiKey = "xnd_development_...";
 		initializeLinkedAccountTokenization();
-		initializeLinkedAccountTokenization2();
+		initializeLinkedAccountTokenization_withAllParametersAsHashmap();
 	}
 }

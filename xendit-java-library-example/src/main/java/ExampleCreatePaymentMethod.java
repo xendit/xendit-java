@@ -31,7 +31,7 @@ public class ExampleCreatePaymentMethod {
 		}
 	}
 
-	private static void createPaymentMethod2() {
+	private static void createPaymentMethod_withAllParametersAsHashmap() {
 		try {
 			Map<String, Object> properties = new HashMap<>();
 			properties.put("id", "la-052d3e2d-bc4d-4c98-8072-8d232a552299");
@@ -57,6 +57,6 @@ public class ExampleCreatePaymentMethod {
 	public static void main(String[] args) {
 		Xendit.apiKey = "xnd_development_...";
 		createPaymentMethod();
-		createPaymentMethod2();
+		createPaymentMethod_withAllParametersAsHashmap();
 	}
 }

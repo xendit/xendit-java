@@ -24,7 +24,7 @@ public class ExampleValidateOTPforLinkedAccountToken {
 		}
 	}
 
-	private static void validateOTP2() {
+	private static void validateOTP_withAllParametersAsHashmap() {
 		try {
 			Map<String, Object> params = new HashMap<>();
 			params.put("otp_code", "333000");
@@ -44,6 +44,6 @@ public class ExampleValidateOTPforLinkedAccountToken {
 	public static void main(String[] args) {
 		Xendit.apiKey = "xnd_development_...";
 		validateOTP();
-		validateOTP2();
+		validateOTP_withAllParametersAsHashmap();
 	}
 }

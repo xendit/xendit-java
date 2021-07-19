@@ -70,7 +70,7 @@ public class ExampleCreateDirectDebitPayment {
 		}
 	}
 
-	private static void createDirectDebitPayment2() {
+	private static void createDirectDebitPayment_withAllParametersAsHashmap() {
 		try {
 			DirectDebitBasketItem basketItem =  DirectDebitBasketItem.builder()
 					.referenceId("basket-product-ref-id")
@@ -127,6 +127,6 @@ public class ExampleCreateDirectDebitPayment {
 	public static void main(String[] args) {
 		Xendit.apiKey = "xnd_development_...";
 		createDirectDebitPayment();
-		createDirectDebitPayment2();
+		createDirectDebitPayment_withAllParametersAsHashmap();
 	}
 }
