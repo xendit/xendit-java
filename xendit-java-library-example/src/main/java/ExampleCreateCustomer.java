@@ -50,7 +50,7 @@ public class ExampleCreateCustomer {
     }
   }
 
-  private static void createCustomer2() {
+  private static void createCustomer_withAllParametersAsHashmap() {
     try {
       Map<String, Object> metadata = new HashMap<>();
       metadata.put("halo", "hello");
@@ -75,6 +75,6 @@ public class ExampleCreateCustomer {
   public static void main(String[] args) {
     Xendit.apiKey = "xnd_development_...";
     createCustomer();
-    createCustomer2();
+    createCustomer_withAllParametersAsHashmap();
   }
 }
