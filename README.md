@@ -72,6 +72,9 @@ This library is the abstraction of Xendit API for access from applications writt
   - [QR Code](#qr-code)
     - [Create QR Code](#create-qr-code)
     - [Get QR Code](#get-qr-code)
+  - [Customer](#customer)
+    - [Create Customer](#create-customer)
+    - [Get Customer by Reference ID](#get-customer-by-reference-id)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -895,6 +898,62 @@ QRCode qrCode = QRCode.create(
 
 ```java
 QRCode qrCode = QRCode.getQRCode("external_id");
+```
+
+### Customer
+
+#### Create Customer
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+Customer.createCustomer(
+    String referenceId,
+    String mobileNumber,
+    String email,
+    String givenNames,
+    String middleName,
+    String surname,
+    String description,
+    String phoneNumber,
+    String nationality,
+    CustomerAddress[] addresses,
+    String dateOfBirth,
+    Map&lt;String, Object&gt; metadata
+);
+</pre>
+</td>
+<td>
+<pre>
+Customer.createCustomer(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> metadata = new HashMap<>();
+metadata.put("halo", "hello");
+metadata.put("tes", "123");
+
+Map<String, Object> params = new HashMap<>();
+params.put("reference_id", "test-reference-id");
+params.put("email", "tes@tes.com");
+params.put("given_names", "Given Names");
+params.put("nationality", "ID");
+params.put("date_of_birth", "1995-12-30");
+params.put("metadata", metadata);
+
+Customer customer = Customer.createCustomer(params);
+```
+
+#### Get Customer by Reference ID
+
+```java
+Customer[] customers = Customer.getCustomerByReferenceId("test-reference-id");
 ```
 
 [Back to top](#table-of-contents)
