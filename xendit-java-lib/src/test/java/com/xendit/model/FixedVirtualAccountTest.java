@@ -94,9 +94,10 @@ public class FixedVirtualAccountTest {
     String url = String.format("%s%s%s", URL, "/", TEST_ID);
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.GET, url, null, FixedVirtualAccount.class))
+            RequestResource.Method.GET, url, new HashMap<>(), null, FixedVirtualAccount.class))
         .thenReturn(VALID_ACCOUNT);
-    FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.getFixedVA(TEST_ID);
+    FixedVirtualAccount fixedVirtualAccount =
+        FixedVirtualAccount.getFixedVA(new HashMap<>(), TEST_ID);
 
     assertEquals(fixedVirtualAccount, VALID_ACCOUNT);
   }
@@ -106,7 +107,7 @@ public class FixedVirtualAccountTest {
     String url = String.format("%s%s", URL, "/fake_id");
 
     when(Xendit.requestClient.request(
-            RequestResource.Method.GET, url, null, FixedVirtualAccount.class))
+            RequestResource.Method.GET, url, new HashMap<>(), null, FixedVirtualAccount.class))
         .thenThrow(new XenditException("Callback virtual account not found"));
     FixedVirtualAccount.getFixedVA("fake_id");
   }

@@ -137,7 +137,7 @@ public class Customer {
     return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Customer[].class);
   }
 
-  public static Customer createCustomerRequest(
+  private static Customer createCustomerRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", Xendit.getUrl(), "/customers");
 
