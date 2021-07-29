@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### v.1.14.0
+- Add customer product function
+- Add direct debit function
+
 ### v.1.5.1 [25-02-2020]
 - Fix installation hassle for Maven Project
 - Add contributing guideline
