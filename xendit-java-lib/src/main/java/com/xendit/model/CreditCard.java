@@ -40,8 +40,8 @@ public class CreditCard {
     params.put("token_id", tokenId);
     params.put("external_id", externalId);
     params.put("amount", amount);
-    params.put("authentication_id", authenticationId);
-    params.put("card_cvn", cardCVN);
+    if (isNotEmpty(authenticationId)) params.put("authentication_id", authenticationId);
+    if (isNotEmpty(cardCVN)) params.put("card_cvn", cardCVN);
     params.put("capture", capture);
     String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
 
@@ -103,9 +103,9 @@ public class CreditCard {
     params.put("token_id", tokenId);
     params.put("external_id", externalId);
     params.put("amount", amount);
-    params.put("authentication_id", authenticationId);
-    params.put("card_cvn", cardCVN);
-    params.put("descriptor", descriptor);
+    if (isNotEmpty(authenticationId)) params.put("authentication_id", authenticationId);
+    if (isNotEmpty(cardCVN)) params.put("card_cvn", cardCVN);
+    if (isNotEmpty(descriptor)) params.put("descriptor", descriptor);
     String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
 
     return Xendit.requestClient.request(
@@ -250,5 +250,9 @@ public class CreditCard {
 
     return Xendit.requestClient.request(
         RequestResource.Method.POST, url, headers, params, CreditCardRefund.class);
+  }
+
+  private static boolean isNotEmpty(String param) {
+    return param != null && !"".equals(param);
   }
 }
