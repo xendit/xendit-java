@@ -1,0 +1,43 @@
+name: Publish to Maven Central
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    name: Publish to Maven Central
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      name: Checkout
+    - name: Set up Java and Maven Central Repository
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+        server-id: ossrh
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - id: install-secret-key
+      name: Add secring.gpg
+      run: echo ${{ secrets.OSSRH_GPG }} | base64 -d > secring.gpg
+    - id: build-and-sign
+      name: Build and Sign with Gradle
+      run: ./gradlew build -x signArchives
+    - id: publish-to-central
+      name: Publish to central repository
+      env:
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      run: ./gradlew --stop && ./gradlew uploadArchives -Psigning.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} -Psigning.secretKeyRingFile=../secring.gpg -Psigning.keyId=${{ secrets.OSSRH_GPG_SECRET_KEY_ID }} --stacktrace --info
+    - name: Close and release repository
+      run: ./gradlew --stop && ./gradlew closeAndReleaseRepository
+      env:
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
