@@ -1,13 +1,19 @@
 package com.xenditclient;
 
 import com.xenditclient.balance.BalanceClient;
+import com.xenditclient.disbursement.DisbursementClient;
+import com.xenditclient.ewallet.EWalletClient;
 import com.xenditclient.invoice.InvoiceClient;
+import com.xenditclient.payout.PayoutClient;
 
 public class XenditClient {
 
   private static Xendit.Option opt;
   public InvoiceClient invoice;
   public BalanceClient balance;
+  public PayoutClient payout;
+  public DisbursementClient disbursement;
+  public EWalletClient eWallet;
 
   private XenditClient() {}
 
@@ -36,8 +42,15 @@ public class XenditClient {
   private static XenditClient initClient(Xendit.Option option) {
     XenditClient.opt = option;
     XenditClient xenditClient = new XenditClient();
+    buildClient(option, xenditClient);
+    return xenditClient;
+  }
+
+  private static void buildClient(Xendit.Option option, XenditClient xenditClient) {
     xenditClient.invoice = new InvoiceClient(option, Xendit.getRequestClient());
     xenditClient.balance = new BalanceClient(option, Xendit.getRequestClient());
-    return xenditClient;
+    xenditClient.disbursement = new DisbursementClient(option, Xendit.getRequestClient());
+    xenditClient.payout = new PayoutClient(option, Xendit.getRequestClient());
+    xenditClient.eWallet = new EWalletClient(option, Xendit.getRequestClient());
   }
 }

@@ -19,9 +19,9 @@ import org.junit.Test;
 
 public class InvoiceTest {
   private static final String URL_V2 =
-      String.format("%s%s", com.xendit.Xendit.getUrl(), "/v2/invoices");
+      String.format("%s%s", Xendit.Opt.getXenditURL(), "/v2/invoices");
   private static final String URL_V1 =
-      String.format("%s%s", com.xendit.Xendit.getUrl(), "/invoices");
+      String.format("%s%s", Xendit.Opt.getXenditURL(), "/invoices");
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static String TEST_ID = "5e0cb0bbf4d38b20d5421b72";
   private static String TEST_EXTERNAL_ID = "test_id";

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
+import com.xenditclient.invoice.Invoice;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;

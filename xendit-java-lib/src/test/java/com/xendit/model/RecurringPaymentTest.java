@@ -9,6 +9,7 @@ import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.RequestResource;
+import com.xenditclient.invoice.Invoice;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -181,7 +182,8 @@ public class RecurringPaymentTest {
   public void getPaymentsById_Success_IfIdIsAvailable() throws XenditException {
     String url =
         String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?recurring_payment_id=", TEST_ID);
-    Invoice invoice = Invoice.builder().recurringPaymentId(TEST_ID).build();
+    Invoice invoice = new Invoice();
+    invoice.setRecurringPaymentId(TEST_ID);
     Invoice[] invoices = {invoice};
     when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class))
         .thenReturn(invoices);

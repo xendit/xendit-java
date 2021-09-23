@@ -5,7 +5,6 @@ import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBankInvoice;
 import com.xendit.model.AvailableEwalletInvoice;
 import com.xendit.model.AvailableRetailOutletInvoice;
-import com.xendit.model.ItemInvoice;
 import com.xenditclient.Xendit;
 import java.util.HashMap;
 import java.util.Map;

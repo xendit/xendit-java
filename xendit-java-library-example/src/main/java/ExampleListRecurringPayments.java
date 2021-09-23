@@ -1,7 +1,7 @@
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.Invoice;
 import com.xendit.model.RecurringPayment;
+import com.xenditclient.invoice.Invoice;
 
 public class ExampleListRecurringPayments {
   public static void main(String[] args) {

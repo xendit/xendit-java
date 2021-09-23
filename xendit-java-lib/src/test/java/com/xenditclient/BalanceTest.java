@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BalanceTest {
-  private static String URL = String.format("%s%s", com.xendit.Xendit.getUrl(), "/balance");
+  private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/balance");
   private static Map<String, String> HEADERS = new HashMap<>();
   Balance VALID_BALANCE = new Balance();
   NetworkClient requestClient = mock(BaseRequest.class);
