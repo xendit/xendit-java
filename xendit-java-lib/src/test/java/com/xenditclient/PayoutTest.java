@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
+import com.xenditclient.network.BaseRequest;
 import com.xenditclient.network.NetworkClient;
 import com.xenditclient.payout.Payout;
 import com.xenditclient.payout.PayoutClient;
@@ -24,8 +25,8 @@ public class PayoutTest {
   private static String TEST_STATUS_VOIDED = "VOIDED";
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
-  NetworkClient requestClient = mock(com.xenditclient.network.BaseRequest.class);
-  com.xenditclient.Xendit.Option opt = mock(com.xenditclient.Xendit.Option.class);
+  NetworkClient requestClient = mock(BaseRequest.class);
+  Xendit.Option opt = mock(Xendit.Option.class);
   PayoutClient payoutClient = mock(PayoutClient.class);
   private static Payout VALID_PAYOUT = new Payout();
   private static Payout VOIDED_PAYOUT = new Payout();

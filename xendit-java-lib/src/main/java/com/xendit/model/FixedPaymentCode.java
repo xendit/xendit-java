@@ -1,13 +1,12 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class FixedPaymentCode {
   public enum RetailOutletName {
     ALFAMART,

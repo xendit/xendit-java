@@ -1,18 +1,17 @@
-package com.xendit.model;
+package com.xenditclient.customer;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
+import com.xendit.model.CustomerAddress;
+import com.xenditclient.Xendit;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class Customer {
   @SerializedName("id")
   private String id;
@@ -52,6 +51,8 @@ public class Customer {
 
   @SerializedName("metadata")
   private Map<String, Object> metadata;
+
+  private static CustomerClient customerClient;
 
   /**
    * Create Customer
@@ -133,15 +134,47 @@ public class Customer {
    * @throws XenditException XenditException
    */
   public static Customer[] getCustomerByReferenceId(String referenceId) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/customers?reference_id=", referenceId);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Customer[].class);
+    CustomerClient client = getClient();
+    return client.getCustomerByReferenceId(referenceId);
   }
 
   private static Customer createCustomerRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/customers");
+    CustomerClient client = getClient();
+    return client.createCustomer(headers, params);
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, Customer.class);
+  /**
+   * Its create a client for Customer
+   *
+   * @return CustomerClient
+   */
+  private static CustomerClient getClient() {
+    if (isApiKeyExist()) {
+      if (customerClient == null
+          || !customerClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return customerClient =
+            new CustomerClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (customerClient == null
+          || !customerClient
+              .getOpt()
+              .getApiKey()
+              .trim()
+              .equals(com.xenditclient.Xendit.Opt.getApiKey().trim())) {
+        return customerClient = new CustomerClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return customerClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

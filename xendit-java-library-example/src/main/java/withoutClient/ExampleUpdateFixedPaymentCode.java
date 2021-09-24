@@ -1,7 +1,9 @@
-import com.xendit.Xendit;
+package withoutClient;
+
 import com.xendit.exception.XenditException;
 import com.xendit.model.FixedPaymentCode;
-import com.xendit.model.RetailOutlet;
+import com.xenditclient.Xendit;
+import com.xenditclient.retailOutlet.RetailOutlet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +31,12 @@ public class ExampleUpdateFixedPaymentCode {
     }
 
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_...";
-        updateWithParamObject("5e12d60b7bc384e60435ec92");
+        //access key with Option
+        Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+
+        //access static variable (same as old code )
+        //Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+
+        updateWithParamObject("614c652131464262440e3d06");
     }
 }

@@ -1,10 +1,13 @@
 package com.xenditclient;
 
 import com.xenditclient.balance.BalanceClient;
+import com.xenditclient.customer.CustomerClient;
 import com.xenditclient.disbursement.DisbursementClient;
 import com.xenditclient.ewallet.EWalletClient;
 import com.xenditclient.invoice.InvoiceClient;
 import com.xenditclient.payout.PayoutClient;
+import com.xenditclient.qrCode.QRCodeClient;
+import com.xenditclient.retailOutlet.RetailOutletClient;
 
 public class XenditClient {
 
@@ -14,6 +17,9 @@ public class XenditClient {
   public PayoutClient payout;
   public DisbursementClient disbursement;
   public EWalletClient eWallet;
+  public QRCodeClient qrCode;
+  public CustomerClient customer;
+  public RetailOutletClient retailOutlet;
 
   private XenditClient() {}
 
@@ -52,5 +58,8 @@ public class XenditClient {
     xenditClient.disbursement = new DisbursementClient(option, Xendit.getRequestClient());
     xenditClient.payout = new PayoutClient(option, Xendit.getRequestClient());
     xenditClient.eWallet = new EWalletClient(option, Xendit.getRequestClient());
+    xenditClient.qrCode = new QRCodeClient(option, Xendit.getRequestClient());
+    xenditClient.customer = new CustomerClient(option, Xendit.getRequestClient());
+    xenditClient.retailOutlet = new RetailOutletClient(option,Xendit.getRequestClient());
   }
 }

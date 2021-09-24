@@ -1,20 +1,23 @@
-package com.xendit.model;
+package com.xenditclient;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.BaseRequest;
+import com.xendit.model.CustomerAddress;
 import com.xendit.network.RequestResource;
+import com.xenditclient.customer.Customer;
+import com.xenditclient.customer.CustomerClient;
+import com.xenditclient.network.BaseRequest;
+import com.xenditclient.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CustomerTest {
-  private static String URL = String.format("%s%s", Xendit.getUrl(), "/customers");
+  private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/customers");
   private static String CUSTOMER_ID = "791ac956-397a-400f-9fda-4958894e61b5";
   private static String REFERENCE_ID = "test-reference-id";
   private static String EMAIL = "tes@tes.com";
@@ -24,6 +27,9 @@ public class CustomerTest {
   private static String DATE_OF_BIRTH = "1995-12-30";
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
+  NetworkClient requestClient = mock(BaseRequest.class);
+  Xendit.Option opt = mock(com.xenditclient.Xendit.Option.class);
+  CustomerClient customerClient = mock(CustomerClient.class);
   private static CustomerAddress CUSTOMER_ADDRESS =
       CustomerAddress.builder()
           .country("ID")
@@ -38,22 +44,23 @@ public class CustomerTest {
           .build();
   private static CustomerAddress[] CUSTOMER_ADDRESS_ARRAY =
       new CustomerAddress[] {CUSTOMER_ADDRESS};
-  private static Customer VALID_CUSTOMER =
-      Customer.builder()
-          .id(CUSTOMER_ID)
-          .referenceId(REFERENCE_ID)
-          .givenNames(GIVEN_NAMES)
-          .email(EMAIL)
-          .mobileNumber(MOBILE_NUMBER)
-          .nationality(NATIONALITY)
-          .dateOfBirth(DATE_OF_BIRTH)
-          .addresses(CUSTOMER_ADDRESS_ARRAY)
-          .build();
+  private static Customer VALID_CUSTOMER = new Customer();
   private static Customer[] CUSTOMER_ARRAY = new Customer[] {VALID_CUSTOMER};
 
   @Before
   public void initMocks() {
-    Xendit.requestClient = mock(BaseRequest.class);
+    VALID_CUSTOMER.setId(CUSTOMER_ID);
+    VALID_CUSTOMER.setReferenceId(REFERENCE_ID);
+    VALID_CUSTOMER.setGivenNames(GIVEN_NAMES);
+    VALID_CUSTOMER.setEmail(EMAIL);
+    VALID_CUSTOMER.setMobileNumber(MOBILE_NUMBER);
+    VALID_CUSTOMER.setNationality(NATIONALITY);
+    VALID_CUSTOMER.setDateOfBirth(DATE_OF_BIRTH);
+    VALID_CUSTOMER.setAddresses(CUSTOMER_ADDRESS_ARRAY);
+
+    Xendit.Opt.setApiKey(
+        "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+    Xendit.setRequestClient(requestClient);
     HEADERS.clear();
     PARAMS.clear();
   }
@@ -77,12 +84,26 @@ public class CustomerTest {
   public void createCustomer_Success_IfMethodCalledCorrectly() throws XenditException {
     initCreateParams();
 
-    when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS, Customer.class))
+    when(this.requestClient.request(
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), Customer.class))
+        .thenReturn(VALID_CUSTOMER);
+    when(customerClient.createCustomer(
+            REFERENCE_ID,
+            MOBILE_NUMBER,
+            EMAIL,
+            GIVEN_NAMES,
+            null,
+            null,
+            null,
+            null,
+            NATIONALITY,
+            CUSTOMER_ADDRESS_ARRAY,
+            DATE_OF_BIRTH,
+            null))
         .thenReturn(VALID_CUSTOMER);
 
     Customer customer =
-        Customer.createCustomer(
+        customerClient.createCustomer(
             REFERENCE_ID,
             MOBILE_NUMBER,
             EMAIL,
@@ -103,11 +124,12 @@ public class CustomerTest {
   public void createCustomer_Success_IfParamsIsValid() throws XenditException {
     initCreateParams();
 
-    when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS, Customer.class))
+    when(this.requestClient.request(
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), Customer.class))
         .thenReturn(VALID_CUSTOMER);
+    when(customerClient.createCustomer(PARAMS)).thenReturn(VALID_CUSTOMER);
 
-    Customer customer = Customer.createCustomer(PARAMS);
+    Customer customer = customerClient.createCustomer(PARAMS);
 
     assertEquals(VALID_CUSTOMER, customer);
   }
@@ -117,11 +139,12 @@ public class CustomerTest {
     initCreateParams();
     HEADERS.put("for-user-id", "user-id");
 
-    when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS, Customer.class))
+    when(this.requestClient.request(
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), Customer.class))
         .thenReturn(VALID_CUSTOMER);
+    when(customerClient.createCustomer(HEADERS, PARAMS)).thenReturn(VALID_CUSTOMER);
 
-    Customer customer = Customer.createCustomer(HEADERS, PARAMS);
+    Customer customer = customerClient.createCustomer(HEADERS, PARAMS);
 
     assertEquals(VALID_CUSTOMER, customer);
   }
@@ -131,21 +154,30 @@ public class CustomerTest {
     initCreateParams();
     PARAMS.put("nationality", "NOT_ID");
 
-    when(Xendit.requestClient.request(
-            RequestResource.Method.POST, URL, new HashMap<>(), PARAMS, Customer.class))
+    when(this.requestClient.request(
+            RequestResource.Method.POST,
+            URL,
+            new HashMap<>(),
+            PARAMS,
+            opt.getApiKey(),
+            Customer.class))
+        .thenThrow(new XenditException("Nationality is invalid"));
+    when(customerClient.createCustomer(PARAMS))
         .thenThrow(new XenditException("Nationality is invalid"));
 
-    Customer.createCustomer(PARAMS);
+    customerClient.createCustomer(PARAMS);
   }
 
   @Test
   public void getCustomer_Success_IfReferenceIdIsAvailable() throws XenditException {
     String url = String.format("%s?reference_id=%s", URL, REFERENCE_ID);
 
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Customer[].class))
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), Customer[].class))
         .thenReturn(CUSTOMER_ARRAY);
+    when(customerClient.getCustomerByReferenceId(REFERENCE_ID)).thenReturn(CUSTOMER_ARRAY);
 
-    Customer[] customers = Customer.getCustomerByReferenceId(REFERENCE_ID);
+    Customer[] customers = customerClient.getCustomerByReferenceId(REFERENCE_ID);
 
     assertEquals(CUSTOMER_ARRAY, customers);
   }
@@ -155,9 +187,11 @@ public class CustomerTest {
     String NOT_AVAILABLE_REFERENCE_ID = "not-available-reference-id";
     String url = String.format("%s?reference_id=%s", URL, NOT_AVAILABLE_REFERENCE_ID);
 
-    when(Xendit.requestClient.request(RequestResource.Method.GET, url, null, Customer[].class))
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), Customer[].class))
         .thenThrow(new XenditException("Customer not found"));
-
-    Customer.getCustomerByReferenceId(NOT_AVAILABLE_REFERENCE_ID);
+    when(customerClient.getCustomerByReferenceId(NOT_AVAILABLE_REFERENCE_ID))
+        .thenThrow(new XenditException("Customer not found"));
+    customerClient.getCustomerByReferenceId(NOT_AVAILABLE_REFERENCE_ID);
   }
 }
