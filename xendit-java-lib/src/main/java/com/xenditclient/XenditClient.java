@@ -1,6 +1,9 @@
 package com.xenditclient;
 
 import com.xenditclient.balance.BalanceClient;
+import com.xenditclient.batchDisbursements.BatchDisbursementClient;
+import com.xenditclient.cardlessCredit.CardlessCreditClient;
+import com.xenditclient.creditCard.CreditCardClient;
 import com.xenditclient.customer.CustomerClient;
 import com.xenditclient.disbursement.DisbursementClient;
 import com.xenditclient.ewallet.EWalletClient;
@@ -8,6 +11,7 @@ import com.xenditclient.invoice.InvoiceClient;
 import com.xenditclient.payout.PayoutClient;
 import com.xenditclient.qrCode.QRCodeClient;
 import com.xenditclient.retailOutlet.RetailOutletClient;
+import com.xenditclient.virtualAccount.FixedVirtualAccountClient;
 
 public class XenditClient {
 
@@ -20,8 +24,12 @@ public class XenditClient {
   public QRCodeClient qrCode;
   public CustomerClient customer;
   public RetailOutletClient retailOutlet;
+  public BatchDisbursementClient batchDisbursement;
+  public CardlessCreditClient cardlessCredit;
+  public CreditCardClient creditCard;
+  public FixedVirtualAccountClient fixedVirtualAccount;
 
-  private XenditClient() {}
+    private XenditClient() {}
 
   public static class Builder {
 
@@ -61,5 +69,9 @@ public class XenditClient {
     xenditClient.qrCode = new QRCodeClient(option, Xendit.getRequestClient());
     xenditClient.customer = new CustomerClient(option, Xendit.getRequestClient());
     xenditClient.retailOutlet = new RetailOutletClient(option,Xendit.getRequestClient());
+    xenditClient.batchDisbursement = new BatchDisbursementClient(option,Xendit.getRequestClient());
+    xenditClient.cardlessCredit = new CardlessCreditClient(option,Xendit.getRequestClient());
+    xenditClient.creditCard = new CreditCardClient(option,Xendit.getRequestClient());
+    xenditClient.fixedVirtualAccount = new FixedVirtualAccountClient(option,Xendit.getRequestClient());
   }
 }

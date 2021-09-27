@@ -1,13 +1,19 @@
-import com.xendit.Xendit;
+package withClient;
+
 import com.xendit.exception.XenditException;
-import com.xendit.model.CardlessCredit;
 import com.xendit.model.CardlessCreditCustomer;
 import com.xendit.model.CardlessCreditItem;
 import com.xendit.model.CardlessCreditShippingAddress;
+import com.xenditclient.XenditClient;
+import com.xenditclient.cardlessCredit.CardlessCredit;
 
 public class ExampleCreateCardlessCredit {
   public static void main(String[] args) {
-    Xendit.apiKey = "xnd_development_...";
+    //create xendit client which holds value of apikey
+    XenditClient xenditClient = new XenditClient.Builder()
+            .apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+            .build();
+
 
     try {
       CardlessCreditItem item =
@@ -40,7 +46,7 @@ public class ExampleCreateCardlessCredit {
           .phone("08129748247684")
           .build();
 
-      CardlessCredit cardlessCredit = CardlessCredit.create(
+      CardlessCredit cardlessCredit = xenditClient.cardlessCredit.create(
           "KREDIVO",
           "external_id",
           200000,

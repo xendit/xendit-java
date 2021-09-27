@@ -1,11 +1,17 @@
-import com.xendit.Xendit;
+package withoutClient;
+
 import com.xendit.exception.XenditException;
-import com.xendit.model.CreditCard;
 import com.xendit.model.CreditCardCharge;
+import com.xenditclient.Xendit;
+import com.xenditclient.creditCard.CreditCard;
 
 public class ExampleCreateAuthorizationCard {
   public static void main(String[] args) {
-    Xendit.apiKey = "xnd_development_...";
+    //access key with Option
+    Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+
+    //access static variable (same as old code )
+    //Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
 
     try {
       CreditCardCharge creditCardCharge = CreditCard.createAuthorization("token_id", "external_id", 75000, "auth_id", "123", false);

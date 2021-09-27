@@ -116,15 +116,6 @@ public class BaseRequest implements NetworkClient {
     try {
       connection = createXenditConnection(url, apiKey, headers);
 
-
-
-      if (method == RequestResource.Method.PATCH){
-        connection.setRequestProperty("X-HTTP-Method-Override", "PATCH");
-        connection.setRequestMethod(method.getText());
-      }else{
-        connection.setRequestMethod(method.getText());
-      }
-
       if (method == RequestResource.Method.POST || method == RequestResource.Method.PATCH) {
         connection.setDoOutput(true);
         connection.setRequestProperty("Accept-Charset", "utf-8");

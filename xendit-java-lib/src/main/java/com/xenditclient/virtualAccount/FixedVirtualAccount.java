@@ -1,20 +1,23 @@
-package com.xendit.model;
+package com.xenditclient.virtualAccount;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
+import com.xendit.model.AvailableBank;
+import com.xendit.model.FixedVirtualAccountPayment;
 import com.xendit.network.RequestResource;
+import com.xenditclient.Xendit;
+import com.xenditclient.payout.PayoutClient;
+import lombok.*;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class FixedVirtualAccount {
 
   @SerializedName("id")
@@ -62,6 +65,8 @@ public class FixedVirtualAccount {
 
   @SerializedName("description")
   private String description;
+
+  private static FixedVirtualAccountClient fixedVirtualAccountClient;
 
   /**
    * Create closed VA with complete object
@@ -213,9 +218,8 @@ public class FixedVirtualAccount {
    * @throws XenditException
    */
   public static AvailableBank[] getAvailableBanks() throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/available_virtual_account_banks");
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, AvailableBank[].class);
+    FixedVirtualAccountClient client = getClient();
+    return client.getAvailableBanks();
   }
 
   /**
@@ -228,9 +232,8 @@ public class FixedVirtualAccount {
    */
   public static FixedVirtualAccount getFixedVA(Map<String, String> headers, String id)
       throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, FixedVirtualAccount.class);
+    FixedVirtualAccountClient client = getClient();
+    return client.getFixedVA(headers, id);
   }
 
   /**
@@ -254,9 +257,8 @@ public class FixedVirtualAccount {
    */
   public static FixedVirtualAccount update(String id, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/callback_virtual_accounts/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.PATCH, url, params, FixedVirtualAccount.class);
+    FixedVirtualAccountClient client = getClient();
+    return client.update(id, params);
   }
 
   /**
@@ -267,25 +269,45 @@ public class FixedVirtualAccount {
    * @throws XenditException
    */
   public static FixedVirtualAccountPayment getPayment(String paymentId) throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s", Xendit.getUrl(), "/callback_virtual_account_payments/payment_id=", paymentId);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, FixedVirtualAccountPayment.class);
+    FixedVirtualAccountClient client = getClient();
+    return client.getPayment(paymentId);
   }
 
   private static FixedVirtualAccount create(
       Map<String, String> headers, Map<String, Object> params, Boolean isClosed)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/callback_virtual_accounts");
+    FixedVirtualAccountClient client = getClient();
+    return client.create(headers, params, isClosed);
+  }
 
-    params.put("is_closed", isClosed);
 
-    if (isClosed && params.containsKey("suggested_amount")) {
-      throw new ParamException("Suggested amount is not supported for closed VA");
+  /**
+   * Its create a client for FixedVirtualAccount
+   *
+   * @return FixedVirtualAccountClient
+   */
+  private static FixedVirtualAccountClient getClient() {
+    if (isApiKeyExist()) {
+      if (fixedVirtualAccountClient == null
+              || !fixedVirtualAccountClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return fixedVirtualAccountClient =
+                new FixedVirtualAccountClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (fixedVirtualAccountClient == null
+              || !fixedVirtualAccountClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return fixedVirtualAccountClient = new FixedVirtualAccountClient(Xendit.Opt, Xendit.getRequestClient());
+      }
     }
+    return fixedVirtualAccountClient;
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, FixedVirtualAccount.class);
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return com.xenditclient.Xendit.apiKey != null;
   }
 }
