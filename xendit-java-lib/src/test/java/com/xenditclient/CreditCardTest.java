@@ -1,13 +1,14 @@
 package com.xenditclient;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.CreditCardCharge;
-import com.xendit.model.CreditCardRefund;
-import com.xendit.model.CreditCardReverseAuth;
+import com.xenditclient.creditCard.CreditCardCharge;
+import com.xenditclient.creditCard.CreditCardRefund;
+import com.xenditclient.creditCard.CreditCardReverseAuth;
 import com.xendit.network.RequestResource;
 import com.xenditclient.creditCard.CreditCardClient;
-import com.xenditclient.network.BaseRequest;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import org.junit.Before;
 import org.junit.Test;
 

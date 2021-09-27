@@ -3,8 +3,8 @@ package com.xenditclient.disbursement;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
 import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.Xendit;
+import com.xendit.network.NetworkClient;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,7 +148,7 @@ public class DisbursementClient {
   }
 
   public Disbursement getById(Map<String, String> headers, String id) throws XenditException {
-    String url = String.format("%s%s%s", com.xendit.Xendit.getUrl(), "/disbursements/", id);
+    String url = String.format("%s%s%s",Xendit.Opt.getXenditURL(), "/disbursements/", id);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement.class);
   }

@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
+import com.xendit.network.BaseRequest;
 import com.xendit.network.RequestResource;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.NetworkClient;
 import com.xenditclient.qrCode.QRCode;
 import com.xenditclient.qrCode.QRCodeClient;
 import java.util.HashMap;
@@ -25,8 +27,8 @@ public class QRCodeTest {
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
   private static QRCode VALID_PAYMENT = new QRCode();
-  NetworkClient requestClient = mock(com.xenditclient.network.BaseRequest.class);
-  Xendit.Option opt = mock(com.xenditclient.Xendit.Option.class);
+  NetworkClient requestClient = mock(BaseRequest.class);
+  Xendit.Option opt = mock(Xendit.Option.class);
   QRCodeClient qrCodeClient = mock(QRCodeClient.class);
 
   @Before

@@ -2,8 +2,7 @@ package com.xenditclient.customer;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.exception.XenditException;
-import com.xendit.model.CustomerAddress;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.*;
@@ -162,7 +161,7 @@ public class Customer {
               .getOpt()
               .getApiKey()
               .trim()
-              .equals(com.xenditclient.Xendit.Opt.getApiKey().trim())) {
+              .equals(Xendit.Opt.getApiKey().trim())) {
         return customerClient = new CustomerClient(Xendit.Opt, Xendit.getRequestClient());
       }
     }

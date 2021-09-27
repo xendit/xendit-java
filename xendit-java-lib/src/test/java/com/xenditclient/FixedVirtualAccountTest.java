@@ -1,11 +1,13 @@
 package com.xenditclient;
 
+import com.xendit.Xendit;
 import com.xendit.enums.BankCode;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xendit.model.FixedVirtualAccountPayment;
+import com.xendit.network.BaseRequest;
+import com.xenditclient.virtualAccount.FixedVirtualAccountPayment;
 import com.xendit.network.RequestResource;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.NetworkClient;
 import com.xenditclient.virtualAccount.FixedVirtualAccount;
 import com.xenditclient.virtualAccount.FixedVirtualAccountClient;
 import org.junit.Before;
@@ -27,8 +29,8 @@ public class FixedVirtualAccountTest {
     private static String TEST_EXTERNAL_ID = "test_external_id";
     private static BankCode TEST_BANK_CODE = BankCode.BNI;
     private static String TEST_NAME = "John Doe";
-    NetworkClient requestClient = mock(com.xenditclient.network.BaseRequest.class);
-    com.xenditclient.Xendit.Option opt = mock(com.xenditclient.Xendit.Option.class);
+    NetworkClient requestClient = mock(BaseRequest.class);
+    Xendit.Option opt = mock(Xendit.Option.class);
     FixedVirtualAccountClient fixedVirtualAccountClient = mock(FixedVirtualAccountClient.class);
     private static FixedVirtualAccount VALID_ACCOUNT = new FixedVirtualAccount();
 

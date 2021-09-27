@@ -2,8 +2,7 @@ package com.xenditclient.ewallet;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.exception.XenditException;
-import com.xendit.model.EWalletBasketItem;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.*;
@@ -175,7 +174,7 @@ public class EWalletCharge {
           || !eWalletClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
         return eWalletClient =
             new EWalletClient(
-                com.xenditclient.Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+                Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (eWalletClient == null

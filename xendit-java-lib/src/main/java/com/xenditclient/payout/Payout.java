@@ -2,7 +2,7 @@ package com.xenditclient.payout;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.exception.XenditException;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.*;

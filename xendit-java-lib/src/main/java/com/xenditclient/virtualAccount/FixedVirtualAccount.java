@@ -1,13 +1,9 @@
 package com.xenditclient.virtualAccount;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xendit.model.FixedVirtualAccountPayment;
-import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.payout.PayoutClient;
+import com.xendit.Xendit;
 import lombok.*;
 
 import java.util.Date;
@@ -308,6 +304,6 @@ public class FixedVirtualAccount {
    * @return boolean
    */
   private static boolean isApiKeyExist() {
-    return com.xenditclient.Xendit.apiKey != null;
+    return Xendit.apiKey != null;
   }
 }

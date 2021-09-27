@@ -1,10 +1,7 @@
 package com.xenditclient.creditCard;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.CreditCardCharge;
-import com.xendit.model.CreditCardRefund;
-import com.xendit.model.CreditCardReverseAuth;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -253,6 +250,6 @@ public class CreditCard {
    * @return boolean
    */
   private static boolean isApiKeyExist() {
-    return com.xenditclient.Xendit.apiKey != null;
+    return Xendit.apiKey != null;
   }
 }

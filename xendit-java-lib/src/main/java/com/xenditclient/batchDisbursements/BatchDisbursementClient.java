@@ -2,10 +2,9 @@ package com.xenditclient.batchDisbursements;
 
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xendit.model.BatchDisbursementItem;
 import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.Xendit;
+import com.xendit.network.NetworkClient;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;

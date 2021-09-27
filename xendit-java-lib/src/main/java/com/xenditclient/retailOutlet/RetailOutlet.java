@@ -1,8 +1,7 @@
 package com.xenditclient.retailOutlet;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.FixedPaymentCode;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;

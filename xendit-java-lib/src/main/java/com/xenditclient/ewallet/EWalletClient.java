@@ -2,11 +2,9 @@ package com.xenditclient.ewallet;
 
 import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
-import com.xendit.model.EWalletBasketItem;
-import com.xendit.model.EWalletLinkajaItem;
 import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.Xendit;
+import com.xendit.network.NetworkClient;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;

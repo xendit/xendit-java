@@ -2,7 +2,7 @@ package com.xenditclient.qrCode;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.exception.XenditException;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
@@ -124,7 +124,7 @@ public class QRCode {
           || !qrCodeClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
         return qrCodeClient =
             new QRCodeClient(
-                com.xenditclient.Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+                Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (qrCodeClient == null
@@ -132,7 +132,7 @@ public class QRCode {
               .getOpt()
               .getApiKey()
               .trim()
-              .equals(com.xenditclient.Xendit.Opt.getApiKey().trim())) {
+              .equals(Xendit.Opt.getApiKey().trim())) {
         return qrCodeClient = new QRCodeClient(Xendit.Opt, Xendit.getRequestClient());
       }
     }

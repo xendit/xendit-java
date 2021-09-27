@@ -2,10 +2,8 @@ package com.xenditclient.invoice;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.exception.XenditException;
-import com.xendit.model.AvailableBankInvoice;
-import com.xendit.model.AvailableEwalletInvoice;
-import com.xendit.model.AvailableRetailOutletInvoice;
-import com.xenditclient.Xendit;
+import com.xenditclient.retailOutlet.AvailableRetailOutletInvoice;
+import com.xendit.Xendit;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;

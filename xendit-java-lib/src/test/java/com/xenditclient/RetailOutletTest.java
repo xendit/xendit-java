@@ -1,11 +1,11 @@
 package com.xenditclient;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.FixedPaymentCode;
+import com.xenditclient.retailOutlet.FixedPaymentCode;
 import com.xendit.network.RequestResource;
-import com.xenditclient.network.BaseRequest;
-import com.xenditclient.network.NetworkClient;
-import com.xenditclient.retailOutlet.RetailOutlet;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import com.xenditclient.retailOutlet.RetailOutletClient;
 import org.junit.Before;
 import org.junit.Test;

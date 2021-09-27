@@ -1,15 +1,15 @@
 package com.xenditclient;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.CardlessCreditCustomer;
-import com.xendit.model.CardlessCreditItem;
-import com.xendit.model.CardlessCreditShippingAddress;
+import com.xenditclient.cardlessCredit.CardlessCreditCustomer;
+import com.xenditclient.cardlessCredit.CardlessCreditItem;
+import com.xenditclient.cardlessCredit.CardlessCreditShippingAddress;
 import com.xendit.network.RequestResource;
-import com.xenditclient.balance.BalanceClient;
 import com.xenditclient.cardlessCredit.CardlessCredit;
 import com.xenditclient.cardlessCredit.CardlessCreditClient;
-import com.xenditclient.network.BaseRequest;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import org.junit.Before;
 import org.junit.Test;
 

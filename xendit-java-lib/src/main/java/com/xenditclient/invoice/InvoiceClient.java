@@ -2,8 +2,8 @@ package com.xenditclient.invoice;
 
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.Xendit;
+import com.xendit.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -48,7 +48,7 @@ public class InvoiceClient {
   }
 
   public Invoice getById(Map<String, String> headers, String id) throws XenditException {
-    String url = String.format("%s%s%s", com.xendit.Xendit.getUrl(), "/v2/invoices/", id);
+    String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/v2/invoices/", id);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Invoice.class);
   }
@@ -82,7 +82,7 @@ public class InvoiceClient {
     }
 
     String url =
-        String.format("%s%s%s", com.xendit.Xendit.getUrl(), "/v2/invoices?", parameters.toString());
+        String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/v2/invoices?", parameters.toString());
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Invoice[].class);
   }
@@ -93,7 +93,7 @@ public class InvoiceClient {
 
   public Invoice expire(Map<String, String> headers, String id) throws XenditException {
     String url =
-        String.format("%s%s%s%s", com.xendit.Xendit.getUrl(), "/invoices/", id, "/expire!");
+        String.format("%s%s%s%s", Xendit.Opt.getXenditURL(), "/invoices/", id, "/expire!");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, null, opt.getApiKey(), Invoice.class);
   }

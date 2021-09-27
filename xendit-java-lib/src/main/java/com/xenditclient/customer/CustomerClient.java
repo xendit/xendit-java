@@ -1,10 +1,9 @@
 package com.xenditclient.customer;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.CustomerAddress;
 import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.Xendit;
+import com.xendit.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;

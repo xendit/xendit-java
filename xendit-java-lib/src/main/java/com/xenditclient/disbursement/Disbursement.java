@@ -3,7 +3,7 @@ package com.xenditclient.disbursement;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xenditclient.Xendit;
+import com.xendit.Xendit;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
@@ -348,6 +348,6 @@ public class Disbursement {
    * @return boolean
    */
   private static boolean isApiKeyExist() {
-    return com.xenditclient.Xendit.apiKey != null;
+    return Xendit.apiKey != null;
   }
 }

@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.EWalletBasketItem;
+import com.xendit.network.BaseRequest;
+import com.xenditclient.ewallet.EWalletBasketItem;
 import com.xendit.network.RequestResource;
 import com.xenditclient.ewallet.EWalletCharge;
 import com.xenditclient.ewallet.EWalletClient;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -29,7 +31,7 @@ public class EWalletChargeTest {
   private static Map<String, String> ACTIONS = new HashMap<>();
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
-  NetworkClient requestClient = mock(com.xenditclient.network.BaseRequest.class);
+  NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   EWalletClient eWalletClient = mock(EWalletClient.class);
   private static EWalletBasketItem BASKET_ITEM =

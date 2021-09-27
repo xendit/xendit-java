@@ -6,12 +6,13 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.network.RequestResource;
 import com.xenditclient.invoice.Invoice;
 import com.xenditclient.invoice.InvoiceClient;
-import com.xenditclient.network.BaseRequest;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;

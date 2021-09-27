@@ -1,12 +1,9 @@
 package com.xenditclient.creditCard;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.CreditCardCharge;
-import com.xendit.model.CreditCardRefund;
-import com.xendit.model.CreditCardReverseAuth;
 import com.xendit.network.RequestResource;
-import com.xenditclient.Xendit;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.Xendit;
+import com.xendit.network.NetworkClient;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;

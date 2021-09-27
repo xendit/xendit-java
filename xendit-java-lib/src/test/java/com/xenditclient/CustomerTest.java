@@ -4,13 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.CustomerAddress;
+import com.xenditclient.customer.CustomerAddress;
 import com.xendit.network.RequestResource;
 import com.xenditclient.customer.Customer;
 import com.xenditclient.customer.CustomerClient;
-import com.xenditclient.network.BaseRequest;
-import com.xenditclient.network.NetworkClient;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class CustomerTest {
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
   NetworkClient requestClient = mock(BaseRequest.class);
-  Xendit.Option opt = mock(com.xenditclient.Xendit.Option.class);
+  Xendit.Option opt = mock(Xendit.Option.class);
   CustomerClient customerClient = mock(CustomerClient.class);
   private static CustomerAddress CUSTOMER_ADDRESS =
       CustomerAddress.builder()
