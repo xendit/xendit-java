@@ -6,11 +6,11 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
-import com.xenditclient.balance.Balance;
-import com.xenditclient.balance.BalanceClient;
+import com.xendit.model.balance.Balance;
+import com.xendit.model.balance.BalanceClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
+import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;

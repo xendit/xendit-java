@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xenditclient.customer.CustomerAddress;
+import com.xendit.model.customer.CustomerAddress;
 import com.xendit.Xendit;
-import com.xenditclient.customer.Customer;
+import com.xendit.model.customer.Customer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,10 +76,10 @@ public class ExampleCreateCustomer {
 
   public static void main(String[] args) {
     //access key with Option
-    Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+    Xendit.Opt.setApiKey("xnd_development_...");
 
     //access static variable (same as old code )
-    //Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+    //Xendit.apiKey = "xnd_development_...";
     createCustomer();
     createCustomer_withAllParametersAsHashmap();
   }

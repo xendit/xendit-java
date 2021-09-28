@@ -1,7 +1,6 @@
 package com.xendit.network;
 
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.Map;
 
 public interface NetworkClient {

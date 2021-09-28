@@ -2,14 +2,18 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xenditclient.virtualAccount.FixedVirtualAccount;
+import com.xendit.model.virtualAccount.FixedVirtualAccount;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ExampleUpdateVA {
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+        //access key with Option
+        Xendit.Opt.setApiKey("xnd_development_...");
+
+        //access static variable (same as old code )
+        //Xendit.apiKey = "xnd_development_...";
 
         try {
             Map<String, Object> params = new HashMap<>();

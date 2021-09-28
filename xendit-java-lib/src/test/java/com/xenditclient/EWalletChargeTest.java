@@ -6,12 +6,12 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
+import com.xendit.model.ewallet.EWalletBasketItem;
+import com.xendit.model.ewallet.EWalletCharge;
+import com.xendit.model.ewallet.EWalletClient;
 import com.xendit.network.BaseRequest;
-import com.xenditclient.ewallet.EWalletBasketItem;
-import com.xendit.network.RequestResource;
-import com.xenditclient.ewallet.EWalletCharge;
-import com.xenditclient.ewallet.EWalletClient;
 import com.xendit.network.NetworkClient;
+import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;

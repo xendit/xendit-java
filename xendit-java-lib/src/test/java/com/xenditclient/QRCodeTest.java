@@ -6,11 +6,11 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
+import com.xendit.model.qrCode.QRCode;
+import com.xendit.model.qrCode.QRCodeClient;
 import com.xendit.network.BaseRequest;
-import com.xendit.network.RequestResource;
 import com.xendit.network.NetworkClient;
-import com.xenditclient.qrCode.QRCode;
-import com.xenditclient.qrCode.QRCodeClient;
+import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;

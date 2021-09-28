@@ -4,17 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xenditclient.directDebit.DirectDebitPaymentClient;
-import com.xenditclient.directDebit.LinkedAccountEnum.AccountType;
+import com.xendit.exception.XenditException;
+import com.xendit.model.directDebit.DirectDebitPaymentClient;
+import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
+import com.xendit.model.directDebit.PaymentMethod;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.xenditclient.directDebit.PaymentMethod;
-import com.xendit.network.BaseRequest;
-import com.xendit.network.NetworkClient;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -70,7 +69,7 @@ public class PaymentMethodTest {
   @Before
   public void initMocks() {
     Xendit.Opt.setApiKey(
-            "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+        "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
     HEADERS.clear();
     PARAMS.clear();
@@ -88,9 +87,16 @@ public class PaymentMethodTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS,opt.getApiKey(), PaymentMethod.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            PaymentMethod.class))
         .thenReturn(VALID_PAYMENT_METHOD);
-    when(directDebitPaymentClient.createPaymentMethod(CUSTOMER_ID,PAYMENT_METHOD_TYPE,REQUEST_PROPERTIES,METADATA)).thenReturn(VALID_PAYMENT_METHOD);
+    when(directDebitPaymentClient.createPaymentMethod(
+            CUSTOMER_ID, PAYMENT_METHOD_TYPE, REQUEST_PROPERTIES, METADATA))
+        .thenReturn(VALID_PAYMENT_METHOD);
 
     PaymentMethod paymentMethod =
         directDebitPaymentClient.createPaymentMethod(
@@ -104,7 +110,12 @@ public class PaymentMethodTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS,opt.getApiKey(), PaymentMethod.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            PaymentMethod.class))
         .thenReturn(VALID_PAYMENT_METHOD);
     when(directDebitPaymentClient.createPaymentMethod(PARAMS)).thenReturn(VALID_PAYMENT_METHOD);
 
@@ -119,9 +130,15 @@ public class PaymentMethodTest {
     HEADERS.put("for-user-id", "user-id");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS,opt.getApiKey(), PaymentMethod.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            PaymentMethod.class))
         .thenReturn(VALID_PAYMENT_METHOD);
-    when(directDebitPaymentClient.createPaymentMethod(HEADERS,PARAMS)).thenReturn(VALID_PAYMENT_METHOD);
+    when(directDebitPaymentClient.createPaymentMethod(HEADERS, PARAMS))
+        .thenReturn(VALID_PAYMENT_METHOD);
 
     PaymentMethod paymentMethod = directDebitPaymentClient.createPaymentMethod(HEADERS, PARAMS);
 
@@ -134,11 +151,16 @@ public class PaymentMethodTest {
     PARAMS.put("type", "NOT_DEBIT_CARD");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, new HashMap<>(), PARAMS,opt.getApiKey(), PaymentMethod.class))
+            RequestResource.Method.POST,
+            URL,
+            new HashMap<>(),
+            PARAMS,
+            opt.getApiKey(),
+            PaymentMethod.class))
         .thenThrow(new XenditException("Payment method type is invalid"));
 
-    when(directDebitPaymentClient.createPaymentMethod(PARAMS)).thenThrow(new XenditException("Payment method type is invalid"));
-
+    when(directDebitPaymentClient.createPaymentMethod(PARAMS))
+        .thenThrow(new XenditException("Payment method type is invalid"));
 
     directDebitPaymentClient.createPaymentMethod(PARAMS);
   }
@@ -147,11 +169,14 @@ public class PaymentMethodTest {
   public void getPaymentMethods_Success_IfCustomerIdIsAvailable() throws XenditException {
     String url = String.format("%s?customer_id=%s", URL, CUSTOMER_ID);
 
-    when(this.requestClient.request(RequestResource.Method.GET, url, null,opt.getApiKey(), PaymentMethod[].class))
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), PaymentMethod[].class))
         .thenReturn(PAYMENT_METHOD_ARRAY);
-    when(directDebitPaymentClient.getPaymentMethodsByCustomerId(CUSTOMER_ID)).thenReturn(PAYMENT_METHOD_ARRAY);
+    when(directDebitPaymentClient.getPaymentMethodsByCustomerId(CUSTOMER_ID))
+        .thenReturn(PAYMENT_METHOD_ARRAY);
 
-    PaymentMethod[] paymentMethods = directDebitPaymentClient.getPaymentMethodsByCustomerId(CUSTOMER_ID);
+    PaymentMethod[] paymentMethods =
+        directDebitPaymentClient.getPaymentMethodsByCustomerId(CUSTOMER_ID);
 
     assertEquals(PAYMENT_METHOD_ARRAY, paymentMethods);
   }
@@ -162,10 +187,12 @@ public class PaymentMethodTest {
     String NOT_AVAILABLE_CUSTOMER_ID = "not-available-customer-id";
     String url = String.format("%s?customer_id=%s", URL, NOT_AVAILABLE_CUSTOMER_ID);
 
-    when(this.requestClient.request(RequestResource.Method.GET, url, null,opt.getApiKey(), PaymentMethod[].class))
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), PaymentMethod[].class))
         .thenThrow(new XenditException("Payment methods not found"));
 
-    when(directDebitPaymentClient.getPaymentMethodsByCustomerId(NOT_AVAILABLE_CUSTOMER_ID)).thenThrow(new XenditException("Payment methods not found"));
+    when(directDebitPaymentClient.getPaymentMethodsByCustomerId(NOT_AVAILABLE_CUSTOMER_ID))
+        .thenThrow(new XenditException("Payment methods not found"));
 
     directDebitPaymentClient.getPaymentMethodsByCustomerId(NOT_AVAILABLE_CUSTOMER_ID);
   }

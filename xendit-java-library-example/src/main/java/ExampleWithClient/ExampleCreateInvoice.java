@@ -1,7 +1,7 @@
 package ExampleWithClient;
 
 import com.xendit.XenditClient;
-import com.xenditclient.invoice.Invoice;
+import com.xendit.model.invoice.Invoice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +14,12 @@ public class ExampleCreateInvoice {
 
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+                .apikey("xnd_development_...")
                 .build();
 
         //create second object of xendit client with different apikey
         XenditClient xenditClient2 = new XenditClient.Builder()
-                .apikey("xnd_development_fBbgLpGo7ZdGqOIg4YIphntfNcFOE0ZdhqyfgeQcYaqoR3erPvVrozgtJY4EZb")
+                .apikey("xnd_development_...")
                 .build();
 
         try {

@@ -2,8 +2,8 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xenditclient.directDebit.LinkedAccountEnum.AccountType;
-import com.xenditclient.directDebit.PaymentMethod;
+import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
+import com.xendit.model.directDebit.PaymentMethod;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,10 +58,10 @@ public class ExampleCreatePaymentMethod {
 
 	public static void main(String[] args) {
 		//access key with Option
-		Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+		Xendit.Opt.setApiKey("xnd_development_...");
 
 		//access static variable (same as old code )
-		//Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+		//Xendit.apiKey = "xnd_development_...";
 		createPaymentMethod();
 		createPaymentMethod_withAllParametersAsHashmap();
 	}

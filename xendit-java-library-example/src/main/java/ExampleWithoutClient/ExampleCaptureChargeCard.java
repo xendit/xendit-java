@@ -1,17 +1,17 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xenditclient.creditCard.CreditCardCharge;
+import com.xendit.model.creditCard.CreditCardCharge;
 import com.xendit.Xendit;
-import com.xenditclient.creditCard.CreditCard;
+import com.xendit.model.creditCard.CreditCard;
 
 public class ExampleCaptureChargeCard {
   public static void main(String[] args) {
     //access key with Option
-    Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+    Xendit.Opt.setApiKey("xnd_development_...");
 
     //access static variable (same as old code )
-    //Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+    //Xendit.apiKey = "xnd_development_...";
 
     try {
       CreditCardCharge creditCardCharge = CreditCard.captureCharge("12345678", 55000);

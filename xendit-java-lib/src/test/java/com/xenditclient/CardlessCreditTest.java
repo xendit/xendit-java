@@ -1,24 +1,23 @@
 package com.xenditclient;
 
-import com.xendit.Xendit;
-import com.xendit.exception.XenditException;
-import com.xenditclient.cardlessCredit.CardlessCreditCustomer;
-import com.xenditclient.cardlessCredit.CardlessCreditItem;
-import com.xenditclient.cardlessCredit.CardlessCreditShippingAddress;
-import com.xendit.network.RequestResource;
-import com.xenditclient.cardlessCredit.CardlessCredit;
-import com.xenditclient.cardlessCredit.CardlessCreditClient;
-import com.xendit.network.BaseRequest;
-import com.xendit.network.NetworkClient;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import com.xendit.Xendit;
+import com.xendit.exception.XenditException;
+import com.xendit.model.cardlessCredit.CardlessCredit;
+import com.xendit.model.cardlessCredit.CardlessCreditClient;
+import com.xendit.model.cardlessCredit.CardlessCreditCustomer;
+import com.xendit.model.cardlessCredit.CardlessCreditItem;
+import com.xendit.model.cardlessCredit.CardlessCreditShippingAddress;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
+import com.xendit.network.RequestResource;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CardlessCreditTest {
   private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/cardless-credit");
@@ -58,7 +57,7 @@ public class CardlessCreditTest {
   @Before
   public void initMocks() {
     Xendit.Opt.setApiKey(
-            "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+        "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
     PARAMS.clear();
     PARAMS.put("cardless_credit_type", "KREDIVO");
@@ -75,7 +74,12 @@ public class CardlessCreditTest {
   @Test
   public void create_Success_IfParamsAreValid() throws XenditException {
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS,opt.getApiKey(), CardlessCredit.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            CardlessCredit.class))
         .thenReturn(VALID_CREDIT);
     when(cardlessCreditClient.create(PARAMS)).thenReturn(VALID_CREDIT);
     CardlessCredit cardlessCredit = cardlessCreditClient.create(PARAMS);
@@ -87,10 +91,17 @@ public class CardlessCreditTest {
     PARAMS.clear();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS,opt.getApiKey(), CardlessCredit.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            CardlessCredit.class))
         .thenThrow(
             new XenditException("There was an error with the format submitted to the server."));
-    when(cardlessCreditClient.create(PARAMS)).thenThrow(new XenditException("There was an error with the format submitted to the server."));
+    when(cardlessCreditClient.create(PARAMS))
+        .thenThrow(
+            new XenditException("There was an error with the format submitted to the server."));
     cardlessCreditClient.create(PARAMS);
   }
 }

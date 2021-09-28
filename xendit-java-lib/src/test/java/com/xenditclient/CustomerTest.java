@@ -6,12 +6,12 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xenditclient.customer.CustomerAddress;
-import com.xendit.network.RequestResource;
-import com.xenditclient.customer.Customer;
-import com.xenditclient.customer.CustomerClient;
+import com.xendit.model.customer.Customer;
+import com.xendit.model.customer.CustomerAddress;
+import com.xendit.model.customer.CustomerClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
+import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;

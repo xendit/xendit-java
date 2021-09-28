@@ -2,13 +2,13 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xenditclient.qrCode.QRCode;
+import com.xendit.model.qrCode.QRCode;
 
 public class ExampleCreateQRCode {
   public static void main(String[] args) {
     //create xendit client which holds value of apikey
     XenditClient xenditClient = new XenditClient.Builder()
-            .apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+            .apikey("xnd_development_...")
             .build();
     try {
       QRCode qrCode = xenditClient.qrCode.createQRCode("external_id", QRCode.QRCodeType.DYNAMIC, "https://webhook.site", 10000);

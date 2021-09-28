@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xenditclient.disbursement.Disbursement;
+import com.xendit.model.disbursement.Disbursement;
 
 import java.util.Arrays;
 

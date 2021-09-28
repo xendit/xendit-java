@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xenditclient.ewallet.EWalletBasketItem;
+import com.xendit.model.ewallet.EWalletBasketItem;
 import com.xendit.Xendit;
-import com.xenditclient.ewallet.EWalletCharge;
+import com.xendit.model.ewallet.EWalletCharge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,10 +76,10 @@ public class ExampleCreateEWalletCharge {
 
   public static void main(String[] args) {
     //access key with Option
-    Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+    Xendit.Opt.setApiKey("xnd_development_...");
 
     //access static variable (same as old code )
-    //Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+    //Xendit.apiKey = "xnd_development_...";
     createCharge();
     createCharge2();
   }

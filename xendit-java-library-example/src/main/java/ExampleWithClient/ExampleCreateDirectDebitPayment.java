@@ -2,9 +2,9 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xenditclient.directDebit.DirectDebitBasketItem;
-import com.xenditclient.directDebit.DirectDebitDevice;
-import com.xenditclient.directDebit.DirectDebitPayment;
+import com.xendit.model.directDebit.DirectDebitBasketItem;
+import com.xendit.model.directDebit.DirectDebitDevice;
+import com.xendit.model.directDebit.DirectDebitPayment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -129,7 +129,7 @@ public class ExampleCreateDirectDebitPayment {
 	public static void main(String[] args) {
 		//create xendit client which holds value of apikey
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+				.apikey("xnd_development_...")
 				.build();
 		createDirectDebitPayment(xenditClient);
 		createDirectDebitPayment_withAllParametersAsHashmap(xenditClient);

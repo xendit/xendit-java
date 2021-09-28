@@ -4,17 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xenditclient.directDebit.*;
-import com.xenditclient.directDebit.LinkedAccountEnum.AccountType;
-import com.xenditclient.directDebit.LinkedAccountEnum.ChannelCode;
+import com.xendit.exception.XenditException;
+import com.xendit.model.directDebit.*;
+import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
+import com.xendit.model.directDebit.LinkedAccountEnum.ChannelCode;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.xendit.network.BaseRequest;
-import com.xendit.network.NetworkClient;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,9 +23,11 @@ public class LinkedAccountTest {
       String.format("%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/auth");
   private static String VALIDATE_URL =
       String.format(
-          "%s%s%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/", TOKEN_ID, "/validate_otp");
+          "%s%s%s%s",
+          Xendit.Opt.getXenditURL(), "/linked_account_tokens/", TOKEN_ID, "/validate_otp");
   private static String GET_ACCESSIBLE_URL =
-      String.format("%s%s%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/", TOKEN_ID, "/accounts");
+      String.format(
+          "%s%s%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/", TOKEN_ID, "/accounts");
   private static String UNBIND_URL =
       String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/", TOKEN_ID);
   private static String CUSTOMER_ID = "6778b829-1936-4c4a-a321-9a0178840571";
@@ -49,7 +50,8 @@ public class LinkedAccountTest {
           put("account_email", "test.email@xendit.co");
         }
       };
-  private static InitializedLinkedAccount VALID_INITIALIZED_LINKED_ACCOUNT = new InitializedLinkedAccount();
+  private static InitializedLinkedAccount VALID_INITIALIZED_LINKED_ACCOUNT =
+      new InitializedLinkedAccount();
 
   private static ValidatedLinkedAccount VALID_VALIDATED_LINKED_ACCOUNT =
       ValidatedLinkedAccount.builder()
@@ -78,7 +80,7 @@ public class LinkedAccountTest {
     VALID_INITIALIZED_LINKED_ACCOUNT.setStatus(PENDING_STATUS);
 
     Xendit.Opt.setApiKey(
-            "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+        "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
 
     HEADERS.clear();
@@ -108,10 +110,12 @@ public class LinkedAccountTest {
             opt.getApiKey(),
             InitializedLinkedAccount.class))
         .thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
-    when(directDebitPaymentClient.initializeLinkedAccountTokenization(CUSTOMER_ID,CHANNEL_CODE,PROPERTIES,null)).thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.initializeLinkedAccountTokenization(
+            CUSTOMER_ID, CHANNEL_CODE, PROPERTIES, null))
+        .thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
 
     InitializedLinkedAccount initializedLinkedAccount =
-            directDebitPaymentClient.initializeLinkedAccountTokenization(
+        directDebitPaymentClient.initializeLinkedAccountTokenization(
             CUSTOMER_ID, CHANNEL_CODE, PROPERTIES, null);
 
     assertEquals(VALID_INITIALIZED_LINKED_ACCOUNT, initializedLinkedAccount);
@@ -130,10 +134,11 @@ public class LinkedAccountTest {
             InitializedLinkedAccount.class))
         .thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
 
-    when(directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS)).thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS))
+        .thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
 
     InitializedLinkedAccount initializedLinkedAccount =
-            directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS);
+        directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS);
 
     assertEquals(VALID_INITIALIZED_LINKED_ACCOUNT, initializedLinkedAccount);
   }
@@ -152,10 +157,11 @@ public class LinkedAccountTest {
             InitializedLinkedAccount.class))
         .thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
 
-    when(directDebitPaymentClient.initializeLinkedAccountTokenization(HEADERS,PARAMS)).thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.initializeLinkedAccountTokenization(HEADERS, PARAMS))
+        .thenReturn(VALID_INITIALIZED_LINKED_ACCOUNT);
 
     InitializedLinkedAccount initializedLinkedAccount =
-            directDebitPaymentClient.initializeLinkedAccountTokenization(HEADERS, PARAMS);
+        directDebitPaymentClient.initializeLinkedAccountTokenization(HEADERS, PARAMS);
 
     assertEquals(VALID_INITIALIZED_LINKED_ACCOUNT, initializedLinkedAccount);
   }
@@ -173,7 +179,8 @@ public class LinkedAccountTest {
             opt.getApiKey(),
             InitializedLinkedAccount.class))
         .thenThrow(new XenditException("Channel code is invalid"));
-    when(directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS)).thenThrow(new XenditException("Channel code is invalid"));
+    when(directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS))
+        .thenThrow(new XenditException("Channel code is invalid"));
 
     directDebitPaymentClient.initializeLinkedAccountTokenization(PARAMS);
   }
@@ -191,10 +198,11 @@ public class LinkedAccountTest {
             ValidatedLinkedAccount.class))
         .thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
 
-    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID,OTP_CODE)).thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, OTP_CODE))
+        .thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
 
     ValidatedLinkedAccount validatedLinkedAccount =
-            directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, OTP_CODE);
+        directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, OTP_CODE);
 
     assertEquals(VALID_VALIDATED_LINKED_ACCOUNT, validatedLinkedAccount);
   }
@@ -212,7 +220,8 @@ public class LinkedAccountTest {
             ValidatedLinkedAccount.class))
         .thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
 
-    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID,PARAMS)).thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, PARAMS))
+        .thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
 
     ValidatedLinkedAccount validatedLinkedAccount =
         directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, PARAMS);
@@ -234,7 +243,8 @@ public class LinkedAccountTest {
             ValidatedLinkedAccount.class))
         .thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
 
-    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID,HEADERS,PARAMS)).thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, HEADERS, PARAMS))
+        .thenReturn(VALID_VALIDATED_LINKED_ACCOUNT);
 
     ValidatedLinkedAccount validatedLinkedAccount =
         directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, HEADERS, PARAMS);
@@ -255,7 +265,8 @@ public class LinkedAccountTest {
             opt.getApiKey(),
             ValidatedLinkedAccount.class))
         .thenThrow(new XenditException("OTP code is invalid"));
-    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID,PARAMS)).thenThrow(new XenditException("OTP code is invalid"));
+    when(directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, PARAMS))
+        .thenThrow(new XenditException("OTP code is invalid"));
 
     directDebitPaymentClient.validateOTPWithToken(TOKEN_ID, PARAMS);
   }
@@ -263,10 +274,15 @@ public class LinkedAccountTest {
   @Test
   public void retrieveAccessibleAccounts_Success_IfTokenIdIsAvailable() throws XenditException {
     when(this.requestClient.request(
-            RequestResource.Method.GET, GET_ACCESSIBLE_URL, null,opt.getApiKey(), AccessibleLinkedAccount[].class))
+            RequestResource.Method.GET,
+            GET_ACCESSIBLE_URL,
+            null,
+            opt.getApiKey(),
+            AccessibleLinkedAccount[].class))
         .thenReturn(ACCESSIBLE_LINKED_ACCOUNT_ARRAY);
 
-    when(directDebitPaymentClient.retrieveAccessibleLinkedAccounts(TOKEN_ID)).thenReturn(ACCESSIBLE_LINKED_ACCOUNT_ARRAY);
+    when(directDebitPaymentClient.retrieveAccessibleLinkedAccounts(TOKEN_ID))
+        .thenReturn(ACCESSIBLE_LINKED_ACCOUNT_ARRAY);
 
     AccessibleLinkedAccount[] accessibleLinkedAccounts =
         directDebitPaymentClient.retrieveAccessibleLinkedAccounts(TOKEN_ID);
@@ -281,13 +297,20 @@ public class LinkedAccountTest {
     GET_ACCESSIBLE_URL =
         String.format(
             "%s%s%s%s",
-            Xendit.Opt.getXenditURL(), "/linked_account_tokens/", NOT_AVAILABLE_TOKEN_ID, "/accounts");
+            Xendit.Opt.getXenditURL(),
+            "/linked_account_tokens/",
+            NOT_AVAILABLE_TOKEN_ID,
+            "/accounts");
 
     when(this.requestClient.request(
-            RequestResource.Method.GET, GET_ACCESSIBLE_URL, null,opt.getApiKey(), AccessibleLinkedAccount[].class))
+            RequestResource.Method.GET,
+            GET_ACCESSIBLE_URL,
+            null,
+            opt.getApiKey(),
+            AccessibleLinkedAccount[].class))
         .thenThrow(new XenditException("Linked accounts not found"));
     when(directDebitPaymentClient.retrieveAccessibleLinkedAccounts(NOT_AVAILABLE_TOKEN_ID))
-            .thenThrow(new XenditException("Linked accounts not found"));
+        .thenThrow(new XenditException("Linked accounts not found"));
 
     directDebitPaymentClient.retrieveAccessibleLinkedAccounts(NOT_AVAILABLE_TOKEN_ID);
   }
@@ -295,10 +318,15 @@ public class LinkedAccountTest {
   @Test
   public void unbindLinkedAccount_Success_IfTokenIdIsAvailable() throws XenditException {
     when(this.requestClient.request(
-            RequestResource.Method.DELETE, UNBIND_URL, null, opt.getApiKey(),UnbindedLinkedAccount.class))
+            RequestResource.Method.DELETE,
+            UNBIND_URL,
+            null,
+            opt.getApiKey(),
+            UnbindedLinkedAccount.class))
         .thenReturn(VALID_UNBINDED_LINKED_ACCOUNT);
 
-    when(directDebitPaymentClient.unbindLinkedAccountToken(TOKEN_ID)).thenReturn(VALID_UNBINDED_LINKED_ACCOUNT);
+    when(directDebitPaymentClient.unbindLinkedAccountToken(TOKEN_ID))
+        .thenReturn(VALID_UNBINDED_LINKED_ACCOUNT);
 
     UnbindedLinkedAccount unbindedLinkedAccount =
         directDebitPaymentClient.unbindLinkedAccountToken(TOKEN_ID);
@@ -310,14 +338,19 @@ public class LinkedAccountTest {
   public void unbindLinkedAccount_ThrowsException_IfTokenIdIsNotAvailable() throws XenditException {
     String NOT_AVAILABLE_TOKEN_ID = "not-available-token-id";
     UNBIND_URL =
-        String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/", NOT_AVAILABLE_TOKEN_ID);
+        String.format(
+            "%s%s%s", Xendit.Opt.getXenditURL(), "/linked_account_tokens/", NOT_AVAILABLE_TOKEN_ID);
 
     when(this.requestClient.request(
-            RequestResource.Method.DELETE, UNBIND_URL, null,opt.getApiKey(), UnbindedLinkedAccount.class))
+            RequestResource.Method.DELETE,
+            UNBIND_URL,
+            null,
+            opt.getApiKey(),
+            UnbindedLinkedAccount.class))
         .thenThrow(new XenditException("Linked account not found"));
 
     when(directDebitPaymentClient.unbindLinkedAccountToken(NOT_AVAILABLE_TOKEN_ID))
-            .thenThrow(new XenditException("Linked account not found"));
+        .thenThrow(new XenditException("Linked account not found"));
 
     directDebitPaymentClient.unbindLinkedAccountToken(NOT_AVAILABLE_TOKEN_ID);
   }

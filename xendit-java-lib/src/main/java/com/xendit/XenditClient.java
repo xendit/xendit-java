@@ -1,19 +1,19 @@
 package com.xendit;
 
-import com.xenditclient.balance.BalanceClient;
-import com.xenditclient.batchDisbursements.BatchDisbursementClient;
-import com.xenditclient.cardlessCredit.CardlessCreditClient;
-import com.xenditclient.creditCard.CreditCardClient;
-import com.xenditclient.customer.CustomerClient;
-import com.xenditclient.directDebit.DirectDebitPaymentClient;
-import com.xenditclient.disbursement.DisbursementClient;
-import com.xenditclient.ewallet.EWalletClient;
-import com.xenditclient.invoice.InvoiceClient;
-import com.xenditclient.payout.PayoutClient;
-import com.xenditclient.qrCode.QRCodeClient;
-import com.xenditclient.recurringPayment.RecurringPaymentClient;
-import com.xenditclient.retailOutlet.RetailOutletClient;
-import com.xenditclient.virtualAccount.FixedVirtualAccountClient;
+import com.xendit.model.balance.BalanceClient;
+import com.xendit.model.batchDisbursements.BatchDisbursementClient;
+import com.xendit.model.cardlessCredit.CardlessCreditClient;
+import com.xendit.model.creditCard.CreditCardClient;
+import com.xendit.model.customer.CustomerClient;
+import com.xendit.model.directDebit.DirectDebitPaymentClient;
+import com.xendit.model.disbursement.DisbursementClient;
+import com.xendit.model.ewallet.EWalletClient;
+import com.xendit.model.invoice.InvoiceClient;
+import com.xendit.model.payout.PayoutClient;
+import com.xendit.model.qrCode.QRCodeClient;
+import com.xendit.model.recurringPayment.RecurringPaymentClient;
+import com.xendit.model.retailOutlet.RetailOutletClient;
+import com.xendit.model.virtualAccount.FixedVirtualAccountClient;
 
 public class XenditClient {
 
@@ -33,7 +33,7 @@ public class XenditClient {
   public RecurringPaymentClient recurringPayment;
   public DirectDebitPaymentClient directDebitPayment;
 
-    private XenditClient() {}
+  private XenditClient() {}
 
   public static class Builder {
 
@@ -72,12 +72,14 @@ public class XenditClient {
     xenditClient.eWallet = new EWalletClient(option, Xendit.getRequestClient());
     xenditClient.qrCode = new QRCodeClient(option, Xendit.getRequestClient());
     xenditClient.customer = new CustomerClient(option, Xendit.getRequestClient());
-    xenditClient.retailOutlet = new RetailOutletClient(option,Xendit.getRequestClient());
-    xenditClient.batchDisbursement = new BatchDisbursementClient(option,Xendit.getRequestClient());
-    xenditClient.cardlessCredit = new CardlessCreditClient(option,Xendit.getRequestClient());
-    xenditClient.creditCard = new CreditCardClient(option,Xendit.getRequestClient());
-    xenditClient.fixedVirtualAccount = new FixedVirtualAccountClient(option,Xendit.getRequestClient());
-    xenditClient.recurringPayment = new RecurringPaymentClient(option,Xendit.getRequestClient());
-    xenditClient.directDebitPayment = new DirectDebitPaymentClient(option,Xendit.getRequestClient());
+    xenditClient.retailOutlet = new RetailOutletClient(option, Xendit.getRequestClient());
+    xenditClient.batchDisbursement = new BatchDisbursementClient(option, Xendit.getRequestClient());
+    xenditClient.cardlessCredit = new CardlessCreditClient(option, Xendit.getRequestClient());
+    xenditClient.creditCard = new CreditCardClient(option, Xendit.getRequestClient());
+    xenditClient.fixedVirtualAccount =
+        new FixedVirtualAccountClient(option, Xendit.getRequestClient());
+    xenditClient.recurringPayment = new RecurringPaymentClient(option, Xendit.getRequestClient());
+    xenditClient.directDebitPayment =
+        new DirectDebitPaymentClient(option, Xendit.getRequestClient());
   }
 }

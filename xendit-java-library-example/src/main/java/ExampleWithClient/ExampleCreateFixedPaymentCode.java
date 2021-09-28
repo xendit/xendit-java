@@ -1,7 +1,7 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xenditclient.retailOutlet.FixedPaymentCode;
+import com.xendit.model.retailOutlet.FixedPaymentCode;
 import com.xendit.XenditClient;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class ExampleCreateFixedPaymentCode {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+                .apikey("xnd_development_...")
                 .build();
         createWithoutParamObject(xenditClient);
     }

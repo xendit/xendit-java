@@ -2,8 +2,8 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xenditclient.directDebit.InitializedLinkedAccount;
-import com.xenditclient.directDebit.LinkedAccountEnum.ChannelCode;
+import com.xendit.model.directDebit.InitializedLinkedAccount;
+import com.xendit.model.directDebit.LinkedAccountEnum.ChannelCode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +64,7 @@ public class ExampleInitializeLinkedAccountTokenization {
 
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+				.apikey("xnd_development_...")
 				.build();
 		initializeLinkedAccountTokenization(xenditClient);
 		initializeLinkedAccountTokenization_withAllParametersAsHashmap(xenditClient);

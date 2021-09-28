@@ -2,13 +2,13 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xenditclient.recurringPayment.RecurringPayment;
+import com.xendit.model.recurringPayment.RecurringPayment;
 
 public class ExampleResumeRecurringPayment {
   public static void main(String[] args) {
     //create xendit client which holds value of apikey
     XenditClient xenditClient = new XenditClient.Builder()
-            .apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+            .apikey("xnd_development_...")
             .build();
 
     try {

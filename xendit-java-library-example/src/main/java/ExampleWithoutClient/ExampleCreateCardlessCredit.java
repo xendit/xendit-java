@@ -1,19 +1,19 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xenditclient.cardlessCredit.CardlessCreditCustomer;
-import com.xenditclient.cardlessCredit.CardlessCreditItem;
-import com.xenditclient.cardlessCredit.CardlessCreditShippingAddress;
+import com.xendit.model.cardlessCredit.CardlessCreditCustomer;
+import com.xendit.model.cardlessCredit.CardlessCreditItem;
+import com.xendit.model.cardlessCredit.CardlessCreditShippingAddress;
 import com.xendit.Xendit;
-import com.xenditclient.cardlessCredit.CardlessCredit;
+import com.xendit.model.cardlessCredit.CardlessCredit;
 
 public class ExampleCreateCardlessCredit {
   public static void main(String[] args) {
     //access key with Option
-    Xendit.Opt.setApiKey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+    Xendit.Opt.setApiKey("xnd_development_...");
 
     //access static variable (same as old code )
-    //Xendit.apiKey = "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB";
+    //Xendit.apiKey = "xnd_development_...";
 
     try {
       CardlessCreditItem item =

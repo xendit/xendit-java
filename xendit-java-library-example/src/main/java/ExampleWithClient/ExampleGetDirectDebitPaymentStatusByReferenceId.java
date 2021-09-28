@@ -2,14 +2,14 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xenditclient.directDebit.DirectDebitPayment;
+import com.xendit.model.directDebit.DirectDebitPayment;
 
 import java.util.Arrays;
 
 public class ExampleGetDirectDebitPaymentStatusByReferenceId {
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+				.apikey("xnd_development_...")
 				.build();
 		try {
 			DirectDebitPayment[] directDebitPayments = xenditClient.directDebitPayment.getDirectDebitPaymentStatusByReferenceId("test-direct-debit-ref-4");

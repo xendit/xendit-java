@@ -10,7 +10,7 @@ public class ExampleGetAvailableVABank {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB")
+                .apikey("xnd_development_...")
                 .build();
 
         try {
