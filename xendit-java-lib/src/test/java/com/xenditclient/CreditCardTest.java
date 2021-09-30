@@ -6,10 +6,10 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.creditCard.CreditCardCharge;
-import com.xendit.model.creditCard.CreditCardClient;
-import com.xendit.model.creditCard.CreditCardRefund;
-import com.xendit.model.creditCard.CreditCardReverseAuth;
+import com.xendit.model.CreditCardCharge;
+import com.xendit.model.CreditCardClient;
+import com.xendit.model.CreditCardRefund;
+import com.xendit.model.CreditCardReverseAuth;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;

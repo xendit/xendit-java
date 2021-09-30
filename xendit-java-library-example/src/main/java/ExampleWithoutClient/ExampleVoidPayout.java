@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.payout.Payout;
+import com.xendit.model.Payout;
 
 public class ExampleVoidPayout {
     public static void main(String[] args) {

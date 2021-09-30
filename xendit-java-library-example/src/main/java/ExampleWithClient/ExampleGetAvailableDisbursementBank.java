@@ -12,12 +12,12 @@ public class ExampleGetAvailableDisbursementBank {
 
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         //create second object of xendit client with different apikey
         XenditClient xenditClient2 = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         try {

@@ -2,8 +2,8 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
-import com.xendit.model.directDebit.PaymentMethod;
+import com.xendit.model.LinkedAccountEnum.AccountType;
+import com.xendit.model.PaymentMethod;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class ExampleCreatePaymentMethod {
 
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_...")
+				.setApikey("xnd_development_...")
 				.build();
 		createPaymentMethod(xenditClient);
 		createPaymentMethod_withAllParametersAsHashmap(xenditClient);

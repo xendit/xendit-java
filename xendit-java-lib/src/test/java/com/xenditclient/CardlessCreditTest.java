@@ -6,11 +6,11 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.cardlessCredit.CardlessCredit;
-import com.xendit.model.cardlessCredit.CardlessCreditClient;
-import com.xendit.model.cardlessCredit.CardlessCreditCustomer;
-import com.xendit.model.cardlessCredit.CardlessCreditItem;
-import com.xendit.model.cardlessCredit.CardlessCreditShippingAddress;
+import com.xendit.model.CardlessCredit;
+import com.xendit.model.CardlessCreditClient;
+import com.xendit.model.CardlessCreditCustomer;
+import com.xendit.model.CardlessCreditItem;
+import com.xendit.model.CardlessCreditShippingAddress;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -52,7 +52,7 @@ public class CardlessCreditTest {
           .countryCode("IDN")
           .phone("08129748247684")
           .build();
-  private static CardlessCredit VALID_CREDIT = new CardlessCredit();
+  private static CardlessCredit VALID_CREDIT = CardlessCredit.builder().build();
 
   @Before
   public void initMocks() {

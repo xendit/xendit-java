@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.directDebit.UnbindedLinkedAccount;
+import com.xendit.model.UnbindedLinkedAccount;
 
 public class ExampleUnbindLinkedAccount {
 	public static void main(String[] args) {

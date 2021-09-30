@@ -1,17 +1,17 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.cardlessCredit.CardlessCreditCustomer;
-import com.xendit.model.cardlessCredit.CardlessCreditItem;
-import com.xendit.model.cardlessCredit.CardlessCreditShippingAddress;
+import com.xendit.model.CardlessCreditCustomer;
+import com.xendit.model.CardlessCreditItem;
+import com.xendit.model.CardlessCreditShippingAddress;
 import com.xendit.XenditClient;
-import com.xendit.model.cardlessCredit.CardlessCredit;
+import com.xendit.model.CardlessCredit;
 
 public class ExampleCreateCardlessCredit {
   public static void main(String[] args) {
     //create xendit client which holds value of apikey
     XenditClient xenditClient = new XenditClient.Builder()
-            .apikey("xnd_development_...")
+            .setApikey("xnd_development_...")
             .build();
 
 

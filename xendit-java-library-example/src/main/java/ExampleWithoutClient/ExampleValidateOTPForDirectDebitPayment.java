@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.directDebit.DirectDebitPayment;
+import com.xendit.model.DirectDebitPayment;
 
 import java.util.HashMap;
 import java.util.Map;

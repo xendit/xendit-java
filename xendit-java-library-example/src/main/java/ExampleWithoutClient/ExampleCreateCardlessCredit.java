@@ -1,11 +1,11 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.cardlessCredit.CardlessCreditCustomer;
-import com.xendit.model.cardlessCredit.CardlessCreditItem;
-import com.xendit.model.cardlessCredit.CardlessCreditShippingAddress;
+import com.xendit.model.CardlessCreditCustomer;
+import com.xendit.model.CardlessCreditItem;
+import com.xendit.model.CardlessCreditShippingAddress;
 import com.xendit.Xendit;
-import com.xendit.model.cardlessCredit.CardlessCredit;
+import com.xendit.model.CardlessCredit;
 
 public class ExampleCreateCardlessCredit {
   public static void main(String[] args) {

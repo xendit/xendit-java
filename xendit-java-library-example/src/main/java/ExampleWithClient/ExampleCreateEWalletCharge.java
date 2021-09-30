@@ -1,9 +1,9 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.ewallet.EWalletBasketItem;
+import com.xendit.model.EWalletBasketItem;
 import com.xendit.XenditClient;
-import com.xendit.model.ewallet.EWalletCharge;
+import com.xendit.model.EWalletCharge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class ExampleCreateEWalletCharge {
   public static void main(String[] args) {
     //create xendit client which holds value of apikey
     XenditClient xenditClient = new XenditClient.Builder()
-            .apikey("xnd_development_...")
+            .setApikey("xnd_development_...")
             .build();
 
     createCharge(xenditClient);

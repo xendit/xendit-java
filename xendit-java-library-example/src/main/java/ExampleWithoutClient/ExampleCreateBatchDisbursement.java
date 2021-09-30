@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.batchDisbursements.BatchDisbursementItem;
+import com.xendit.model.BatchDisbursementItem;
 import com.xendit.Xendit;
-import com.xendit.model.batchDisbursements.BatchDisbursement;
+import com.xendit.model.BatchDisbursement;
 
 public class ExampleCreateBatchDisbursement {
     public static void main(String[] args) {

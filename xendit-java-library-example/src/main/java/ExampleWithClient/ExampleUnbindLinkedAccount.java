@@ -2,12 +2,12 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.directDebit.UnbindedLinkedAccount;
+import com.xendit.model.UnbindedLinkedAccount;
 
 public class ExampleUnbindLinkedAccount {
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_...")
+				.setApikey("xnd_development_...")
 				.build();
 
 		try {

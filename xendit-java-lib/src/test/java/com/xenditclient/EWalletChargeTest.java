@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.ewallet.EWalletBasketItem;
-import com.xendit.model.ewallet.EWalletCharge;
-import com.xendit.model.ewallet.EWalletClient;
+import com.xendit.model.EWalletBasketItem;
+import com.xendit.model.EWalletCharge;
+import com.xendit.model.EWalletClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -46,39 +46,39 @@ public class EWalletChargeTest {
           .subCategory("product sub category")
           .build();
   private static EWalletBasketItem[] BASKET_ITEM_ARRAY = new EWalletBasketItem[] {BASKET_ITEM};
-  private static EWalletCharge VALID_EWALLET_CHARGE = new EWalletCharge();
+  private static EWalletCharge VALID_EWALLET_CHARGE =
+      EWalletCharge.builder()
+          .id(CHARGE_ID)
+          .businessId(BUSINESS_ID)
+          .currency(CURRENCY)
+          .chargeAmount(AMOUNT)
+          .captureAmount(AMOUNT)
+          .checkoutMethod(CHECKOUT_METHOD)
+          .channelCode(CHANNEL_CODE)
+          .channelProperties(
+              new HashMap<String, String>() {
+                {
+                  put("success_redirect_url", REDIRECT_URL);
+                }
+              })
+          .actions(
+              new HashMap<String, String>() {
+                {
+                  put("desktop_web_checkout_url", null);
+                  put("mobile_web_checkout_url", null);
+                  put("mobile_deeplink_checkout_url", "https://mobile.deeplink.checkout.url");
+                  put("qr_checkout_string", "test-qr-string");
+                }
+              })
+          .isRedirectRequired(Boolean.TRUE)
+          .callbackUrl(REDIRECT_URL)
+          .created("2021-02-09T06:22:35.064408Z")
+          .updated("2021-02-09T06:22:35.064408Z")
+          .captureNow(Boolean.TRUE)
+          .build();
 
   @Before
   public void initMocks() {
-
-    VALID_EWALLET_CHARGE.setId(CHARGE_ID);
-    VALID_EWALLET_CHARGE.setBusinessId(BUSINESS_ID);
-    VALID_EWALLET_CHARGE.setCurrency(CURRENCY);
-    VALID_EWALLET_CHARGE.setChargeAmount(AMOUNT);
-    VALID_EWALLET_CHARGE.setCaptureAmount(AMOUNT);
-    VALID_EWALLET_CHARGE.setCheckoutMethod(CHECKOUT_METHOD);
-    VALID_EWALLET_CHARGE.setChannelCode(CHANNEL_CODE);
-    VALID_EWALLET_CHARGE.setChannelProperties(
-        new HashMap<String, String>() {
-          {
-            put("success_redirect_url", REDIRECT_URL);
-          }
-        });
-    VALID_EWALLET_CHARGE.setActions(
-        new HashMap<String, String>() {
-          {
-            put("desktop_web_checkout_url", null);
-            put("mobile_web_checkout_url", null);
-            put("mobile_deeplink_checkout_url", "https://mobile.deeplink.checkout.url");
-            put("qr_checkout_string", "test-qr-string");
-          }
-        });
-    VALID_EWALLET_CHARGE.setIsRedirectRequired(Boolean.TRUE);
-    VALID_EWALLET_CHARGE.setCallbackUrl(REDIRECT_URL);
-    VALID_EWALLET_CHARGE.setCreated("2021-02-09T06:22:35.064408Z");
-    VALID_EWALLET_CHARGE.setUpdated("2021-02-09T06:22:35.064408Z");
-    VALID_EWALLET_CHARGE.setCaptureNow(Boolean.TRUE);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

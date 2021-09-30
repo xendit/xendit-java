@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.ewallet.EWalletPayment;
+import com.xendit.model.EWalletPayment;
 
 public class ExampleGetEWalletPayment {
     public static void main(String[] args) {

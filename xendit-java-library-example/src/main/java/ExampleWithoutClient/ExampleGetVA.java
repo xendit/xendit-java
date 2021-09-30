@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.virtualAccount.FixedVirtualAccount;
+import com.xendit.model.FixedVirtualAccount;
 
 public class ExampleGetVA {
     public static void main(String[] args) {

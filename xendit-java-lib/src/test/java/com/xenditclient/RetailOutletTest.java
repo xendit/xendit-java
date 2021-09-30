@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.retailOutlet.FixedPaymentCode;
-import com.xendit.model.retailOutlet.RetailOutletClient;
+import com.xendit.model.FixedPaymentCode;
+import com.xendit.model.RetailOutletClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -26,7 +26,8 @@ public class RetailOutletTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   RetailOutletClient retailOutletClient = mock(RetailOutletClient.class);
-  private static FixedPaymentCode VALID_FPC = new FixedPaymentCode();
+  private static FixedPaymentCode VALID_FPC =
+      FixedPaymentCode.builder().id(TEST_ID).externalId(TEST_EXTERNAL_ID).build();
 
   @Before
   public void initMocks() {
@@ -111,11 +112,12 @@ public class RetailOutletTest {
   public void updateFixedPaymentCode_Success_IfIdIsAvailable() throws XenditException {
     PARAMS.put("name", "New Name");
     String url = String.format("%s%s%s", URL, "/", TEST_ID);
-    FixedPaymentCode result = new FixedPaymentCode();
-    result.setId(TEST_ID);
-    result.setExternalId(TEST_EXTERNAL_ID);
-    result.setName("New Name");
-
+    FixedPaymentCode result =
+        FixedPaymentCode.builder()
+            .id(TEST_ID)
+            .externalId(TEST_EXTERNAL_ID)
+            .name("New Name")
+            .build();
     when(this.requestClient.request(
             RequestResource.Method.PATCH,
             url,

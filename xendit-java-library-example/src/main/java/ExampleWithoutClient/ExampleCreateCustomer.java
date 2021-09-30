@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.customer.CustomerAddress;
+import com.xendit.model.CustomerAddress;
 import com.xendit.Xendit;
-import com.xendit.model.customer.Customer;
+import com.xendit.model.Customer;
 
 import java.util.HashMap;
 import java.util.Map;

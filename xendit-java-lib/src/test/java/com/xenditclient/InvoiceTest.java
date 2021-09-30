@@ -8,8 +8,8 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.invoice.Invoice;
-import com.xendit.model.invoice.InvoiceClient;
+import com.xendit.model.Invoice;
+import com.xendit.model.InvoiceClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -31,19 +31,20 @@ public class InvoiceTest {
   private static Number TEST_AMOUNT_GREATER = 1000000001;
   private static String TEST_EMAIL = "test@email.com";
   private static String TEST_DESC = "Testing";
-  Invoice VALID_INVOICE = new Invoice();
+  private static Invoice VALID_INVOICE =
+      Invoice.builder()
+          .id(TEST_ID)
+          .externalId(TEST_EXTERNAL_ID)
+          .amount(TEST_AMOUNT)
+          .payerEmail(TEST_EMAIL)
+          .description(TEST_DESC)
+          .build();
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   InvoiceClient invoiceClient = mock(InvoiceClient.class);
 
   @Before
   public void initMocks() {
-    VALID_INVOICE.setId(TEST_ID);
-    VALID_INVOICE.setExternalId(TEST_EXTERNAL_ID);
-    VALID_INVOICE.setAmount(TEST_AMOUNT);
-    VALID_INVOICE.setPayerEmail(TEST_EMAIL);
-    VALID_INVOICE.setDescription(TEST_DESC);
-
     PARAMS.put("external_id", TEST_EXTERNAL_ID);
     PARAMS.put("amount", TEST_AMOUNT);
     PARAMS.put("payer_email", TEST_EMAIL);

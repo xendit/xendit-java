@@ -1,7 +1,7 @@
 package ExampleWithoutClient;
 
 import com.xendit.Xendit;
-import com.xendit.model.invoice.Invoice;
+import com.xendit.model.Invoice;
 
 import java.util.HashMap;
 import java.util.Map;

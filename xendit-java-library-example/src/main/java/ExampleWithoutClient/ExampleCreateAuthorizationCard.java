@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.creditCard.CreditCardCharge;
+import com.xendit.model.CreditCardCharge;
 import com.xendit.Xendit;
-import com.xendit.model.creditCard.CreditCard;
+import com.xendit.model.CreditCard;
 
 public class ExampleCreateAuthorizationCard {
   public static void main(String[] args) {

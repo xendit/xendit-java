@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.customer.Customer;
-import com.xendit.model.customer.CustomerAddress;
-import com.xendit.model.customer.CustomerClient;
+import com.xendit.model.Customer;
+import com.xendit.model.CustomerAddress;
+import com.xendit.model.CustomerClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -45,20 +45,21 @@ public class CustomerTest {
           .build();
   private static CustomerAddress[] CUSTOMER_ADDRESS_ARRAY =
       new CustomerAddress[] {CUSTOMER_ADDRESS};
-  private static Customer VALID_CUSTOMER = new Customer();
+  private static Customer VALID_CUSTOMER =
+      Customer.builder()
+          .id(CUSTOMER_ID)
+          .referenceId(REFERENCE_ID)
+          .givenNames(GIVEN_NAMES)
+          .email(EMAIL)
+          .mobileNumber(MOBILE_NUMBER)
+          .nationality(NATIONALITY)
+          .dateOfBirth(DATE_OF_BIRTH)
+          .addresses(CUSTOMER_ADDRESS_ARRAY)
+          .build();
   private static Customer[] CUSTOMER_ARRAY = new Customer[] {VALID_CUSTOMER};
 
   @Before
   public void initMocks() {
-    VALID_CUSTOMER.setId(CUSTOMER_ID);
-    VALID_CUSTOMER.setReferenceId(REFERENCE_ID);
-    VALID_CUSTOMER.setGivenNames(GIVEN_NAMES);
-    VALID_CUSTOMER.setEmail(EMAIL);
-    VALID_CUSTOMER.setMobileNumber(MOBILE_NUMBER);
-    VALID_CUSTOMER.setNationality(NATIONALITY);
-    VALID_CUSTOMER.setDateOfBirth(DATE_OF_BIRTH);
-    VALID_CUSTOMER.setAddresses(CUSTOMER_ADDRESS_ARRAY);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

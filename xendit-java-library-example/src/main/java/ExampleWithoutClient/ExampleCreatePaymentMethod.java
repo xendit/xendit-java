@@ -2,8 +2,8 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
-import com.xendit.model.directDebit.PaymentMethod;
+import com.xendit.model.LinkedAccountEnum.AccountType;
+import com.xendit.model.PaymentMethod;
 
 import java.util.HashMap;
 import java.util.Map;

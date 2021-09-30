@@ -2,12 +2,12 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.directDebit.DirectDebitPayment;
+import com.xendit.model.DirectDebitPayment;
 
 public class ExampleGetDirectDebitPaymentStatusById {
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_...")
+				.setApikey("xnd_development_...")
 				.build();
 
 		try {

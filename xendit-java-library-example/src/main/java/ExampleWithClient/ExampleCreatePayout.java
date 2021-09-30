@@ -2,7 +2,7 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.payout.Payout;
+import com.xendit.model.Payout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ public class ExampleCreatePayout {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         try {

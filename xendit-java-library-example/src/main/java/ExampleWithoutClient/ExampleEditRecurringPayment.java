@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.recurringPayment.RecurringPayment;
+import com.xendit.model.RecurringPayment;
 
 import java.util.HashMap;
 import java.util.Map;

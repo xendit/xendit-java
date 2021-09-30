@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.virtualAccount.FixedVirtualAccountPayment;
+import com.xendit.model.FixedVirtualAccountPayment;
 import com.xendit.Xendit;
-import com.xendit.model.virtualAccount.FixedVirtualAccount;
+import com.xendit.model.FixedVirtualAccount;
 
 public class ExampleGetVAPayment {
     public static void main(String[] args) {

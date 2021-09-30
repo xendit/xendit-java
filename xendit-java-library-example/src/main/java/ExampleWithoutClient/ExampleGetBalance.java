@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.balance.Balance;
+import com.xendit.model.Balance;
 
 /**
  * Example to get balance without client or having only single apikey

@@ -7,9 +7,9 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.invoice.Invoice;
-import com.xendit.model.recurringPayment.RecurringPayment;
-import com.xendit.model.recurringPayment.RecurringPaymentClient;
+import com.xendit.model.Invoice;
+import com.xendit.model.RecurringPayment;
+import com.xendit.model.RecurringPaymentClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -33,18 +33,19 @@ public class RecurringPaymentTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   RecurringPaymentClient recurringPaymentClient = mock(RecurringPaymentClient.class);
-  private static RecurringPayment VALID_PAYMENT = new RecurringPayment();
+  private static RecurringPayment VALID_PAYMENT =
+      RecurringPayment.builder()
+          .id(TEST_ID)
+          .externalId(TEST_EXTERNAL_ID)
+          .payerEmail(TEST_PAYER_EMAIL)
+          .interval(TEST_INTERVAL)
+          .intervalCount(TEST_INTERVAL_COUNT)
+          .description(TEST_DESCRIPTION)
+          .amount(TEST_AMOUNT)
+          .build();
 
   @Before
   public void initMocks() {
-    VALID_PAYMENT.setId(TEST_ID);
-    VALID_PAYMENT.setExternalId(TEST_EXTERNAL_ID);
-    VALID_PAYMENT.setPayerEmail(TEST_PAYER_EMAIL);
-    VALID_PAYMENT.setInterval(TEST_INTERVAL);
-    VALID_PAYMENT.setIntervalCount(TEST_INTERVAL_COUNT);
-    VALID_PAYMENT.setDescription(TEST_DESCRIPTION);
-    VALID_PAYMENT.setAmount(TEST_AMOUNT);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
@@ -92,8 +93,7 @@ public class RecurringPaymentTest {
 
   @Test
   public void edit_Success_IfIdIsAvailable() throws XenditException {
-    RecurringPayment result = new RecurringPayment();
-    result.setAmount(98765);
+    RecurringPayment result = RecurringPayment.builder().amount(98765).build();
     String url = String.format("%s%s%s", URL, "/", TEST_ID);
     Map<String, Object> params = new HashMap<>();
     params.put("amount", 98765);
@@ -147,9 +147,7 @@ public class RecurringPaymentTest {
 
   @Test
   public void stop_Success_IfIdIsAvailable() throws XenditException {
-    RecurringPayment result = new RecurringPayment();
-    result.setId(TEST_ID);
-    result.setStatus("STOPPED");
+    RecurringPayment result = RecurringPayment.builder().id(TEST_ID).status("STOPPED").build();
     String url = String.format("%s%s%s%s", URL, "/", TEST_ID, "/stop!");
     when(this.requestClient.request(
             RequestResource.Method.POST, url, null, opt.getApiKey(), RecurringPayment.class))
@@ -176,9 +174,7 @@ public class RecurringPaymentTest {
 
   @Test
   public void pause_Success_IfIdIsAvailable() throws XenditException {
-    RecurringPayment result = new RecurringPayment();
-    result.setId(TEST_ID);
-    result.setStatus("PAUSED");
+    RecurringPayment result = RecurringPayment.builder().id(TEST_ID).status("PAUSED").build();
     String url = String.format("%s%s%s%s", URL, "/", TEST_ID, "/pause!");
     when(this.requestClient.request(
             RequestResource.Method.POST, url, null, opt.getApiKey(), RecurringPayment.class))
@@ -205,9 +201,7 @@ public class RecurringPaymentTest {
 
   @Test
   public void resume_Success_IfIdIsAvailable() throws XenditException {
-    RecurringPayment result = new RecurringPayment();
-    result.setId(TEST_ID);
-    result.setStatus("ACTIVE");
+    RecurringPayment result = RecurringPayment.builder().id(TEST_ID).status("ACTIVE").build();
     String url = String.format("%s%s%s%s", URL, "/", TEST_ID, "/resume!");
     when(this.requestClient.request(
             RequestResource.Method.POST, url, null, opt.getApiKey(), RecurringPayment.class))
@@ -237,8 +231,7 @@ public class RecurringPaymentTest {
     String url =
         String.format(
             "%s%s%s", Xendit.Opt.getXenditURL(), "/v2/invoices?recurring_payment_id=", TEST_ID);
-    Invoice invoice = new Invoice();
-    invoice.setRecurringPaymentId(TEST_ID);
+    Invoice invoice = Invoice.builder().recurringPaymentId(TEST_ID).build();
     Invoice[] invoices = {invoice};
     when(this.requestClient.request(
             RequestResource.Method.GET, url, null, opt.getApiKey(), Invoice[].class))

@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.retailOutlet.FixedPaymentCode;
+import com.xendit.model.FixedPaymentCode;
 import com.xendit.Xendit;
-import com.xendit.model.retailOutlet.RetailOutlet;
+import com.xendit.model.RetailOutlet;
 
 public class ExampleGetFixedPaymentCode {
     public static void main(String[] args) {

@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.ewallet.EWalletBasketItem;
+import com.xendit.model.EWalletBasketItem;
 import com.xendit.Xendit;
-import com.xendit.model.ewallet.EWalletCharge;
+import com.xendit.model.EWalletCharge;
 
 import java.util.HashMap;
 import java.util.Map;

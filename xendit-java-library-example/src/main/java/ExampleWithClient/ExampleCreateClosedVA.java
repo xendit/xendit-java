@@ -3,7 +3,7 @@ package ExampleWithClient;
 import com.xendit.enums.BankCode;
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.virtualAccount.FixedVirtualAccount;
+import com.xendit.model.FixedVirtualAccount;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ public class ExampleCreateClosedVA {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         Map<String, Object> closedVAMap = new HashMap<String, Object>();

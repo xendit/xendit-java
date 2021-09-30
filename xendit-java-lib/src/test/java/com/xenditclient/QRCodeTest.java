@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.qrCode.QRCode;
-import com.xendit.model.qrCode.QRCodeClient;
+import com.xendit.model.QRCode;
+import com.xendit.model.QRCodeClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -26,20 +26,21 @@ public class QRCodeTest {
   private static String TEST_QR_STATUS = QRCode.QRCodeStatus.ACTIVE.toString();
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
-  private static QRCode VALID_PAYMENT = new QRCode();
+  private static QRCode VALID_PAYMENT =
+      QRCode.builder()
+          .id(TEST_ID)
+          .externalId(TEST_EXTERNAL_ID)
+          .qrString(TEST_QR_STRING)
+          .callbackUrl(TEST_CALLBACK_URL)
+          .status(TEST_QR_STATUS)
+          .amount(10000)
+          .build();
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   QRCodeClient qrCodeClient = mock(QRCodeClient.class);
 
   @Before
   public void initMocks() {
-    VALID_PAYMENT.setId(TEST_ID);
-    VALID_PAYMENT.setExternalId(TEST_EXTERNAL_ID);
-    VALID_PAYMENT.setQrString(TEST_QR_STRING);
-    VALID_PAYMENT.setCallbackUrl(TEST_CALLBACK_URL);
-    VALID_PAYMENT.setStatus(TEST_QR_STATUS);
-    VALID_PAYMENT.setAmount(10000);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

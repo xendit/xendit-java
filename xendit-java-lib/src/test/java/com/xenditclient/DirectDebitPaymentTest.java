@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.directDebit.*;
-import com.xendit.model.directDebit.LinkedAccountEnum.ChannelCode;
+import com.xendit.model.*;
+import com.xendit.model.LinkedAccountEnum.ChannelCode;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;

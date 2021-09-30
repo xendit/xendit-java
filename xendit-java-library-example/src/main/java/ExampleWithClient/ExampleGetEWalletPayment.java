@@ -2,13 +2,13 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.ewallet.EWalletPayment;
+import com.xendit.model.EWalletPayment;
 
 public class ExampleGetEWalletPayment {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         try {

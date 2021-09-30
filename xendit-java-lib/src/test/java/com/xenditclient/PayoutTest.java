@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.payout.Payout;
-import com.xendit.model.payout.PayoutClient;
+import com.xendit.model.Payout;
+import com.xendit.model.PayoutClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -29,23 +29,25 @@ public class PayoutTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   PayoutClient payoutClient = mock(PayoutClient.class);
-  private static Payout VALID_PAYOUT = new Payout();
-  private static Payout VOIDED_PAYOUT = new Payout();
+  private static Payout VALID_PAYOUT =
+      Payout.builder()
+          .id(TEST_ID)
+          .externalId(TEST_EXTERNAL_ID)
+          .amount(TEST_AMOUNT)
+          .passcode(TEST_PASSCODE)
+          .status(TEST_STATUS)
+          .build();
+  private static Payout VOIDED_PAYOUT =
+      Payout.builder()
+          .id(TEST_ID)
+          .externalId(TEST_EXTERNAL_ID)
+          .amount(TEST_AMOUNT)
+          .passcode(TEST_PASSCODE)
+          .status(TEST_STATUS_VOIDED)
+          .build();
 
   @Before
   public void initMocks() {
-    VALID_PAYOUT.setId(TEST_ID);
-    VALID_PAYOUT.setExternalId(TEST_EXTERNAL_ID);
-    VALID_PAYOUT.setAmount(TEST_AMOUNT);
-    VALID_PAYOUT.setPasscode(TEST_PASSCODE);
-    VALID_PAYOUT.setStatus(TEST_STATUS);
-
-    VOIDED_PAYOUT.setId(TEST_ID);
-    VOIDED_PAYOUT.setExternalId(TEST_EXTERNAL_ID);
-    VOIDED_PAYOUT.setAmount(TEST_AMOUNT);
-    VOIDED_PAYOUT.setPasscode(TEST_PASSCODE);
-    VOIDED_PAYOUT.setStatus(TEST_STATUS);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

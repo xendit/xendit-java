@@ -1,9 +1,9 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.customer.CustomerAddress;
+import com.xendit.model.CustomerAddress;
 import com.xendit.XenditClient;
-import com.xendit.model.customer.Customer;
+import com.xendit.model.Customer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class ExampleCreateCustomer {
   public static void main(String[] args) {
     //create xendit client which holds value of apikey
     XenditClient xenditClient = new XenditClient.Builder()
-            .apikey("xnd_development_...")
+            .setApikey("xnd_development_...")
             .build();
     createCustomer(xenditClient);
     createCustomer_withAllParametersAsHashmap(xenditClient);

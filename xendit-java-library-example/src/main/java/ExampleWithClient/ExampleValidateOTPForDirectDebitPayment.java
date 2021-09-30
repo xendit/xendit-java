@@ -2,7 +2,7 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.directDebit.DirectDebitPayment;
+import com.xendit.model.DirectDebitPayment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class ExampleValidateOTPForDirectDebitPayment {
 
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_...")
+				.setApikey("xnd_development_...")
 				.build();
 		validateOTP(xenditClient);
 		validateOTP_withAllParametersAsHashmap(xenditClient);

@@ -3,7 +3,7 @@ package ExampleWithClient;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
 import com.xendit.XenditClient;
-import com.xendit.model.disbursement.Disbursement;
+import com.xendit.model.Disbursement;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class ExampleCreateDisbursement {
 
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         try {
@@ -36,15 +36,15 @@ public class ExampleCreateDisbursement {
              * First option. Create directly from a properly named hashmap key value pair.
              * Check https://xendit.github.io/apireference/#create-disbursement for field name.
              */
-            Map<String, Object> disbursementMap = new HashMap<String, Object>();
-            disbursementMap.put("external_id", "my_external_id");
-            disbursementMap.put("bank_code", destinationBank.getCode());
-            disbursementMap.put("account_holder_name", "John Doe");
-            disbursementMap.put("account_number", "123456789");
-            disbursementMap.put("description", "My Description");
-            disbursementMap.put("amount", "90000");
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("external_id", "my_external_id");
+            params.put("bank_code", destinationBank.getCode());
+            params.put("account_holder_name", "John Doe");
+            params.put("account_number", "123456789");
+            params.put("description", "My Description");
+            params.put("amount", "90000");
 
-            Disbursement disbursement = xenditClient.disbursement.create(disbursementMap);
+            Disbursement disbursement = xenditClient.disbursement.create(params);
 
             /**
              * Second option. Create with individual value of required params.

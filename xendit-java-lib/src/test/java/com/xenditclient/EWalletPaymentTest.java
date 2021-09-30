@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.ewallet.EWalletClient;
-import com.xendit.model.ewallet.EWalletLinkajaItem;
-import com.xendit.model.ewallet.EWalletPayment;
+import com.xendit.model.EWalletClient;
+import com.xendit.model.EWalletLinkajaItem;
+import com.xendit.model.EWalletPayment;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -27,13 +27,11 @@ public class EWalletPaymentTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   EWalletClient eWalletClient = mock(EWalletClient.class);
-  private static EWalletPayment VALID_PAYMENT = new EWalletPayment();
+  private static EWalletPayment VALID_PAYMENT =
+      EWalletPayment.builder().id(TEST_ID).externalId(TEST_EXTERNAL_ID).build();
 
   @Before
   public void initMocks() {
-    VALID_PAYMENT.setId(TEST_ID);
-    VALID_PAYMENT.setExternalId(TEST_EXTERNAL_ID);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

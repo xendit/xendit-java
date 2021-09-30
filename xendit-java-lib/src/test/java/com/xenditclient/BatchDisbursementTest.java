@@ -8,9 +8,9 @@ import static org.mockito.Mockito.when;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xendit.model.batchDisbursements.BatchDisbursement;
-import com.xendit.model.batchDisbursements.BatchDisbursementClient;
-import com.xendit.model.batchDisbursements.BatchDisbursementItem;
+import com.xendit.model.BatchDisbursement;
+import com.xendit.model.BatchDisbursementClient;
+import com.xendit.model.BatchDisbursementItem;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -24,11 +24,11 @@ public class BatchDisbursementTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   BatchDisbursementClient batchDisbursementClient = mock(BatchDisbursementClient.class);
-  private static BatchDisbursement VALID_BATCH = new BatchDisbursement();
+  private static BatchDisbursement VALID_BATCH =
+      BatchDisbursement.builder().reference(TEST_REFERENCE).build();
 
   @Before
   public void initMocks() {
-    VALID_BATCH.setReference(TEST_REFERENCE);
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

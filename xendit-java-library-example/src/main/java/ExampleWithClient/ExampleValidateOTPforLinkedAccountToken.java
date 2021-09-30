@@ -2,7 +2,7 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.directDebit.ValidatedLinkedAccount;
+import com.xendit.model.ValidatedLinkedAccount;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class ExampleValidateOTPforLinkedAccountToken {
 
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_...")
+				.setApikey("xnd_development_...")
 				.build();
 		validateOTP(xenditClient);
 		validateOTP_withAllParametersAsHashmap(xenditClient);

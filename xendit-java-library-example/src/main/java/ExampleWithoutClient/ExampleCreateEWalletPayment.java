@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.ewallet.EWalletLinkajaItem;
+import com.xendit.model.EWalletLinkajaItem;
 import com.xendit.Xendit;
-import com.xendit.model.ewallet.EWalletPayment;
+import com.xendit.model.EWalletPayment;
 
 public class ExampleCreateEWalletPayment {
     private static void createOvo() {

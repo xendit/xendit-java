@@ -1,19 +1,19 @@
 package com.xendit;
 
-import com.xendit.model.balance.BalanceClient;
-import com.xendit.model.batchDisbursements.BatchDisbursementClient;
-import com.xendit.model.cardlessCredit.CardlessCreditClient;
-import com.xendit.model.creditCard.CreditCardClient;
-import com.xendit.model.customer.CustomerClient;
-import com.xendit.model.directDebit.DirectDebitPaymentClient;
-import com.xendit.model.disbursement.DisbursementClient;
-import com.xendit.model.ewallet.EWalletClient;
-import com.xendit.model.invoice.InvoiceClient;
-import com.xendit.model.payout.PayoutClient;
-import com.xendit.model.qrCode.QRCodeClient;
-import com.xendit.model.recurringPayment.RecurringPaymentClient;
-import com.xendit.model.retailOutlet.RetailOutletClient;
-import com.xendit.model.virtualAccount.FixedVirtualAccountClient;
+import com.xendit.model.BalanceClient;
+import com.xendit.model.BatchDisbursementClient;
+import com.xendit.model.CardlessCreditClient;
+import com.xendit.model.CreditCardClient;
+import com.xendit.model.CustomerClient;
+import com.xendit.model.DirectDebitPaymentClient;
+import com.xendit.model.DisbursementClient;
+import com.xendit.model.EWalletClient;
+import com.xendit.model.FixedVirtualAccountClient;
+import com.xendit.model.InvoiceClient;
+import com.xendit.model.PayoutClient;
+import com.xendit.model.QRCodeClient;
+import com.xendit.model.RecurringPaymentClient;
+import com.xendit.model.RetailOutletClient;
 
 public class XenditClient {
 
@@ -41,7 +41,7 @@ public class XenditClient {
 
     public Builder() {}
 
-    public Builder apikey(String apikey) {
+    public Builder setApikey(String apikey) {
       this.apikey = apikey;
       return this;
     }

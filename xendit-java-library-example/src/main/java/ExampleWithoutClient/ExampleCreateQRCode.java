@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.qrCode.QRCode;
+import com.xendit.model.QRCode;
 
 public class ExampleCreateQRCode {
   public static void main(String[] args) {

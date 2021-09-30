@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.recurringPayment.RecurringPayment;
+import com.xendit.model.RecurringPayment;
 
 public class ExampleStopRecurringPayment {
   public static void main(String[] args) {

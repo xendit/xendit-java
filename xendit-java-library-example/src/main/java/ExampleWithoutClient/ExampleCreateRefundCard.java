@@ -1,9 +1,9 @@
 package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.creditCard.CreditCardRefund;
+import com.xendit.model.CreditCardRefund;
 import com.xendit.Xendit;
-import com.xendit.model.creditCard.CreditCard;
+import com.xendit.model.CreditCard;
 
 public class ExampleCreateRefundCard {
   public static void main(String[] args) {

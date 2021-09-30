@@ -1,14 +1,14 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.retailOutlet.FixedPaymentCode;
+import com.xendit.model.FixedPaymentCode;
 import com.xendit.XenditClient;
 
 public class ExampleGetFixedPaymentCode {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
 
         try {

@@ -9,9 +9,9 @@ import com.xendit.Xendit;
 import com.xendit.enums.BankCode;
 import com.xendit.exception.XenditException;
 import com.xendit.model.AvailableBank;
-import com.xendit.model.virtualAccount.FixedVirtualAccount;
-import com.xendit.model.virtualAccount.FixedVirtualAccountClient;
-import com.xendit.model.virtualAccount.FixedVirtualAccountPayment;
+import com.xendit.model.FixedVirtualAccount;
+import com.xendit.model.FixedVirtualAccountClient;
+import com.xendit.model.FixedVirtualAccountPayment;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -32,13 +32,12 @@ public class FixedVirtualAccountTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   FixedVirtualAccountClient fixedVirtualAccountClient = mock(FixedVirtualAccountClient.class);
-  private static FixedVirtualAccount VALID_ACCOUNT = new FixedVirtualAccount();
+  private static FixedVirtualAccount VALID_ACCOUNT =
+      FixedVirtualAccount.builder().id(TEST_ID).build();
 
   @Before
   public void initMocks() {
     PARAMS.clear();
-
-    VALID_ACCOUNT.setId(TEST_ID);
 
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
@@ -169,7 +168,8 @@ public class FixedVirtualAccountTest {
 
   @Test
   public void update_Success_IfIdIsAvailable() throws XenditException {
-    FixedVirtualAccount fixedVirtualAccount = new FixedVirtualAccount();
+    FixedVirtualAccount fixedVirtualAccount =
+        FixedVirtualAccount.builder().id(TEST_ID).isSingleUse(true).build();
     fixedVirtualAccount.setId(TEST_ID);
     fixedVirtualAccount.setIsSingleUse(true);
 

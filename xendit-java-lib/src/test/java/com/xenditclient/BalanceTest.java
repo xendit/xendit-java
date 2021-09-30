@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.balance.Balance;
-import com.xendit.model.balance.BalanceClient;
+import com.xendit.model.Balance;
+import com.xendit.model.BalanceClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -19,14 +19,13 @@ import org.junit.Test;
 public class BalanceTest {
   private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/balance");
   private static Map<String, String> HEADERS = new HashMap<>();
-  Balance VALID_BALANCE = Balance.builder().build();
+  Balance VALID_BALANCE = Balance.builder().balance(10000000).build();
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   BalanceClient balanceClient = mock(BalanceClient.class);
 
   @Before
   public void initMocks() {
-    VALID_BALANCE.setBalance(10000000);
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);

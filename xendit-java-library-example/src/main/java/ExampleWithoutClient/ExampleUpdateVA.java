@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.virtualAccount.FixedVirtualAccount;
+import com.xendit.model.FixedVirtualAccount;
 
 import java.util.HashMap;
 import java.util.Map;

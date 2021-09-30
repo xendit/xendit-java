@@ -1,9 +1,9 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.ewallet.EWalletLinkajaItem;
+import com.xendit.model.EWalletLinkajaItem;
 import com.xendit.XenditClient;
-import com.xendit.model.ewallet.EWalletPayment;
+import com.xendit.model.EWalletPayment;
 
 public class ExampleCreateEWalletPayment {
     private static void createOvo(XenditClient xenditClient) {
@@ -58,7 +58,7 @@ public class ExampleCreateEWalletPayment {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .apikey("xnd_development_...")
+                .setApikey("xnd_development_...")
                 .build();
         createOvo(xenditClient);
         /*createLinkaja(xenditClient);

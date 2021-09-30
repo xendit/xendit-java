@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.invoice.Invoice;
+import com.xendit.model.Invoice;
 
 public class ExampleExpireInvoice {
     public static void main(String[] args) {

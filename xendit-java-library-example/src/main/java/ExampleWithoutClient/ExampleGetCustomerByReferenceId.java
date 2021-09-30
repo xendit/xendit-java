@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.customer.Customer;
+import com.xendit.model.Customer;
 
 import java.util.Arrays;
 

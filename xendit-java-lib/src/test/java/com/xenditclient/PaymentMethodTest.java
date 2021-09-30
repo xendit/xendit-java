@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.directDebit.DirectDebitPaymentClient;
-import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
-import com.xendit.model.directDebit.PaymentMethod;
+import com.xendit.model.DirectDebitPaymentClient;
+import com.xendit.model.LinkedAccountEnum.AccountType;
+import com.xendit.model.PaymentMethod;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;

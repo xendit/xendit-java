@@ -2,14 +2,14 @@ package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
-import com.xendit.model.directDebit.AccessibleLinkedAccount;
+import com.xendit.model.AccessibleLinkedAccount;
 
 import java.util.Arrays;
 
 public class ExampleRetrieveAccessibleLinkedAccounts {
 	public static void main(String[] args) {
 		XenditClient xenditClient = new XenditClient.Builder()
-				.apikey("xnd_development_...")
+				.setApikey("xnd_development_...")
 				.build();
 		try {
 			AccessibleLinkedAccount[] linkedAccounts = xenditClient.directDebitPayment.retrieveAccessibleLinkedAccounts(

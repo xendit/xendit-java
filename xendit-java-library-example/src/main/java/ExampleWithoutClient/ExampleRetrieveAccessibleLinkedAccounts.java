@@ -2,7 +2,7 @@ package ExampleWithoutClient;
 
 import com.xendit.exception.XenditException;
 import com.xendit.Xendit;
-import com.xendit.model.directDebit.AccessibleLinkedAccount;
+import com.xendit.model.AccessibleLinkedAccount;
 
 import java.util.Arrays;
 

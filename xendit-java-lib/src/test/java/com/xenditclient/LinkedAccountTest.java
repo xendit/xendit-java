@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.model.directDebit.*;
-import com.xendit.model.directDebit.LinkedAccountEnum.AccountType;
-import com.xendit.model.directDebit.LinkedAccountEnum.ChannelCode;
+import com.xendit.model.*;
+import com.xendit.model.LinkedAccountEnum.AccountType;
+import com.xendit.model.LinkedAccountEnum.ChannelCode;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -51,8 +51,12 @@ public class LinkedAccountTest {
         }
       };
   private static InitializedLinkedAccount VALID_INITIALIZED_LINKED_ACCOUNT =
-      new InitializedLinkedAccount();
-
+      InitializedLinkedAccount.builder()
+          .id(TOKEN_ID)
+          .customerId(CUSTOMER_ID)
+          .channelCode(CHANNEL_CODE)
+          .status(PENDING_STATUS)
+          .build();
   private static ValidatedLinkedAccount VALID_VALIDATED_LINKED_ACCOUNT =
       ValidatedLinkedAccount.builder()
           .id(TOKEN_ID)
@@ -74,11 +78,6 @@ public class LinkedAccountTest {
 
   @Before
   public void initMocks() {
-    VALID_INITIALIZED_LINKED_ACCOUNT.setId(TOKEN_ID);
-    VALID_INITIALIZED_LINKED_ACCOUNT.setCustomerId(CUSTOMER_ID);
-    VALID_INITIALIZED_LINKED_ACCOUNT.setChannelCode(CHANNEL_CODE);
-    VALID_INITIALIZED_LINKED_ACCOUNT.setStatus(PENDING_STATUS);
-
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
