@@ -1,9 +1,7 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
@@ -33,11 +31,11 @@ public class ValidatedLinkedAccount {
    * @return ValidatedLinkedAccount model.
    * @throws XenditException XenditException
    */
-  public static ValidatedLinkedAccount validateOTP(String tokenId, String otpCode)
+  public static ValidatedLinkedAccount validateOTPWithToken(String tokenId, String otpCode)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     params.put("otp_code", otpCode);
-    return validateOTPRequest(tokenId, new HashMap<>(), params);
+    return validateOTPRequestWithToken(tokenId, new HashMap<>(), params);
   }
 
   /**
@@ -48,9 +46,9 @@ public class ValidatedLinkedAccount {
    * @return ValidatedLinkedAccount
    * @throws XenditException
    */
-  public static ValidatedLinkedAccount validateOTP(String tokenId, Map<String, Object> params)
-      throws XenditException {
-    return validateOTPRequest(tokenId, new HashMap<>(), params);
+  public static ValidatedLinkedAccount validateOTPWithToken(
+      String tokenId, Map<String, Object> params) throws XenditException {
+    return validateOTPRequestWithToken(tokenId, new HashMap<>(), params);
   }
 
   /**
@@ -62,20 +60,16 @@ public class ValidatedLinkedAccount {
    * @return ValidatedLinkedAccount
    * @throws XenditException
    */
-  public static ValidatedLinkedAccount validateOTP(
+  public static ValidatedLinkedAccount validateOTPWithToken(
       String tokenId, Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    return validateOTPRequest(tokenId, headers, params);
+    return validateOTPRequestWithToken(tokenId, headers, params);
   }
 
-  private static ValidatedLinkedAccount validateOTPRequest(
+  private static ValidatedLinkedAccount validateOTPRequestWithToken(
       String tokenId, Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s%s", Xendit.getUrl(), "/linked_account_tokens/", tokenId, "/validate_otp");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, ValidatedLinkedAccount.class);
+    DirectDebitPaymentClient client = DirectDebitPayment.getClient();
+    return client.validateOTPRequestWithToken(tokenId, headers, params);
   }
 }

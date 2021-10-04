@@ -1,19 +1,15 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.LinkedAccountEnum.AccountType;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class PaymentMethod {
   @SerializedName("id")
   private String id;
@@ -38,6 +34,8 @@ public class PaymentMethod {
 
   @SerializedName("metadata")
   private Map<String, Object> metadata;
+
+  private static DirectDebitPaymentClient directDebitPaymentClient;
 
   /**
    * Create payment method
@@ -97,17 +95,13 @@ public class PaymentMethod {
    */
   public static PaymentMethod[] getPaymentMethodsByCustomerId(String customerId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", Xendit.getUrl(), "/payment_methods?customer_id=", customerId);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, PaymentMethod[].class);
+    DirectDebitPaymentClient client = DirectDebitPayment.getClient();
+    return client.getPaymentMethodsByCustomerId(customerId);
   }
 
   private static PaymentMethod createPaymentMethodRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/payment_methods");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, PaymentMethod.class);
+    DirectDebitPaymentClient client = DirectDebitPayment.getClient();
+    return client.createPaymentMethodRequest(headers, params);
   }
 }

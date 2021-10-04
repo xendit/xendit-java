@@ -1,9 +1,7 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,9 +26,7 @@ public class UnbindedLinkedAccount {
    */
   public static UnbindedLinkedAccount unbindLinkedAccountToken(String linkedAccountTokenId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", Xendit.getUrl(), "/linked_account_tokens/", linkedAccountTokenId);
-    return Xendit.requestClient.request(
-        RequestResource.Method.DELETE, url, null, UnbindedLinkedAccount.class);
+    DirectDebitPaymentClient client = DirectDebitPayment.getClient();
+    return client.unbindLinkedAccountToken(linkedAccountTokenId);
   }
 }

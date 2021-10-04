@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class RecurringPayment {
   @SerializedName("id")
   private String id;
@@ -71,6 +68,8 @@ public class RecurringPayment {
   @SerializedName("currency")
   private String currency;
 
+  private static RecurringPaymentClient recurringPaymentClient;
+
   /**
    * Create recurring payment with given parameters
    *
@@ -95,16 +94,8 @@ public class RecurringPayment {
       String description,
       Number amount)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/recurring_payments");
-    Map<String, Object> params = new HashMap<>();
-    params.put("external_id", externalId);
-    params.put("payer_email", payerEmail);
-    params.put("interval", interval);
-    params.put("interval_count", intervalCount);
-    params.put("description", description);
-    params.put("amount", amount);
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.create(externalId, payerEmail, interval, intervalCount, description, amount);
   }
 
   /**
@@ -128,9 +119,8 @@ public class RecurringPayment {
    */
   public static RecurringPayment create(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/recurring_payments");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.create(headers, params);
   }
 
   /**
@@ -143,9 +133,8 @@ public class RecurringPayment {
    */
   public static RecurringPayment edit(String id, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/recurring_payments/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.PATCH, url, params, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.edit(id, params);
   }
 
   /**
@@ -156,9 +145,8 @@ public class RecurringPayment {
    * @throws XenditException XenditException
    */
   public static RecurringPayment get(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/recurring_payments/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.get(id);
   }
 
   /**
@@ -169,9 +157,8 @@ public class RecurringPayment {
    * @throws XenditException XenditException
    */
   public static RecurringPayment stop(String id) throws XenditException {
-    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/stop!");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, null, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.stop(id);
   }
 
   /**
@@ -182,9 +169,8 @@ public class RecurringPayment {
    * @throws XenditException XenditException
    */
   public static RecurringPayment pause(String id) throws XenditException {
-    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/pause!");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, null, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.pause(id);
   }
 
   /**
@@ -195,9 +181,8 @@ public class RecurringPayment {
    * @throws XenditException XenditException
    */
   public static RecurringPayment resume(String id) throws XenditException {
-    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/recurring_payments/", id, "/resume!");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, null, RecurringPayment.class);
+    RecurringPaymentClient client = getClient();
+    return client.resume(id);
   }
 
   /**
@@ -208,7 +193,43 @@ public class RecurringPayment {
    * @throws XenditException XenditException
    */
   public static Invoice[] getPaymentsById(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?recurring_payment_id=", id);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Invoice[].class);
+    RecurringPaymentClient client = getClient();
+    return client.getPaymentsById(id);
+  }
+
+  /**
+   * Its create a client for RecurringPayment
+   *
+   * @return RecurringPaymentClient
+   */
+  private static RecurringPaymentClient getClient() {
+    if (isApiKeyExist()) {
+      if (recurringPaymentClient == null
+          || !recurringPaymentClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return recurringPaymentClient =
+            new RecurringPaymentClient(
+                Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (recurringPaymentClient == null
+          || !recurringPaymentClient
+              .getOpt()
+              .getApiKey()
+              .trim()
+              .equals(Xendit.Opt.getApiKey().trim())) {
+        return recurringPaymentClient =
+            new RecurringPaymentClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return recurringPaymentClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

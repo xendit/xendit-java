@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class BatchDisbursement {
   @SerializedName("id")
   private String id;
@@ -31,6 +28,8 @@ public class BatchDisbursement {
 
   @SerializedName("status")
   private String status;
+
+  private static BatchDisbursementClient batchDisbursementClient;
 
   /**
    * Create a batch disbursement.
@@ -59,13 +58,8 @@ public class BatchDisbursement {
   public static BatchDisbursement create(
       Map<String, String> headers, String reference, BatchDisbursementItem[] disbursements)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/batch_disbursements");
-    Map<String, Object> params = new HashMap<>();
-    params.put("reference", reference);
-    params.put("disbursements", disbursements);
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, BatchDisbursement.class);
+    BatchDisbursementClient client = getClient();
+    return client.create(headers, reference, disbursements);
   }
 
   /**
@@ -75,8 +69,43 @@ public class BatchDisbursement {
    * @throws XenditException XenditException
    */
   public static AvailableBank[] getAvailableBanks() throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, AvailableBank[].class);
+    BatchDisbursementClient client = getClient();
+    return client.getAvailableBanks();
+  }
+
+  /**
+   * Its create a client for BatchDisbursement
+   *
+   * @return BatchDisbursementClient
+   */
+  private static BatchDisbursementClient getClient() {
+    if (isApiKeyExist()) {
+      if (batchDisbursementClient == null
+          || !batchDisbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return batchDisbursementClient =
+            new BatchDisbursementClient(
+                Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (batchDisbursementClient == null
+          || !batchDisbursementClient
+              .getOpt()
+              .getApiKey()
+              .trim()
+              .equals(Xendit.Opt.getApiKey().trim())) {
+        return batchDisbursementClient =
+            new BatchDisbursementClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return batchDisbursementClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

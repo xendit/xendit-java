@@ -3,68 +3,76 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class Balance {
   @SerializedName("balance")
   private Number balance;
 
+  private static BalanceClient balanceClient;
+
+  /** */
   public enum AccountType {
     CASH,
     HOLDING,
     TAX
   }
 
-  /**
-   * Get balance from your account
-   *
-   * @return Balance
-   * @throws XenditException XenditException
-   */
+  public void setBalance(Number balance) {
+    this.balance = balance;
+  }
+
   public static Balance get() throws XenditException {
     return getBalance(new HashMap<>(), null);
   }
 
-  /**
-   * Get balance from your account based on given account type
-   *
-   * @param accountType The selected balance type
-   * @return Balance
-   * @throws XenditException XenditException
-   */
-  public static Balance get(AccountType accountType) throws XenditException {
+  public static Balance get(Balance.AccountType accountType) throws XenditException {
     return getBalance(new HashMap<>(), accountType);
   }
 
-  /**
-   * Get balance from your account based on given account type
-   *
-   * @param headers
-   * @param accountType The selected balance type
-   * @return Balance
-   * @throws XenditException XenditException
-   */
-  public static Balance get(Map<String, String> headers, AccountType accountType)
+  public static Balance get(Map<String, String> headers, Balance.AccountType accountType)
       throws XenditException {
     return getBalance(headers, accountType);
   }
 
-  private static Balance getBalance(Map<String, String> headers, AccountType accountType)
+  private static Balance getBalance(Map<String, String> headers, Balance.AccountType accountType)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/balance");
-    if (accountType != null) {
-      url = String.format("%s%s%s", url, "?account_type=", accountType);
-    }
+    BalanceClient client = getClient();
+    return client.getBalance(headers, accountType);
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, Balance.class);
+  /**
+   * Its create a client for Invoice
+   *
+   * @return InvoiceClient
+   */
+  private static BalanceClient getClient() {
+    if (isApiKeyExist()) {
+      if (balanceClient == null
+          || !balanceClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return balanceClient =
+            new BalanceClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (balanceClient == null
+          || !balanceClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return balanceClient = new BalanceClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return balanceClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

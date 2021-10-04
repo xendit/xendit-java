@@ -5,7 +5,11 @@ import java.util.Map;
 
 public interface NetworkClient {
   <T> T request(
-      RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
+      RequestResource.Method method,
+      String url,
+      Map<String, Object> params,
+      String apiKey,
+      Class<T> clazz)
       throws XenditException;
 
   <T> T request(
@@ -13,6 +17,7 @@ public interface NetworkClient {
       String url,
       Map<String, String> headers,
       Map<String, Object> params,
+      String apiKey,
       Class<T> clazz)
       throws XenditException;
 }

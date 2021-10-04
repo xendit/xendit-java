@@ -6,12 +6,13 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
+import com.xendit.model.Invoice;
+import com.xendit.model.InvoiceClient;
+import com.xendit.network.BaseRequest;
+import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
-import com.xenditclient.invoice.Invoice;
-import com.xenditclient.invoice.InvoiceClient;
-import com.xenditclient.network.BaseRequest;
-import com.xenditclient.network.NetworkClient;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -19,9 +20,9 @@ import org.junit.Test;
 
 public class InvoiceTest {
   private static final String URL_V2 =
-      String.format("%s%s", com.xendit.Xendit.getUrl(), "/v2/invoices");
+      String.format("%s%s", Xendit.Opt.getXenditURL(), "/v2/invoices");
   private static final String URL_V1 =
-      String.format("%s%s", com.xendit.Xendit.getUrl(), "/invoices");
+      String.format("%s%s", Xendit.Opt.getXenditURL(), "/invoices");
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static String TEST_ID = "5e0cb0bbf4d38b20d5421b72";
   private static String TEST_EXTERNAL_ID = "test_id";
@@ -30,19 +31,20 @@ public class InvoiceTest {
   private static Number TEST_AMOUNT_GREATER = 1000000001;
   private static String TEST_EMAIL = "test@email.com";
   private static String TEST_DESC = "Testing";
-  Invoice VALID_INVOICE = new Invoice();
+  private static Invoice VALID_INVOICE =
+      Invoice.builder()
+          .id(TEST_ID)
+          .externalId(TEST_EXTERNAL_ID)
+          .amount(TEST_AMOUNT)
+          .payerEmail(TEST_EMAIL)
+          .description(TEST_DESC)
+          .build();
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   InvoiceClient invoiceClient = mock(InvoiceClient.class);
 
   @Before
   public void initMocks() {
-    VALID_INVOICE.setId(TEST_ID);
-    VALID_INVOICE.setExternalId(TEST_EXTERNAL_ID);
-    VALID_INVOICE.setAmount(TEST_AMOUNT);
-    VALID_INVOICE.setPayerEmail(TEST_EMAIL);
-    VALID_INVOICE.setDescription(TEST_DESC);
-
     PARAMS.put("external_id", TEST_EXTERNAL_ID);
     PARAMS.put("amount", TEST_AMOUNT);
     PARAMS.put("payer_email", TEST_EMAIL);
