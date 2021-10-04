@@ -3,7 +3,6 @@ package com.xendit.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.xendit.Xendit;
 import com.xendit.exception.ApiException;
 import com.xendit.exception.AuthException;
 import com.xendit.exception.XenditException;
@@ -14,15 +13,22 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class BaseRequest implements NetworkClient {
   private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
 
   public <T> T request(
-      RequestResource.Method method, String url, Map<String, Object> params, Class<T> clazz)
+      RequestResource.Method method,
+      String url,
+      Map<String, Object> params,
+      String apiKey,
+      Class<T> clazz)
       throws XenditException {
-    return request(method, url, new HashMap<>(), params, clazz);
+    return request(method, url, new HashMap<>(), params, apiKey, clazz);
   }
 
   @Override
@@ -31,9 +37,10 @@ public class BaseRequest implements NetworkClient {
       String url,
       Map<String, String> headers,
       Map<String, Object> params,
+      String apiKey,
       Class<T> clazz)
       throws XenditException {
-    return staticRequest(method, url, headers, params, clazz);
+    return staticRequest(method, url, headers, params, apiKey, clazz);
   }
 
   private static Map<String, String> getHeaders(String apiKey, Map<String, String> customHeaders)
@@ -61,9 +68,10 @@ public class BaseRequest implements NetworkClient {
       String url,
       Map<String, String> headers,
       Map<String, Object> params,
+      String apiKey,
       Class<T> clazz)
       throws XenditException {
-    XenditResponse response = rawRequest(method, url, headers, params);
+    XenditResponse response = rawRequest(method, url, headers, params, apiKey);
 
     int responseCode = response.getStatusCode();
     String responseBody = response.getBody();
@@ -86,9 +94,9 @@ public class BaseRequest implements NetworkClient {
       RequestResource.Method method,
       String url,
       Map<String, String> headers,
-      Map<String, Object> params)
+      Map<String, Object> params,
+      String apiKey)
       throws XenditException {
-    String apiKey = Xendit.getApiKey();
 
     if (apiKey == null || apiKey.trim().isEmpty()) {
       throw new AuthException("No API key is provided yet.");

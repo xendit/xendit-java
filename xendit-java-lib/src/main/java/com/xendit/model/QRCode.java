@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class QRCode {
   public enum QRCodeType {
     DYNAMIC,
@@ -51,6 +48,8 @@ public class QRCode {
   @SerializedName("updated")
   private String updated;
 
+  private static QRCodeClient qrCodeClient;
+
   /**
    * Create QR Code with given parameters
    *
@@ -69,14 +68,8 @@ public class QRCode {
   public static QRCode createQRCode(
       String externalId, QRCodeType type, String callbackUrl, Number amount)
       throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("external_id", externalId);
-    params.put("type", type.toString());
-    params.put("callback_url", callbackUrl);
-    params.put("amount", amount);
-    String url = String.format("%s%s", Xendit.getUrl(), "/qr_codes");
-
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, params, QRCode.class);
+    QRCodeClient client = getClient();
+    return client.createQRCode(externalId, type, callbackUrl, amount);
   }
 
   /**
@@ -100,9 +93,8 @@ public class QRCode {
    */
   public static QRCode createQRCode(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/qr_codes");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, QRCode.class);
+    QRCodeClient client = getClient();
+    return client.createQRCode(headers, params);
   }
 
   /**
@@ -113,7 +105,37 @@ public class QRCode {
    * @throws XenditException XenditException
    */
   public static QRCode getQRCode(String externalId) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/qr_codes/", externalId);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, QRCode.class);
+    QRCodeClient client = getClient();
+    return client.getQRCode(externalId);
+  }
+
+  /**
+   * Its create a client for QRCode
+   *
+   * @return QRCodeClient
+   */
+  private static QRCodeClient getClient() {
+    if (isApiKeyExist()) {
+      if (qrCodeClient == null
+          || !qrCodeClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return qrCodeClient =
+            new QRCodeClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (qrCodeClient == null
+          || !qrCodeClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return qrCodeClient = new QRCodeClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return qrCodeClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

@@ -2,28 +2,20 @@ package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
-import com.xendit.exception.ParamException;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class EWalletPayment {
   public enum EWalletType {
     DANA,
     OVO,
     LINKAJA
   }
-
-  private static final BigInteger MINIMUM_AMOUNT = new BigInteger("1");
-  private static final BigInteger MAXIMUM_AMOUNT = new BigInteger("10000000");
 
   @SerializedName("id")
   private String id;
@@ -54,6 +46,8 @@ public class EWalletPayment {
 
   @SerializedName("status")
   private String status;
+
+  private static EWalletClient eWalletClient;
 
   /**
    * Create new payment for LINKAJA
@@ -148,38 +142,43 @@ public class EWalletPayment {
    */
   public static EWalletPayment getPaymentStatus(String externalId, EWalletType ewalletType)
       throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s%s%s",
-            Xendit.getUrl(), "/ewallets/?external_id=", externalId, "&ewallet_type=", ewalletType);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, EWalletPayment.class);
-  }
-
-  private static void amountValidation(String amount) throws ParamException {
-    try {
-      BigInteger bigInteger = new BigInteger(amount);
-
-      if (bigInteger.compareTo(MINIMUM_AMOUNT) == -1) {
-        throw new ParamException(String.format("Minimum amount is %s", MINIMUM_AMOUNT));
-      }
-
-      if (bigInteger.compareTo(MAXIMUM_AMOUNT) == 1) {
-        throw new ParamException(String.format("Maximum amount is %s", MAXIMUM_AMOUNT));
-      }
-    } catch (NumberFormatException e) {
-      throw new ParamException("Invalid amount format");
-    }
+    EWalletClient client = getClient();
+    return client.getPaymentStatus(externalId, ewalletType);
   }
 
   public static EWalletPayment createPaymentRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/ewallets");
-    String amount = params.get("amount").toString();
+    EWalletClient client = getClient();
+    return client.createPaymentRequest(headers, params);
+  }
 
-    amountValidation(amount);
+  /**
+   * Its create a client for Payout
+   *
+   * @return PayoutClient
+   */
+  private static EWalletClient getClient() {
+    if (isApiKeyExist()) {
+      if (eWalletClient == null
+          || !eWalletClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return eWalletClient =
+            new EWalletClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (eWalletClient == null
+          || !eWalletClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return eWalletClient = new EWalletClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return eWalletClient;
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, EWalletPayment.class);
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

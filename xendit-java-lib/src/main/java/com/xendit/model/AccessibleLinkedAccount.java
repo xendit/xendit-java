@@ -1,9 +1,7 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +23,8 @@ public class AccessibleLinkedAccount {
   @SerializedName("properties")
   private Map<String, Object> properties;
 
+  private static DirectDebitPaymentClient directDebitPaymentClient;
+
   /**
    * Get accessible accounts by linked account token
    *
@@ -35,11 +35,7 @@ public class AccessibleLinkedAccount {
    */
   public static AccessibleLinkedAccount[] retrieveAccessibleLinkedAccounts(
       String linkedAccountTokenId) throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s%s",
-            Xendit.getUrl(), "/linked_account_tokens/", linkedAccountTokenId, "/accounts");
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, AccessibleLinkedAccount[].class);
+    DirectDebitPaymentClient client = DirectDebitPayment.getClient();
+    return client.retrieveAccessibleLinkedAccounts(linkedAccountTokenId);
   }
 }

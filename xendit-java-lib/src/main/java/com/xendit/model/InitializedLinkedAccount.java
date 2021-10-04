@@ -1,18 +1,14 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class InitializedLinkedAccount {
   @SerializedName("id")
   private String id;
@@ -85,9 +81,7 @@ public class InitializedLinkedAccount {
 
   private static InitializedLinkedAccount initializeLinkedAccountTokenizationRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/linked_account_tokens/auth");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, InitializedLinkedAccount.class);
+    DirectDebitPaymentClient client = DirectDebitPayment.getClient();
+    return client.initializeLinkedAccountTokenizationRequest(headers, params);
   }
 }

@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class Invoice {
   @SerializedName("id")
   private String id;
@@ -125,6 +122,8 @@ public class Invoice {
   @SerializedName("fixed_va")
   private Boolean fixedVa;
 
+  private static InvoiceClient invoiceClient;
+
   /**
    * Create invoice with given parameters
    *
@@ -139,13 +138,8 @@ public class Invoice {
   public static Invoice create(
       String externalId, Number amount, String payerEmail, String description)
       throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("external_id", externalId);
-    params.put("amount", amount);
-    params.put("payer_email", payerEmail);
-    params.put("description", description);
-    String url = String.format("%s%s", Xendit.getUrl(), "/v2/invoices");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Invoice.class);
+    InvoiceClient client = getClient();
+    return client.create(externalId, amount, payerEmail, description);
   }
 
   /**
@@ -169,9 +163,8 @@ public class Invoice {
    */
   public static Invoice create(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/v2/invoices");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, Invoice.class);
+    InvoiceClient client = getClient();
+    return client.create(headers, params);
   }
 
   /**
@@ -183,9 +176,8 @@ public class Invoice {
    * @throws XenditException XenditException
    */
   public static Invoice getById(Map<String, String> headers, String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, Invoice.class);
+    InvoiceClient client = getClient();
+    return client.getById(headers, id);
   }
 
   /**
@@ -209,32 +201,8 @@ public class Invoice {
    */
   public static Invoice[] getAll(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String parameters = "";
-    String[] paramList =
-        new String[] {
-          "statuses",
-          "limit",
-          "created_after",
-          "created_before",
-          "paid_after",
-          "paid_before",
-          "expired_after",
-          "expired_before",
-          "last_invoice_id",
-          "client_types",
-          "payment_channels",
-          "on_demand_link",
-          "recurring_payment_id",
-        };
-    for (int i = 0; i < paramList.length; i++) {
-      String key = paramList[i];
-      if (params.containsKey(key))
-        parameters += String.format("%s%s%s%s", "&", key, "=", params.get(key));
-    }
-
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/v2/invoices?", parameters);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, Invoice[].class);
+    InvoiceClient client = getClient();
+    return client.getAll(headers, params);
   }
 
   /**
@@ -257,9 +225,8 @@ public class Invoice {
    * @throws XenditException XenditException
    */
   public static Invoice expire(Map<String, String> headers, String id) throws XenditException {
-    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/invoices/", id, "/expire!");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, null, Invoice.class);
+    InvoiceClient client = getClient();
+    return client.expire(headers, id);
   }
 
   /**
@@ -271,5 +238,35 @@ public class Invoice {
    */
   public static Invoice expire(String id) throws XenditException {
     return expire(new HashMap<>(), id);
+  }
+
+  /**
+   * Its create a client for Invoice
+   *
+   * @return InvoiceClient
+   */
+  private static InvoiceClient getClient() {
+    if (isApiKeyExist()) {
+      if (invoiceClient == null
+          || !invoiceClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return invoiceClient =
+            new InvoiceClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (invoiceClient == null
+          || !invoiceClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return invoiceClient = new InvoiceClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return invoiceClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

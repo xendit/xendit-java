@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class Payout {
   @SerializedName("id")
   private String id;
@@ -71,6 +68,8 @@ public class Payout {
   @SerializedName("payment_id")
   private String paymentId;
 
+  private static PayoutClient payoutClient;
+
   /**
    * Create payout with given parameters
    *
@@ -81,11 +80,8 @@ public class Payout {
    * @throws XenditException XenditException
    */
   public static Payout createPayout(String externalId, Number amount) throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("external_id", externalId);
-    params.put("amount", amount);
-    String url = String.format("%s%s", Xendit.getUrl(), "/payouts");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, params, Payout.class);
+    PayoutClient client = getClient();
+    return client.createPayout(externalId, amount);
   }
 
   /**
@@ -109,9 +105,8 @@ public class Payout {
    */
   public static Payout createPayout(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/payouts");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, Payout.class);
+    PayoutClient client = getClient();
+    return client.createPayout(headers, params);
   }
 
   /**
@@ -122,8 +117,8 @@ public class Payout {
    * @throws XenditException XenditException
    */
   public static Payout getPayout(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/payouts/", id);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, Payout.class);
+    PayoutClient client = getClient();
+    return client.getPayout(id);
   }
 
   /**
@@ -134,7 +129,37 @@ public class Payout {
    * @throws XenditException XenditException
    */
   public static Payout voidPayout(String id) throws XenditException {
-    String url = String.format("%s%s%s%s", Xendit.getUrl(), "/payouts/", id, "/void");
-    return Xendit.requestClient.request(RequestResource.Method.POST, url, null, Payout.class);
+    PayoutClient client = getClient();
+    return client.voidPayout(id);
+  }
+
+  /**
+   * Its create a client for Payout
+   *
+   * @return PayoutClient
+   */
+  private static PayoutClient getClient() {
+    if (isApiKeyExist()) {
+      if (payoutClient == null
+          || !payoutClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return payoutClient =
+            new PayoutClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (payoutClient == null
+          || !payoutClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return payoutClient = new PayoutClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return payoutClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

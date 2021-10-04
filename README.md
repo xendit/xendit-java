@@ -124,18 +124,43 @@ More information: https://search.maven.org/artifact/com.xendit/xendit-java-lib
 ## Usage
 You need to use secret API key in order to use functionality in this library. The key can be obtained from your [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
 
+### Without Client
+If you're only dealing with a single secret key, you can simply import the packages required for the products you're interacting with without the need to create a client.
+
+There is another way to set secret key using **Xendit.Opt.setApiKey(")** which is recommended way to use instead of **Xendit.apiKey**.
+
 ```java
 import com.xendit.Xendit;
 
 public class Example {
     public static void main(String[] args) {
-        Xendit.apiKey = "PUT YOUR API KEY HERE";
+        Xendit.Opt.setApiKey("PUT YOUR API KEY HERE");
+        // OR    
+        Xendit.apiKey = "PUT YOUR API KEY HERE";               
     }
 }
 ```
+### With Client
+If you're dealing with multiple secret keys, it is recommended that you use **XenditClient**. This allows you to create as many clients as needed, each with their own individual key.
+```java
+import com.xendit.XenditClient;
 
+public class Example {
+    public static void main(String[] args) {
+        XenditClient xenditClient = new XenditClient.Builder()
+                        .setApikey("PUT YOUR API KEY HERE")
+                        .build();
+
+        XenditClient xenditClient2 = new XenditClient.Builder()
+                        .setApikey("PUT YOUR API KEY HERE")
+                        .build();
+
+    }
+}
+```
 Example: Create a disbursement
 
+###### Without Client
 ```java
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
@@ -146,7 +171,9 @@ import java.util.Map;
 
 public class ExampleCreateDisbursement {
     public static void main(String[] args) {
-        Xendit.apiKey = "xnd_development_...";
+        Xendit.apiKey = "xnd_development_..."; 
+        //OR 
+        Xendit.Opt.setApiKey("xnd_development_...");
 
         try {
             Map<String, Object> params = new HashMap<>();
@@ -158,6 +185,41 @@ public class ExampleCreateDisbursement {
             params.put("amount", "90000");
 
             Disbursement disbursement = Disbursement.create(params);
+        } catch (XenditException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+###### With Client
+```java
+import com.xendit.exception.XenditException;
+import com.xendit.XenditClient;
+import com.xendit.model.Disbursement;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ExampleCreateDisbursement {
+    public static void main(String[] args) {
+        XenditClient xenditClient = new XenditClient.Builder()
+                      .setApikey("xnd_development_...")
+                      .build();
+        
+        XenditClient xenditClient2 = new XenditClient.Builder()
+                      .setApikey("xnd_development_...")
+                      .build();
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("external_id", "my_external_id");
+            params.put("bank_code", "BCA");
+            params.put("account_holder_name", "John Doe");
+            params.put("account_number", "123456789");
+            params.put("description", "My Description");
+            params.put("amount", "90000");
+
+            Disbursement disbursement = xenditClient.disbursement.create(params);
+            Disbursement disbursement2 = xenditClient2.disbursement.create(params);
         } catch (XenditException e) {
             e.printStackTrace();
         }
@@ -209,25 +271,38 @@ params.put("account_number", "123456789");
 params.put("description", "My Description");
 params.put("amount", "90000");
 
-Disbursement disbursement = Disbursement.create(params);
+/* Without client */
+Disbursement disbursement = Disbursement.create(params); 
+
+/* With client */
+Disbursement disbursement = xenditClient.disbursement.create(params);
 ```
 
 #### Get banks with available disbursement service
 
 ```java
+/* Without client */
 AvailableBank[] banks = Disbursement.getAvailableBanks();
+/* With client */
+AvailableBank[] banks = xenditClient.disbursement.getAvailableBanks();
 ```
 
 #### Get a disbursement by external ID
 
 ```java
+/* Without client */
 Disbursement disbursement = Disbursement.getByExternalId("EXAMPLE_ID");
+/* With client */
+Disbursement disbursement = xenditClient.disbursement.getByExternalId("EXAMPLE_ID");
 ```
 
 #### Get a disbursement by ID
 
 ```java
+/* Without client */
 Disbursement disbursement = Disbursement.getById("EXAMPLE_ID");
+/* With client */
+Disbursement disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
 ```
 
 [Back to top](#table-of-contents)
@@ -266,14 +341,19 @@ params.put("external_id", "my_external_id");
 params.put("amount", 1800000);
 params.put("payer_email", "customer@domain.com");
 params.put("description", "Invoice Demo #123");
-
+/* Without client */
 Invoice invoice = Invoice.create(params);
+/* With client */
+Invoice invoice = xenditClient.invoice.create(params);
 ```
 
 #### Get an invoice by ID
 
 ```java
+/* Without client */
 Invoice invoice = Invoice.getById("EXAMPLE_ID");
+/* With client */
+Invoice invoice = xenditClient.invoice.getById("EXAMPLE_ID");
 ```
 
 #### Get all invoices
@@ -282,14 +362,20 @@ Invoice invoice = Invoice.getById("EXAMPLE_ID");
 Map<String, Object> params = new HashMap<>();
 params.put("limit", 3);
 params.put("statuses", "[\"SETTLED\",\"EXPIRED\"]");
-
+/* Without client */
 Invoice[] invoices = Invoice.getAll(params);
+/* With client */
+Invoice[] invoices = xenditClient.invoice.getAll(params);
+
 ```
 
 #### Expire an invoice
 
 ```java
+/* Without client */
 Invoice invoice = Invoice.expire("EXAMPLE_ID");
+/* With client */
+Invoice invoice = xenditClient.invoice.expire("EXAMPLE_ID");
 ```
 
 [Back to top](#table-of-contents)
@@ -355,7 +441,11 @@ params.put("external_id", "my_external_id");
 params.put("bank_code", BankCode.BNI.getText());
 params.put("name", "John Doe");
 
+/* Without client */
 FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(params);
+/* With client */
+FixedVirtualAccount virtualAccount = xenditClient.fixedVirtualAccount.createOpen(params);
+
 ```
 
 #### Update a fixed virtual account by ID
@@ -364,25 +454,37 @@ FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(params);
 Map<String, Object> params = new HashMap<>();
 params.put("is_single_use", true);
 
+/* Without client */
 FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.update("EXAMPLE_ID", params);
+/* With client */
+FixedVirtualAccount fixedVirtualAccount = xenditClient.fixedVirtualAccount.update("EXAMPLE_ID", params);
 ```
 
 #### Get banks with available virtual account service
 
 ```java
+/* Without client */
 AvailableBank[] availableBanks = FixedVirtualAccount.getAvailableBanks();
+/* With client */
+AvailableBank[] availableBanks = xenditClient.fixedVirtualAccount.getAvailableBanks();
 ```
 
 #### Get a fixed virtual account by ID
 
 ```java
+/* Without client */
 FixedVirtualAccount fpa = FixedVirtualAccount.getFixedVA("EXAMPLE_ID");
+/* With client */
+FixedVirtualAccount fpa = xenditClient.fixedVirtualAccount.getFixedVA("EXAMPLE_ID");
 ```
 
 #### Get a fixed virtual account payment by payment ID
 
 ```java
+/* Without client */
 FixedVirtualAccountPayment payment = FixedVirtualAccount.getPayment("EXAMPLE_PAYMENT_ID");
+/* With client */
+FixedVirtualAccountPayment payment = xenditClient.fixedVirtualAccount.getPayment("EXAMPLE_PAYMENT_ID");
 ```
 
 [Back to top](#table-of-contents)
@@ -420,14 +522,19 @@ params.put("external_id", "test");
 params.put("retail_outlet_name", "ALFAMART");
 params.put("name", "Rika Sutanto");
 params.put("expected_amount", 10000);
-
+/* Without client */
 FixedPaymentCode fpc = RetailOutlet.createFixedPaymentCode(params);
+/* With client */
+FixedPaymentCode fpc = xenditClient.retailOutlet.createFixedPaymentCode(params);
 ```
 
 #### Get fixed payment code
 
 ```java
+/* Without client */
 FixedPaymentCode fpc = RetailOutlet.getFixedPaymentCode("EXAMPLE_ID");
+/* With client */
+FixedPaymentCode fpc = xenditClient.retailOutlet.getFixedPaymentCode("EXAMPLE_ID");
 ```
 
 #### Update fixed payment code
@@ -461,7 +568,10 @@ RetailOutlet.updateFixedPaymentCode(
 Map<String, Object> params = new HashMap<>();
 params.put("name", "Lorem Ipsum");
 
+/* Without client */
 FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
+/* With client */
+FixedPaymentCode fpc = xenditClient.retailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
 ```
 
 [Back to top](#table-of-contents)
@@ -506,13 +616,19 @@ params.put("description", "Test desc");
 params.put("amount", 100000);
 params.put("currency", "IDR"); //Optional param
 
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.create(params);
+/* With client */
+RecurringPayment recurringPayment = xenditClient.recurringPayment.create(params);
 ```
 
 #### Get a recurring payment
 
 ```java
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.get("5e2dd160f8a4d24146f5974c");
+/* With client */
+RecurringPayment recurringPayment = xenditClient.recurringPayment.get("5e2dd160f8a4d24146f5974c");
 ```
 
 #### Edit a recurring payment
@@ -522,31 +638,46 @@ Map<String, Object> params = new HashMap<>();
 params.put("amount", 987654);
 params.put("interval", "WEEK");
 
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.edit("5e2dd55ef8a4d24146f59775", params);
+/* With client */
+RecurringPayment recurringPayment = xenditClient.recurringPayment.edit("5e2dd55ef8a4d24146f59775", params);
 ```
 
 #### Stop a recurring payment
 
 ```java
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.stop("5e2dd160f8a4d24146f5974c");
+/* With client */
+RecurringPayment recurringPayment = xenditClient.recurringPayment.stop("5e2dd160f8a4d24146f5974c");
 ```
 
 #### Pause a recurring payment
 
 ```java
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.pause("5e2dd55ef8a4d24146f59775");
+/* With client */
+RecurringPayment recurringPayment = xenditClient.recurringPayment.pause("5e2dd55ef8a4d24146f59775");
 ```
 
 #### Resume a recurring payment
 
 ```java
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.resume("5e2dd55ef8a4d24146f59775");
+/* With client */
+RecurringPayment recurringPayment = xenditClient.recurringPayment.resume("5e2dd55ef8a4d24146f59775");
 ```
 
 #### List recurring payments by ID
 
 ```java
+/* Without client */
 Invoice[] invoices = RecurringPayment.getPaymentsById("5e2dd55ef8a4d24146f59775");
+/* With client */
+Invoice[] invoices = xenditClient.recurringPayment.getPaymentsById("5e2dd55ef8a4d24146f59775");
 ```
 
 [Back to top](#table-of-contents)
@@ -564,7 +695,10 @@ Balance.get(String accountType);
 ```
 
 ```java
+/* Without client */
 Balance balance = Balance.get("CASH");
+/* With client */
+Balance balance = xenditClient.balance.get("CASH");
 ```
 
 [Back to top](#table-of-contents)
@@ -600,19 +734,28 @@ Map<String, Object> params = new HashMap<>();
 params.put("external_id", "my_test_id");
 params.put("amount", 100000);
 
+/* Without client */
 Payout payout = Payout.createPayout(params);
+/* Without client */
+Payout payout = xenditClient.payout.createPayout(params);
 ```
 
 #### Get a payout by ID
 
 ```java
+/* Without client */
 Payout payout = Payout.getPayout("EXAMPLE_ID");
+/* With client */
+Payout payout = xenditClient.payout.getPayout("EXAMPLE_ID");
 ```
 
 #### Void a payout
 
 ```java
+/* Without client */
 Payout payout = Payout.voidPayout("EXAMPLE_ID");
+/* With client */
+Payout payout = xenditClient.payout.voidPayout("EXAMPLE_ID");
 ```
 
 [Back to top](#table-of-contents)
@@ -660,13 +803,19 @@ params.put("checkout_method", "ONE_TIME_PAYMENT");
 params.put("channel_code", "ID_SHOPEEPAY");
 params.put("channel_properties", channelProperties);
 
+/* Without client */
 EWalletCharge charge = EWalletCharge.createEWalletCharge(params);
+/* With client */
+EWalletCharge charge = xenditClient.eWallet.createEWalletCharge(params);
 ```
 
 #### Get an e-wallet charge status
 
 ```java
+/* Without client */
 EWalletCharge charge = EWalletCharge.getEWalletChargeStatus("ewc_c8630205-3e7a-4511-8250-26a084480c4c");
+/* With client */
+EWalletCharge charge = xenditClient.eWallet.getEWalletChargeStatus("ewc_c8630205-3e7a-4511-8250-26a084480c4c");
 ```
 
 [Back to top](#table-of-contents)
@@ -702,7 +851,11 @@ CreditCardCharge.createAuthorization(
 </table>
 
 ```java
+/* Without client */
 CreditCardCharge creditCardCharge = CreditCard.createAuthorization("...", "test_id", 75000, "...", "123", false);
+/* With client */
+CreditCardCharge creditCardCharge = xenditClient.creditCard.createAuthorization("...", "test_id", 75000, "...", "123", false);
+
 ```
 
 #### Create a charge
@@ -734,37 +887,53 @@ CreditCardCharge.createCharge(
 </table>
 
 ```java
+/* Without client */
 CreditCardCharge creditCardCharge = CreditCard.createCharge("...", "test_id", 75000, "...", "123", "lorem ipsum");
+/* With client */
+CreditCardCharge creditCardCharge = xenditClient.creditCard.createCharge("...", "test_id", 75000, "...", "123", "lorem ipsum");
 ```
 
 #### Reverse an authorization
 
 ```java
+
 CreditCard.reverseAuthorization(String chargeId, String externalId);
 
+/* Without client */
 CreditCardReverseAuth creditCardReverseAuth = CreditCard.reverseAuthorization("1234567", "external_id");
+/* With client */
+CreditCardReverseAuth creditCardReverseAuth = xenditClient.creditCard.reverseAuthorization("1234567", "external_id");
 ```
 
 #### Capture a charge
 
 ```java
-CreditCard.captureCharge(String chargeId, Number amount);
 
+CreditCard.captureCharge(String chargeId, Number amount);
+/* Without client */
 CreditCardCharge creditCardCharge = CreditCard.captureCharge("12345678", 55000);
+/* With client */
+CreditCardCharge creditCardCharge = xenditClient.creditCard.captureCharge("12345678", 55000);
 ```
 
 #### Get a charge by ID
 
 ```java
+/* Without client */
 CreditCardCharge creditCardCharge = CreditCard.getCharge("1234567");
+/* With client */
+CreditCardCharge creditCardCharge = xenditClient.creditCard.getCharge("1234567");
 ```
 
 #### Create a refund
 
 ```java
-CreditCard.createRefund(String id, Number amount, String externalId);
 
+CreditCard.createRefund(String id, Number amount, String externalId);
+/* Without client */
 CreditCardRefund creditCardRefund = CreditCard.createRefund("1234567", 50000, "external_id");
+/* With client */
+CreditCardRefund creditCardRefund = xenditClient.creditCard.createRefund("1234567", 50000, "external_id");
 ```
 
 [Back to top](#table-of-contents)
@@ -791,7 +960,13 @@ BatchDisbursementItem item =
 #### Create a batch disbursement
 
 ```java
+/* Without client */
 BatchDisbursement.create(
+    String reference,
+    BatchDisbursementItem[] disbursements
+);
+/* With client */
+xenditClient.batchDisbursement.create(
     String reference,
     BatchDisbursementItem[] disbursements
 );
@@ -800,7 +975,10 @@ BatchDisbursement.create(
 #### Get banks with available disbursement service
 
 ```java
+/* Without client */
 AvailableBank[] banks = BatchDisbursement.getAvailableBanks();
+/* With client */
+AvailableBank[] banks = xenditClient.batchDisbursement.getAvailableBanks();
 ```
 
 [Back to top](#table-of-contents)
@@ -880,7 +1058,20 @@ CardlessCredit.create(
 </table>
 
 ```java
+/* Without client */
 CardlessCredit cardlessCredit = CardlessCredit.create(
+    "KREDIVO",
+    "external_id",
+    200000,
+    CardlessCredit.PaymentType.THREE_MONTHS.getVal(),
+    items,
+    customer,
+    address,
+    "www.example.com",
+    "www.example.com"
+);
+/* With client */
+CardlessCredit cardlessCredit = xenditClient.cardlessCredit.create(
     "KREDIVO",
     "external_id",
     200000,
@@ -898,7 +1089,15 @@ CardlessCredit cardlessCredit = CardlessCredit.create(
 #### Create QR Code
 
 ```java
+/* Without client */
 QRCode qrCode = QRCode.create(
+    "external_id",
+    QRCode.QRCodeType.DYNAMIC,
+    "https://callback.site",
+    10000
+);
+/* With client */
+QRCode qrCode = xenditClient.qrCode.create(
     "external_id",
     QRCode.QRCodeType.DYNAMIC,
     "https://callback.site",
@@ -909,7 +1108,10 @@ QRCode qrCode = QRCode.create(
 #### Get QR Code
 
 ```java
+/* Without client */
 QRCode qrCode = QRCode.getQRCode("external_id");
+/* With client */
+QRCode qrCode = xenditClient.qrCode.getQRCode("external_id");
 ```
 
 ### Customer
@@ -959,13 +1161,19 @@ params.put("nationality", "ID");
 params.put("date_of_birth", "1995-12-30");
 params.put("metadata", metadata);
 
+/* Without client */
 Customer customer = Customer.createCustomer(params);
+/* With client */
+Customer customer = xenditClient.customer.createCustomer(params);
 ```
 
 #### Get Customer by Reference ID
 
 ```java
+/* Without client */
 Customer[] customers = Customer.getCustomerByReferenceId("test-reference-id");
+/* With client */
+Customer[] customers = xenditClient.customer.getCustomerByReferenceId("test-reference-id");
 ```
 
 ### Direct Debit
@@ -1007,7 +1215,15 @@ metadata.put("tes", "123");
 String customerId = "791ac956-397a-400f-9fda-4958894e61b5";
 ChannelCode channelCode = ChannelCode.DC_BRI;
 
+/* Without client */
 InitializedLinkedAccount linkedAccount = InitializedLinkedAccount.initializeLinkedAccountTokenization(
+    customerId,
+    channelCode,
+    properties,
+    metadata
+);
+/* With client */
+InitializedLinkedAccount linkedAccount = xenditClient.directDebitPayment.initializeLinkedAccountTokenization(
     customerId,
     channelCode,
     properties,
@@ -1043,21 +1259,29 @@ params.put("otp_code", "333000");
 
 String tokenId = "lat-ba3c5645-f134-432a-b4f4-f8972685aa03";
 
+/* Without client */
 ValidatedLinkedAccount linkedAccount = ValidatedLinkedAccount.validateOTP(tokenId, params);
+/* With client */
+ValidatedLinkedAccount linkedAccount = xenditClient.directDebitPayment.validateOTP(tokenId, params);
 ```
 
 #### Retrieve accessible accounts by linked account token
 
 ```java
-AccessibleLinkedAccount[] linkedAccounts = AccessibleLinkedAccount.retrieveAccessibleLinkedAccounts(
-    "lat-960e709c-bdd6-4b4a-a361-243186379c45");
+/* Without client */
+AccessibleLinkedAccount[] linkedAccounts = AccessibleLinkedAccount.retrieveAccessibleLinkedAccounts("lat-960e709c-bdd6-4b4a-a361-243186379c45");
+/* With client */
+AccessibleLinkedAccount[] linkedAccounts = xenditClient.directDebitPayment.retrieveAccessibleLinkedAccounts("lat-960e709c-bdd6-4b4a-a361-243186379c45");
 System.out.println(Arrays.toString(linkedAccounts));
 ```
 
 #### Unbind linked account token
 
 ```java
+/* Without client */
 UnbindedLinkedAccount linkedAccount = UnbindedLinkedAccount.unbindLinkedAccountToken("lat-a08fba1b-100c-445b-b788-aaeaf8215e8f");
+/* With client */
+UnbindedLinkedAccount linkedAccount = xenditClient.directDebitPayment.unbindLinkedAccountToken("lat-a08fba1b-100c-445b-b788-aaeaf8215e8f");
 ```
 
 #### Create payment method
@@ -1095,14 +1319,19 @@ params.put("customer_id", "4b7b6050-0830-440a-903b-37d527dbbaa9");
 params.put("type", "DEBIT_CARD");
 params.put("properties", properties);
 params.put("metadata", metadata);
-
+/* Without client */
 PaymentMethod paymentMethod = PaymentMethod.createPaymentMethod(params);
+/* With client */
+PaymentMethod paymentMethod = xenditClient.directDebitPayment.createPaymentMethod(params);
 ```
 
 #### Get payment methods by customer ID
 
 ```java
+/* Without client */
 PaymentMethod[] paymentMethods = PaymentMethod.getPaymentMethodsByCustomerId("4b7b6050-0830-440a-903b-37d527dbbaa9");
+/* With client */
+PaymentMethod[] paymentMethods = xenditClient.directDebitPayment.getPaymentMethodsByCustomerId("4b7b6050-0830-440a-903b-37d527dbbaa9");
 System.out.println(Arrays.toString(paymentMethods));
 ```
 
@@ -1142,7 +1371,10 @@ params.put("description", "Test desc");
 params.put("amount", 100000);
 params.put("currency", "IDR");
 
+/* Without client */
 RecurringPayment recurringPayment = RecurringPayment.create(params);
+/* With client */
+RecurringPayment recurringPayment = xenditClient.directDebitPayment.create(params);
 ```
 
 #### Create direct debit payment
@@ -1221,7 +1453,10 @@ params.put("metadata", metadata);
 
 String idempotencyKey = "idempotency-key-4";
 
+/* Without client */
 DirectDebitPayment directDebitPayment = DirectDebitPayment.createDirectDebitPayment(params, idempotencyKey);
+/* With client */
+DirectDebitPayment directDebitPayment = xenditClient.directDebitPayment.createDirectDebitPayment(params, idempotencyKey);
 ```
 
 #### Validate OTP for direct debit payment
@@ -1252,19 +1487,28 @@ params.put("otp_code", "222000");
 
 String directDebitPaymentId = "ddpy-b150da90-2121-44a6-a836-5eebf0d7ab55";
 
+/* Without client */
 DirectDebitPayment directDebitPayment = DirectDebitPayment.validateOTP(directDebitPaymentId, params);
+/* With client */
+DirectDebitPayment directDebitPayment = xenditClient.directDebitPayment.validateOTP(directDebitPaymentId, params);
 ```
 
 #### Get direct debit payment status by ID
 
 ```java
+/* Without client */
 DirectDebitPayment directDebitPayment = DirectDebitPayment.getDirectDebitPaymentStatusById("ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c");
+/* With client */
+DirectDebitPayment directDebitPayment = xenditClient.directDebitPayment.getDirectDebitPaymentStatusById("ddpy-7e61b0a7-92f9-4762-a994-c2936306f44c");
 ```
 
 #### Get direct debit payment status by reference ID
 
 ```java
+/* Without client */
 DirectDebitPayment[] directDebitPayments = DirectDebitPayment.getDirectDebitPaymentStatusByReferenceId("test-direct-debit-ref-4");
+/* With client */
+DirectDebitPayment[] directDebitPayments = xenditClient.directDebitPayment.getDirectDebitPaymentStatusByReferenceId("test-direct-debit-ref-4");
 System.out.println(Arrays.toString(directDebitPayments));
 ```
 

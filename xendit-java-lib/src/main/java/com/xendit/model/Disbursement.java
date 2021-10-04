@@ -3,19 +3,15 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class Disbursement {
-
   @SerializedName("id")
   private String id;
 
@@ -49,6 +45,8 @@ public class Disbursement {
 
   @SerializedName("email_bcc")
   private String[] emailBcc;
+
+  private static DisbursementClient disbursementClient;
 
   /**
    * Create disbursement with all parameter as HashMap
@@ -97,7 +95,7 @@ public class Disbursement {
       String description,
       BigInteger amount)
       throws XenditException {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("external_id", externalId);
     params.put("bank_code", bankCode);
     params.put("account_holder_name", accountHolderName);
@@ -133,7 +131,7 @@ public class Disbursement {
       BigInteger amount,
       String[] emailTo)
       throws XenditException {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("external_id", externalId);
     params.put("bank_code", bankCode);
     params.put("account_holder_name", accountHolderName);
@@ -174,7 +172,7 @@ public class Disbursement {
       String[] emailTo,
       String[] emailCc)
       throws XenditException {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("external_id", externalId);
     params.put("bank_code", bankCode);
     params.put("account_holder_name", accountHolderName);
@@ -220,7 +218,7 @@ public class Disbursement {
       String[] emailCc,
       String[] emailBcc)
       throws XenditException {
-    Map<String, Object> params = new HashMap<String, Object>();
+    Map<String, Object> params = new HashMap<>();
     params.put("external_id", externalId);
     params.put("bank_code", bankCode);
     params.put("account_holder_name", accountHolderName);
@@ -233,6 +231,12 @@ public class Disbursement {
     return createRequest(new HashMap<>(), params);
   }
 
+  private static Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    DisbursementClient client = getClient();
+    return client.createRequest(headers, params);
+  }
+
   /**
    * Get disbursement available bank
    *
@@ -242,9 +246,9 @@ public class Disbursement {
    */
   public static AvailableBank[] getAvailableBanks(Map<String, String> headers)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/available_disbursements_banks");
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, AvailableBank[].class);
+
+    DisbursementClient client = getClient();
+    return client.getAvailableBanks(headers);
   }
 
   /**
@@ -267,10 +271,9 @@ public class Disbursement {
    */
   public static Disbursement[] getByExternalId(Map<String, String> headers, String externalId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", Xendit.getUrl(), "/disbursements?external_id=", externalId);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, Disbursement[].class);
+
+    DisbursementClient client = getClient();
+    return client.getByExternalId(headers, externalId);
   }
 
   /**
@@ -294,9 +297,8 @@ public class Disbursement {
    */
   public static Disbursement getById(Map<String, String> headers, String id)
       throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/disbursements/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, Disbursement.class);
+    DisbursementClient client = getClient();
+    return client.getById(headers, id);
   }
 
   /**
@@ -310,11 +312,37 @@ public class Disbursement {
     return getById(new HashMap<>(), id);
   }
 
-  private static Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
-      throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/disbursements");
+  /**
+   * Its create a client for Disbursement
+   *
+   * @return DisbursementClient
+   */
+  private static DisbursementClient getClient() {
+    if (isApiKeyExist()) {
+      if (disbursementClient == null
+          || !disbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return disbursementClient =
+            new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (disbursementClient == null
+          || !disbursementClient
+              .getOpt()
+              .getApiKey()
+              .trim()
+              .equals(Xendit.Opt.getApiKey().trim())) {
+        return disbursementClient = new DisbursementClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return disbursementClient;
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, Disbursement.class);
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

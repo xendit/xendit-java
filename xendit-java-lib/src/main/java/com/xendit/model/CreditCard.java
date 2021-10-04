@@ -2,17 +2,19 @@ package com.xendit.model;
 
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class CreditCard {
+
+  private static CreditCardClient creditCardClient;
+
   /**
    * Create authorization with given parameters
    *
@@ -36,17 +38,9 @@ public class CreditCard {
       String cardCVN,
       Boolean capture)
       throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("token_id", tokenId);
-    params.put("external_id", externalId);
-    params.put("amount", amount);
-    if (isNotEmpty(authenticationId)) params.put("authentication_id", authenticationId);
-    if (isNotEmpty(cardCVN)) params.put("card_cvn", cardCVN);
-    params.put("capture", capture);
-    String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+    CreditCardClient client = getClient();
+    return client.createAuthorization(
+        tokenId, externalId, amount, authenticationId, cardCVN, capture);
   }
 
   /**
@@ -71,9 +65,8 @@ public class CreditCard {
    */
   public static CreditCardCharge createAuthorization(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, CreditCardCharge.class);
+    CreditCardClient client = getClient();
+    return client.createAuthorization(headers, params);
   }
 
   /**
@@ -99,17 +92,8 @@ public class CreditCard {
       String cardCVN,
       String descriptor)
       throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("token_id", tokenId);
-    params.put("external_id", externalId);
-    params.put("amount", amount);
-    if (isNotEmpty(authenticationId)) params.put("authentication_id", authenticationId);
-    if (isNotEmpty(cardCVN)) params.put("card_cvn", cardCVN);
-    if (isNotEmpty(descriptor)) params.put("descriptor", descriptor);
-    String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CreditCardCharge.class);
+    CreditCardClient client = getClient();
+    return client.createCharge(tokenId, externalId, amount, authenticationId, cardCVN, descriptor);
   }
 
   /**
@@ -132,9 +116,8 @@ public class CreditCard {
    */
   public static CreditCardCharge createCharge(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/credit_card_charges");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, CreditCardCharge.class);
+    CreditCardClient client = getClient();
+    return client.createCharge(headers, params);
   }
 
   /**
@@ -146,7 +129,8 @@ public class CreditCard {
    */
   public static CreditCardReverseAuth reverseAuthorization(String chargeId, String externalId)
       throws XenditException {
-    return reverseAuthorization(new HashMap<>(), chargeId, externalId);
+    CreditCardClient client = getClient();
+    return client.reverseAuthorization(chargeId, externalId);
   }
 
   /**
@@ -159,14 +143,8 @@ public class CreditCard {
    */
   public static CreditCardReverseAuth reverseAuthorization(
       Map<String, String> headers, String chargeId, String externalId) throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", chargeId, "/auth_reversal");
-    Map<String, Object> params = new HashMap<>();
-    params.put("external_id", externalId);
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, CreditCardReverseAuth.class);
+    CreditCardClient client = getClient();
+    return client.reverseAuthorization(headers, chargeId, externalId);
   }
 
   /**
@@ -193,13 +171,8 @@ public class CreditCard {
    */
   public static CreditCardCharge captureCharge(
       Map<String, String> headers, String chargeId, Number amount) throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("amount", amount);
-    String url =
-        String.format("%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", chargeId, "/capture");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, CreditCardCharge.class);
+    CreditCardClient client = getClient();
+    return client.captureCharge(headers, chargeId, amount);
   }
 
   /**
@@ -210,9 +183,8 @@ public class CreditCard {
    * @throws XenditException XenditException
    */
   public static CreditCardCharge getCharge(String id) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/credit_card_charges/", id);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, CreditCardCharge.class);
+    CreditCardClient client = getClient();
+    return client.getCharge(id);
   }
 
   /**
@@ -242,17 +214,37 @@ public class CreditCard {
   public static CreditCardRefund createRefund(
       Map<String, String> headers, String id, Number amount, String externalId)
       throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("amount", amount);
-    params.put("external_id", externalId);
-    String url =
-        String.format("%s%s%s%s", Xendit.getUrl(), "/credit_card_charges/", id, "/refunds");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, CreditCardRefund.class);
+    CreditCardClient client = getClient();
+    return client.createRefund(headers, id, amount, externalId);
   }
 
-  private static boolean isNotEmpty(String param) {
-    return param != null && !"".equals(param);
+  /**
+   * Its create a client for CreditCard
+   *
+   * @return CreditCardClient
+   */
+  private static CreditCardClient getClient() {
+    if (isApiKeyExist()) {
+      if (creditCardClient == null
+          || !creditCardClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return creditCardClient =
+            new CreditCardClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (creditCardClient == null
+          || !creditCardClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return creditCardClient = new CreditCardClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return creditCardClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

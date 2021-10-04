@@ -4,19 +4,36 @@ import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 
 public class Xendit {
-  public static final String LIVE_URL = "https://api.xendit.co";
 
-  public static volatile NetworkClient requestClient = new BaseRequest();
+  private static volatile NetworkClient requestClient = new BaseRequest();
 
-  public static volatile String apiKey;
+  public static String apiKey;
 
-  private static volatile String apiUrl = LIVE_URL;
+  public static Option Opt = new Option();
 
-  public static String getUrl() {
-    return apiUrl;
+  public static NetworkClient getRequestClient() {
+    return requestClient;
   }
 
-  public static String getApiKey() {
-    return apiKey;
+  public static void setRequestClient(NetworkClient requestClient) {
+    Xendit.requestClient = requestClient;
+  }
+
+  public static class Option {
+
+    private String apiKey;
+
+    public String getApiKey() {
+      return apiKey;
+    }
+
+    public Option setApiKey(String secretKey) {
+      this.apiKey = secretKey;
+      return this;
+    }
+
+    public String getXenditURL() {
+      return "https://api.xendit.co";
+    }
   }
 }

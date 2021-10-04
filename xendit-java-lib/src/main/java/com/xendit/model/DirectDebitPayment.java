@@ -4,16 +4,13 @@ import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.LinkedAccountEnum.ChannelCode;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class DirectDebitPayment {
   @SerializedName("id")
   private String id;
@@ -83,6 +80,8 @@ public class DirectDebitPayment {
 
   @SerializedName("required_action")
   private String requiredAction;
+
+  private static DirectDebitPaymentClient directDebitPaymentClient;
 
   /**
    * Create Direct Debit Payment
@@ -219,10 +218,8 @@ public class DirectDebitPayment {
    */
   public static DirectDebitPayment getDirectDebitPaymentStatusById(String directDebitPaymentId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s%s", Xendit.getUrl(), "/direct_debits/", directDebitPaymentId, "/");
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, DirectDebitPayment.class);
+    DirectDebitPaymentClient client = getClient();
+    return client.getDirectDebitPaymentStatusById(directDebitPaymentId);
   }
 
   /**
@@ -234,28 +231,56 @@ public class DirectDebitPayment {
    */
   public static DirectDebitPayment[] getDirectDebitPaymentStatusByReferenceId(String referenceId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", Xendit.getUrl(), "/direct_debits?reference_id=", referenceId);
-    return Xendit.requestClient.request(
-        RequestResource.Method.GET, url, null, DirectDebitPayment[].class);
+    DirectDebitPaymentClient client = getClient();
+    return client.getDirectDebitPaymentStatusByReferenceId(referenceId);
   }
 
   private static DirectDebitPayment createDirectDebitPaymentRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/direct_debits");
-
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, DirectDebitPayment.class);
+    DirectDebitPaymentClient client = getClient();
+    return client.createDirectDebitPaymentRequest(headers, params);
   }
 
   private static DirectDebitPayment validateOTPRequest(
       String directDebitPaymentId, Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s%s", Xendit.getUrl(), "/direct_debits/", directDebitPaymentId, "/validate_otp/");
+    DirectDebitPaymentClient client = getClient();
+    return client.validateOTPRequest(directDebitPaymentId, headers, params);
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, DirectDebitPayment.class);
+  /**
+   * Its create a client for DirectDebitPayment
+   *
+   * @return DirectDebitPaymentClient
+   */
+  protected static DirectDebitPaymentClient getClient() {
+    if (isApiKeyExist()) {
+      if (directDebitPaymentClient == null
+          || !directDebitPaymentClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return directDebitPaymentClient =
+            new DirectDebitPaymentClient(
+                Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (directDebitPaymentClient == null
+          || !directDebitPaymentClient
+              .getOpt()
+              .getApiKey()
+              .trim()
+              .equals(Xendit.Opt.getApiKey().trim())) {
+        return directDebitPaymentClient =
+            new DirectDebitPaymentClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return directDebitPaymentClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

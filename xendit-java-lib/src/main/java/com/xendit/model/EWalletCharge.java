@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class EWalletCharge {
   @SerializedName("id")
   private String id;
@@ -79,6 +76,8 @@ public class EWalletCharge {
 
   @SerializedName("metadata")
   private Map<String, Object> metadata;
+
+  private static EWalletClient eWalletClient;
 
   /**
    * Create new e-wallet charge
@@ -153,15 +152,43 @@ public class EWalletCharge {
    * @throws XenditException XenditException
    */
   public static EWalletCharge getEWalletChargeStatus(String chargeId) throws XenditException {
-    String url = String.format("%s%s%s", Xendit.getUrl(), "/ewallets/charges/", chargeId);
-    return Xendit.requestClient.request(RequestResource.Method.GET, url, null, EWalletCharge.class);
+    EWalletClient client = getClient();
+    return client.getEWalletChargeStatus(chargeId);
   }
 
   public static EWalletCharge createChargeRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/ewallets/charges");
+    EWalletClient client = getClient();
+    return client.createChargeRequest(headers, params);
+  }
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, EWalletCharge.class);
+  /**
+   * Its create a client for Payout
+   *
+   * @return PayoutClient
+   */
+  private static EWalletClient getClient() {
+    if (isApiKeyExist()) {
+      if (eWalletClient == null
+          || !eWalletClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return eWalletClient =
+            new EWalletClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (eWalletClient == null
+          || !eWalletClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+        return eWalletClient = new EWalletClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return eWalletClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }

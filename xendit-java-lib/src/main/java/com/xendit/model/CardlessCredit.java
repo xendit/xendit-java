@@ -3,16 +3,13 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import com.xendit.network.RequestResource;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Builder
 @Getter
 @Setter
+@Builder
 public class CardlessCredit {
   @SerializedName("redirect_url")
   private String redirectUrl;
@@ -28,6 +25,8 @@ public class CardlessCredit {
 
   @SerializedName("cardless_credit_type")
   private String cardlessCreditType;
+
+  private static CardlessCreditClient cardlessCreditClient;
 
   public enum PaymentType {
     THIRTY_DAYS("30_days"),
@@ -57,20 +56,18 @@ public class CardlessCredit {
       String redirectUrl,
       String callbackUrl)
       throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("cardless_credit_type", cardlessCreditType);
-    params.put("external_id", externalId);
-    params.put("amount", amount);
-    params.put("payment_type", paymentType);
-    params.put("items", items);
-    params.put("customer_details", customerDetails);
-    params.put("shipping_address", shippingAddress);
-    params.put("redirect_url", redirectUrl);
-    params.put("callback_url", callbackUrl);
-    String url = String.format("%s%s", Xendit.getUrl(), "/cardless-credit");
 
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, params, CardlessCredit.class);
+    CardlessCreditClient client = getClient();
+    return client.create(
+        cardlessCreditType,
+        externalId,
+        amount,
+        paymentType,
+        items,
+        customerDetails,
+        shippingAddress,
+        redirectUrl,
+        callbackUrl);
   }
 
   public static CardlessCredit create(Map<String, Object> params) throws XenditException {
@@ -79,8 +76,43 @@ public class CardlessCredit {
 
   public static CardlessCredit create(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.getUrl(), "/cardless-credit");
-    return Xendit.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, CardlessCredit.class);
+    CardlessCreditClient client = getClient();
+    return client.create(headers, params);
+  }
+
+  /**
+   * Its create a client for BatchDisbursement
+   *
+   * @return BatchDisbursementClient
+   */
+  private static CardlessCreditClient getClient() {
+    if (isApiKeyExist()) {
+      if (cardlessCreditClient == null
+          || !cardlessCreditClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+        return cardlessCreditClient =
+            new CardlessCreditClient(
+                Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+      }
+    } else {
+      if (cardlessCreditClient == null
+          || !cardlessCreditClient
+              .getOpt()
+              .getApiKey()
+              .trim()
+              .equals(Xendit.Opt.getApiKey().trim())) {
+        return cardlessCreditClient =
+            new CardlessCreditClient(Xendit.Opt, Xendit.getRequestClient());
+      }
+    }
+    return cardlessCreditClient;
+  }
+
+  /**
+   * check if api-key is exist or not
+   *
+   * @return boolean
+   */
+  private static boolean isApiKeyExist() {
+    return Xendit.apiKey != null;
   }
 }
