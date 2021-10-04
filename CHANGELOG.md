@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### v.1.16.0
+- Allow developers to instantiate multiple classes of Xendit in order to use multiple API Keys
+
 ### v.1.14.0
 - Add customer product function
 - Add direct debit function
