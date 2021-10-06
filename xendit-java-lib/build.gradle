@@ -19,7 +19,11 @@ repositories {
 dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.projectlombok:lombok:1.18.8'
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore
+    implementation 'org.apache.httpcomponents:httpcore:4.4.11'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.13'
 
+    
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
