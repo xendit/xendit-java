@@ -17,6 +17,15 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 public class BaseRequest implements NetworkClient {
   private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
@@ -109,14 +118,58 @@ public class BaseRequest implements NetworkClient {
       jsonParams = gson.toJson(params);
     }
 
-    HttpURLConnection connection = null;
+    if (method == RequestResource.Method.PATCH) {
+      // new Implementation using org.apache.http to support PATCH Method
+      return httpPatchXenditConnection(url, apiKey, headers, jsonParams);
+    } else {
+      // default Implementation of Xendit Connection
+      return defaultHttpXenditConnection(method, url, apiKey, headers, jsonParams);
+    }
+  }
+
+  private static XenditResponse httpPatchXenditConnection(
+      String url, String apiKey, Map<String, String> headers, String jsonParams)
+      throws XenditException {
 
     try {
+      CloseableHttpClient httpClient =
+          HttpClients.custom()
+              .setDefaultRequestConfig(
+                  RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD).build())
+              .build();
+      HttpPatch request = new HttpPatch(url);
+      HttpEntity httpEntity = new ByteArrayEntity(jsonParams.getBytes("UTF-8"));
+      if (headers.get("Content-Type") == null) {
+        request.setHeader("Content-Type", "application/json");
+      }
+      for (Map.Entry<String, String> header : getHeaders(apiKey, headers).entrySet()) {
+        request.setHeader(header.getKey(), header.getValue());
+      }
+
+      request.setEntity(httpEntity);
+      CloseableHttpResponse response;
+      response = httpClient.execute(request);
+      int responseCode = response.getStatusLine().getStatusCode();
+      String responseBody = EntityUtils.toString(response.getEntity());
+
+      return new XenditResponse(responseCode, responseBody);
+    } catch (IOException e) {
+      throw new XenditException("Connection error");
+    }
+  }
+
+  private static XenditResponse defaultHttpXenditConnection(
+      RequestResource.Method method,
+      String url,
+      String apiKey,
+      Map<String, String> headers,
+      String jsonParams)
+      throws XenditException {
+    HttpURLConnection connection = null;
+    try {
       connection = createXenditConnection(url, apiKey, headers);
-
       connection.setRequestMethod(method.getText());
-
-      if (method == RequestResource.Method.POST || method == RequestResource.Method.PATCH) {
+      if (method == RequestResource.Method.POST) {
         connection.setDoOutput(true);
         connection.setRequestProperty("Accept-Charset", "utf-8");
         connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
@@ -136,6 +189,7 @@ public class BaseRequest implements NetworkClient {
 
       return new XenditResponse(responseCode, responseBody);
     } catch (IOException e) {
+
       throw new XenditException("Connection error");
     } finally {
       if (connection != null) {
