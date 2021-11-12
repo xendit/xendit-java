@@ -7,9 +7,9 @@ import static org.mockito.Mockito.when;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.FixedPaymentCode;
-import com.xendit.model.RetailOutletClient;
 import com.xendit.model.RegionalRetailOutletPaymentCode;
 import com.xendit.model.RegionalRetailOutletPayments;
+import com.xendit.model.RetailOutletClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
@@ -159,7 +159,6 @@ public class RetailOutletTest {
     retailOutletClient.updateFixedPaymentCode("fake_id", PARAMS);
   }
 
-
   @Test
   public void createPaymentCode_Success_IfParamsAreValidAndChannelCodeTransferred()
       throws XenditException {
@@ -304,13 +303,13 @@ public class RetailOutletTest {
         .thenReturn(result);
     when(retailOutletClient.getPaymentsByPaymentCodeId(TEST_ID)).thenReturn(result);
     RegionalRetailOutletPayments[] payments =
-  retailOutletClient.getPaymentsByPaymentCodeId(TEST_ID);
+        retailOutletClient.getPaymentsByPaymentCodeId(TEST_ID);
     assertEquals(payments[0].getId(), VALID_PC.getId());
   }
 
   @Test(expected = XenditException.class)
-  public void getPaymentByPaymentCodeId_ThrowsException_IfIdIsNotAvailable() throws
-  XenditException {
+  public void getPaymentByPaymentCodeId_ThrowsException_IfIdIsNotAvailable()
+      throws XenditException {
     String url = String.format("%s%s%s%s", URL, "/", "fake_id", "/payments");
     when(this.requestClient.request(
             RequestResource.Method.GET,
