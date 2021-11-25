@@ -77,7 +77,7 @@ public class CreditCardClient {
 
   public CreditCardCharge createCharge(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    String url = String.format("%s%s", Xendit.Opt.getApiKey(), "/credit_card_charges");
+    String url = String.format("%s%s", Xendit.Opt.getXenditURL(), "/credit_card_charges");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), CreditCardCharge.class);
   }
