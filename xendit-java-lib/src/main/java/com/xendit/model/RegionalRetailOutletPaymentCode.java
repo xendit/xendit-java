@@ -1,6 +1,8 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.Arrays;
+import java.util.Optional;
 import lombok.*;
 
 @Getter
@@ -8,15 +10,31 @@ import lombok.*;
 @Builder
 public class RegionalRetailOutletPaymentCode {
   public enum ChannelCode {
-    SEVENELEVEN,
-    SEVENELEVENCLIQQ,
-    ALFAMART,
-    INDOMARET,
-    CEBUANA,
-    DPMLHUILLIER,
-    DPPALAWAN,
-    ECPAY,
-    LBC
+    SEVENELEVEN("7ELEVEN"),
+    SEVENELEVENCLIQQ("7ELEVEN_CLIQQ"),
+    ALFAMART("ALFAMART"),
+    INDOMARET("INDOMARET"),
+    CEBUANA("CEBUANA"),
+    DPMLHUILLIER("DPMLHUILLIER"),
+    DPPALAWAN("DPPALAWAN"),
+    ECPAY("ECPAY"),
+    LBC("LBC");
+
+    private String code;
+
+    ChannelCode(String code) {
+      this.code = code;
+    }
+
+    public String getChannelCode() {
+      return code;
+    }
+
+    public static Optional<ChannelCode> get(String code) {
+      return Arrays.stream(ChannelCode.values())
+          .filter(element -> element.code.equals(code))
+          .findFirst();
+    }
   }
 
   public enum Market {

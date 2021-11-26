@@ -38,14 +38,7 @@ public class RegionalRetailOutlet extends AbstractRetailOutlet {
       RegionalRetailOutletPaymentCode.Market market)
       throws XenditException {
 
-    String channelCodeParam;
-    if (channelCode == RegionalRetailOutletPaymentCode.ChannelCode.SEVENELEVEN) {
-      channelCodeParam = "7ELEVEN";
-    } else if (channelCode == RegionalRetailOutletPaymentCode.ChannelCode.SEVENELEVENCLIQQ) {
-      channelCodeParam = "7ELEVEN_CLIQQ";
-    } else {
-      channelCodeParam = channelCode.toString();
-    }
+    String channelCodeParam = channelCode.getChannelCode();
 
     Map<String, Object> params = new HashMap<>();
     params.put("reference_id", referenceId);
@@ -82,12 +75,10 @@ public class RegionalRetailOutlet extends AbstractRetailOutlet {
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     RetailOutletClient client = getClient();
     for (Map.Entry<String, Object> param : params.entrySet()) {
-      if (param.getKey() == "channel_code"
-          && param.getValue() == RegionalRetailOutletPaymentCode.ChannelCode.SEVENELEVEN) {
-        param.setValue("7ELEVEN");
-      } else if (param.getKey() == "channel_code"
-          && param.getValue() == RegionalRetailOutletPaymentCode.ChannelCode.SEVENELEVENCLIQQ) {
-        param.setValue("7ELEVEN_CLIQQ");
+      if (param.getKey() == "channel_code") {
+        RegionalRetailOutletPaymentCode.ChannelCode channelCode =
+            (RegionalRetailOutletPaymentCode.ChannelCode) (param.getValue());
+        param.setValue(channelCode.getChannelCode());
       }
     }
     return client.createPaymentCode(headers, params);
