@@ -32,10 +32,14 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get banks with available virtual account service](#get-banks-with-available-virtual-account-service)
     - [Get a fixed virtual account by ID](#get-a-fixed-virtual-account-by-id)
     - [Get a fixed virtual account payment by payment ID](#get-a-fixed-virtual-account-payment-by-payment-id)
-  - [Retail Outlet Services](#retail-outlet-services)
+  - [Retail Outlet Services - Indo](#retail-outlet-services-ID)
     - [Create fixed payment code](#create-fixed-payment-code)
     - [Get fixed payment code](#get-fixed-payment-code)
     - [Update fixed payment code](#update-fixed-payment-code)
+  - [Retail Outlet Services - PH](#retail-outlet-services-PH)
+    - [Create payment code](#create-payment-code)
+    - [Get payment code](#get-payment-code)
+    - [Update payment code](#update-payment-code)
   - [Recurring Payment Services](#recurring-payment-services)
     - [Create a recurring payment](#create-a-recurring-payment)
     - [Get a recurring payment](#get-a-recurring-payment)
@@ -489,7 +493,7 @@ FixedVirtualAccountPayment payment = xenditClient.fixedVirtualAccount.getPayment
 
 [Back to top](#table-of-contents)
 
-### Retail Outlet Services
+### Retail Outlet Services ID
 
 #### Create fixed payment code
 
@@ -572,6 +576,107 @@ params.put("name", "Lorem Ipsum");
 FixedPaymentCode fpc = RetailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
 /* With client */
 FixedPaymentCode fpc = xenditClient.retailOutlet.updateFixedPaymentCode("EXAMPLE_ID", params);
+```
+
+[Back to top](#table-of-contents)
+### Retail Outlet Services PH
+
+#### Create payment code
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RegionalRetailOutlet.createPaymentCode(
+    String referenceId,
+    RegionalRetailOutletPaymentCode.ChannelCode channelCode,
+    String customerName,
+    Number amount,
+    RegionalRetailOutletPaymentCode.Currency currency,
+    RegionalRetailOutletPaymentCode.Market market
+);
+</pre>
+</td>
+<td>
+<pre>
+RegionalRetailOutlet.createPaymentCode(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+params.put("reference_id", "test");
+params.put("channel_code", RegionalRetailOutletPaymentCode.ChannelCode.SEVENELEVENCLIQQ);
+params.put("customer_name", "test-customer");
+params.put("amount", 10);
+params.put("currency",  RegionalRetailOutletPaymentCode.Currency.PHP);
+params.put("market", RegionalRetailOutletPaymentCode.Market.PH);
+/* Without client */
+RegionalRetailOutletPaymentCode pc = RegionalRetailOutlet.createPaymentCode(params);
+/* With client */
+RegionalRetailOutletPaymentCode pc = xenditClient.retailOutlet.createPaymentCode(params);
+```
+
+#### Get payment code
+
+```java
+/* Without client */
+RegionalRetailOutletPaymentCode pc = RegionalRetailOutlet.getPaymentCode("EXAMPLE_ID");
+/* With client */
+RegionalRetailOutletPaymentCode pc = xenditClient.retailOutlet.getPaymentCode("EXAMPLE_ID");
+```
+
+#### Update payment code
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+RegionalRetailOutlet.updatePaymentCode(
+    String id,
+    String customerName,
+    Number amount,
+    RegionalRetailOutletPaymentCode.Currency currency,
+    String expiresAt,
+    String description
+);
+</pre>
+</td>
+<td>
+<pre>
+RegionalRetailOutlet.updatePaymentCode(
+    String id,
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("name", "Lorem Ipsum");
+
+/* Without client */
+RegionalRetailOutletPaymentCode pc = RegionalRetailOutlet.updatePaymentCode("EXAMPLE_ID", params);
+/* With client */
+RegionalRetailOutletPaymentCode pc = xenditClient.retailOutlet.updatePaymentCode("EXAMPLE_ID", params);
+```
+
+#### Get payments by payment code ID
+
+```java
+/* Without client */
+RegionalRetailOutletPaymentCode pc = RegionalRetailOutlet.getPaymentsByPaymentCodeId("EXAMPLE_ID");
+/* With client */
+RegionalRetailOutletPaymentCode pc = xenditClient.retailOutlet.getPaymentsByPaymentCodeId("EXAMPLE_ID");
 ```
 
 [Back to top](#table-of-contents)
