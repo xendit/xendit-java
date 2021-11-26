@@ -12,8 +12,6 @@ public class RegionalRetailOutletPaymentCode {
   public enum ChannelCode {
     SEVENELEVEN("7ELEVEN"),
     SEVENELEVENCLIQQ("7ELEVEN_CLIQQ"),
-    ALFAMART("ALFAMART"),
-    INDOMARET("INDOMARET"),
     CEBUANA("CEBUANA"),
     DPMLHUILLIER("DPMLHUILLIER"),
     DPPALAWAN("DPPALAWAN"),
