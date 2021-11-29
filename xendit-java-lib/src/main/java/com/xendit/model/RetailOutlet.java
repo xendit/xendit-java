@@ -1,15 +1,12 @@
 package com.xendit.model;
 
-import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
 
 @Builder
-public class RetailOutlet {
-  private static RetailOutletClient retailOutletClient;
-
+public class RetailOutlet extends AbstractRetailOutlet {
   /**
    * Create fixed payment code with all parameters as HashMap
    *
@@ -132,39 +129,5 @@ public class RetailOutlet {
       String id, String name, Number expectedAmount, String expirationDate) throws XenditException {
     RetailOutletClient client = getClient();
     return client.updateFixedPaymentCode(id, name, expectedAmount, expirationDate);
-  }
-
-  /**
-   * Its create a client for RetailOutlet
-   *
-   * @return RetailOutletClient
-   */
-  private static RetailOutletClient getClient() {
-    if (isApiKeyExist()) {
-      if (retailOutletClient == null
-          || !retailOutletClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return retailOutletClient =
-            new RetailOutletClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
-      }
-    } else {
-      if (retailOutletClient == null
-          || !retailOutletClient
-              .getOpt()
-              .getApiKey()
-              .trim()
-              .equals(Xendit.Opt.getApiKey().trim())) {
-        return retailOutletClient = new RetailOutletClient(Xendit.Opt, Xendit.getRequestClient());
-      }
-    }
-    return retailOutletClient;
-  }
-
-  /**
-   * check if api-key is exist or not
-   *
-   * @return boolean
-   */
-  private static boolean isApiKeyExist() {
-    return Xendit.apiKey != null;
   }
 }
