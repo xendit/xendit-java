@@ -62,7 +62,7 @@ public class BaseRequest implements NetworkClient {
 
     for (Map.Entry<String, Object> param : clonedParams.entrySet()) {
       if (param.getKey().equals("for-user-id")) {
-        
+
         headers.put(param.getKey(), param.getValue().toString());
         params.remove(param.getKey());
       }
@@ -218,7 +218,7 @@ public class BaseRequest implements NetworkClient {
 
       return new XenditResponse(responseCode, responseBody);
     } catch (IOException e) {
-      throw new XenditException("Connection error : "+e.getMessage());
+      throw new XenditException("Connection error : " + e.getMessage());
     }
   }
 
