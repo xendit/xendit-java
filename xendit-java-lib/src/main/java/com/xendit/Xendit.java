@@ -35,5 +35,9 @@ public class Xendit {
     public String getXenditURL() {
       return "https://api.xendit.co";
     }
+
+    public String getVersion() {
+      return "1.19.0";
+    }
   }
 }

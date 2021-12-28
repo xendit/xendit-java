@@ -3,6 +3,7 @@ package com.xendit.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.xendit.Xendit;
 import com.xendit.exception.ApiException;
 import com.xendit.exception.AuthException;
 import com.xendit.exception.XenditException;
@@ -13,8 +14,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import org.apache.http.HttpEntity;
@@ -29,6 +32,10 @@ import org.apache.http.util.EntityUtils;
 
 public class BaseRequest implements NetworkClient {
   private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
+  private static String[] allowHeaders =
+      new String[] {
+        "for-user-id", "with-fee-rule", "Idempotency-key", "X-IDEMPOTENCY-KEY", "X-api-version"
+      };
 
   public <T> T request(
       RequestResource.Method method,
@@ -55,32 +62,15 @@ public class BaseRequest implements NetworkClient {
   private static Map<String, String> constructCustomHeaders(
       Map<String, String> customHeaders, Map<String, Object> params) throws XenditException {
     Map<String, String> headers = new HashMap<>();
-    Map<String, Object> clonedParams = new HashMap<String, Object>(params);
     for (Map.Entry<String, String> header : customHeaders.entrySet()) {
       headers.put(header.getKey(), header.getValue());
     }
 
-    for (Map.Entry<String, Object> param : clonedParams.entrySet()) {
-      if (param.getKey().equals("for-user-id")) {
+    for (Map.Entry<String, Object> param : params.entrySet()) {
 
+      List<String> allowHeaderList = Arrays.asList(allowHeaders);
+      if (allowHeaderList.contains(param.getKey())) {
         headers.put(param.getKey(), param.getValue().toString());
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("with-fee-rule")) {
-        headers.put(param.getKey(), param.getValue().toString());
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("Idempotency-key")) {
-        headers.put(param.getKey(), param.getValue().toString());
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("X-IDEMPOTENCY-KEY")) {
-        headers.put(param.getKey(), param.getValue().toString());
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("X-api-version")) {
-        headers.put(param.getKey(), param.getValue().toString());
-        params.remove(param.getKey());
       }
     }
     return headers;
@@ -91,19 +81,8 @@ public class BaseRequest implements NetworkClient {
     Map<String, Object> clonedParams = new HashMap<String, Object>(params);
 
     for (Map.Entry<String, Object> param : clonedParams.entrySet()) {
-      if (param.getKey().equals("for-user-id")) {
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("with-fee-rule")) {
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("Idempotency-key")) {
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("X-IDEMPOTENCY-KEY")) {
-        params.remove(param.getKey());
-      }
-      if (param.getKey().equals("X-api-version")) {
+      List<String> allowHeaderList = Arrays.asList(allowHeaders);
+      if (allowHeaderList.contains(param.getKey())) {
         params.remove(param.getKey());
       }
     }
@@ -119,6 +98,8 @@ public class BaseRequest implements NetworkClient {
     }
 
     headers.put("User-Agent", "Xendit Java Library/v1");
+    headers.put("Xendit-Lib", "java");
+    headers.put("Xendit-Lib-Ver", Xendit.Opt.getVersion());
     headers.put("Accept", "application/json");
 
     // Override apiKey with Authorization key
