@@ -52,6 +52,64 @@ public class BaseRequest implements NetworkClient {
     return staticRequest(method, url, headers, params, apiKey, clazz);
   }
 
+  private static Map<String, String> constructCustomHeaders(
+      Map<String, String> customHeaders, Map<String, Object> params) throws XenditException {
+    Map<String, String> headers = new HashMap<>();
+    Map<String, Object> clonedParams = new HashMap<String, Object>(params);
+    for (Map.Entry<String, String> header : customHeaders.entrySet()) {
+      headers.put(header.getKey(), header.getValue());
+    }
+
+    for (Map.Entry<String, Object> param : clonedParams.entrySet()) {
+      if (param.getKey().equals("for-user-id")) {
+        
+        headers.put(param.getKey(), param.getValue().toString());
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("with-fee-rule")) {
+        headers.put(param.getKey(), param.getValue().toString());
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("Idempotency-key")) {
+        headers.put(param.getKey(), param.getValue().toString());
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("X-IDEMPOTENCY-KEY")) {
+        headers.put(param.getKey(), param.getValue().toString());
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("X-api-version")) {
+        headers.put(param.getKey(), param.getValue().toString());
+        params.remove(param.getKey());
+      }
+    }
+    return headers;
+  }
+
+  private static Map<String, Object> filterParams(Map<String, Object> params)
+      throws XenditException {
+    Map<String, Object> clonedParams = new HashMap<String, Object>(params);
+
+    for (Map.Entry<String, Object> param : clonedParams.entrySet()) {
+      if (param.getKey().equals("for-user-id")) {
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("with-fee-rule")) {
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("Idempotency-key")) {
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("X-IDEMPOTENCY-KEY")) {
+        params.remove(param.getKey());
+      }
+      if (param.getKey().equals("X-api-version")) {
+        params.remove(param.getKey());
+      }
+    }
+    return params;
+  }
+
   private static Map<String, String> getHeaders(String apiKey, Map<String, String> customHeaders)
       throws XenditException {
     Map<String, String> headers = new HashMap<>();
@@ -111,6 +169,12 @@ public class BaseRequest implements NetworkClient {
       throw new AuthException("No API key is provided yet.");
     }
 
+    // Hacky way to inject params for XP into headers
+    headers = constructCustomHeaders(headers, params);
+
+    // Hacky way to remove injected params appended to headers
+    params = filterParams(params);
+
     String jsonParams = "";
 
     if (params != null) {
@@ -154,7 +218,7 @@ public class BaseRequest implements NetworkClient {
 
       return new XenditResponse(responseCode, responseBody);
     } catch (IOException e) {
-      throw new XenditException("Connection error");
+      throw new XenditException("Connection error : "+e.getMessage());
     }
   }
 

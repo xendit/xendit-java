@@ -445,6 +445,11 @@ params.put("external_id", "my_external_id");
 params.put("bank_code", BankCode.BNI.getText());
 params.put("name", "John Doe");
 
+/* Optional for xenPlatform */
+params.put("for-user-id", "<Sub Account User ID>");
+
+
+
 /* Without client */
 FixedVirtualAccount virtualAccount = FixedVirtualAccount.createOpen(params);
 /* With client */
@@ -457,6 +462,9 @@ FixedVirtualAccount virtualAccount = xenditClient.fixedVirtualAccount.createOpen
 ```java
 Map<String, Object> params = new HashMap<>();
 params.put("is_single_use", true);
+
+/* Optional for xenPlatform */
+params.put("for-user-id", "<Sub Account User ID>");
 
 /* Without client */
 FixedVirtualAccount fixedVirtualAccount = FixedVirtualAccount.update("EXAMPLE_ID", params);
