@@ -12,7 +12,7 @@ public class ExampleCreatePaylaterCharge {
   private static void createCharge(XenditClient xenditClient) {
     try {
       String planId = "test-plan-id";
-      String referenceId = "test-reference-id";
+      String referenceId = "order-id-456";
       String checkoutMethod = "ONE_TIME_PAYMENT";
       String successRedirectUrl = "https://yourwebsite.com/order/123";
 
