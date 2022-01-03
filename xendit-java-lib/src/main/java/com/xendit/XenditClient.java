@@ -32,6 +32,7 @@ public class XenditClient {
   public FixedVirtualAccountClient fixedVirtualAccount;
   public RecurringPaymentClient recurringPayment;
   public DirectDebitPaymentClient directDebitPayment;
+  public PaylaterClient paylater;
 
   private XenditClient() {}
 
