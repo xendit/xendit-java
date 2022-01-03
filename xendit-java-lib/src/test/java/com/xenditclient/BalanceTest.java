@@ -27,7 +27,7 @@ public class BalanceTest {
   @Before
   public void initMocks() {
     Xendit.Opt.setApiKey(
-        "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
+        "xnd_development_HhEaDg8BL32lxtHdNaABWgQ3LvnIEtFtwXIDdK1M9v2imuMwpLWPyAJNMVKq58");
     Xendit.setRequestClient(requestClient);
   }
 

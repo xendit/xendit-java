@@ -81,5 +81,6 @@ public class XenditClient {
     xenditClient.recurringPayment = new RecurringPaymentClient(option, Xendit.getRequestClient());
     xenditClient.directDebitPayment =
         new DirectDebitPaymentClient(option, Xendit.getRequestClient());
+    xenditClient.paylater = new PaylaterClient(option, Xendit.getRequestClient());
   }
 }
