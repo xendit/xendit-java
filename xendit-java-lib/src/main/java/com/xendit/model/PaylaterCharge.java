@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class EWalletCharge {
+public class PaylaterCharge {
     @SerializedName("plan_id")
     private String planId;
   
