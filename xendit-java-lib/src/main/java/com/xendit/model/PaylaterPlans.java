@@ -32,10 +32,10 @@ public class PaylaterPlans {
      * Create new e-wallet charge
      *
      * @param customerId.
-     * @param channel      code.
+     * @param channelCode.
      * @param currency.
      * @param amount.
-     * @param order_items, Array of objects describing the item/s purchased using
+     * @param orderItems,  Array of objects describing the item/s purchased using
      *                     PayLater.
      * @return Paylater model.
      * @throws XenditException XenditException

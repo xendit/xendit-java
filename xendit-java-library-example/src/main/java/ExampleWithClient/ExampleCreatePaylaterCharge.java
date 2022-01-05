@@ -1,9 +1,9 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.model.EWalletBasketItem;
+import com.xendit.model.PaylaterOrderItem;
 import com.xendit.XenditClient;
-import com.xendit.model.EWalletCharge;
+import com.xendit.model.PaylaterCharge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +23,7 @@ public class ExampleCreatePaylaterCharge {
           successRedirectUrl,
           null,
           null,
-          null,
-          null
-      );
+          null);
       System.out.println(charge.getId());
       System.out.println(charge.getReferenceId());
     } catch (XenditException e) {
@@ -34,10 +32,10 @@ public class ExampleCreatePaylaterCharge {
   }
 
   public static void main(String[] args) {
-    //create xendit client which holds value of apikey
+    // create xendit client which holds value of apikey
     XenditClient xenditClient = new XenditClient.Builder()
-            .setApikey("xnd_development_...")
-            .build();
+        .setApikey("xnd_development_...")
+        .build();
 
     createCharge(xenditClient);
   }

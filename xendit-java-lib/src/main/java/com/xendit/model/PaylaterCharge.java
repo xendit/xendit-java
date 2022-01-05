@@ -79,7 +79,7 @@ public class PaylaterCharge {
    * @return PaylaterCharge
    * @throws XenditException
    */
-  public static PaylaterCharge createPaylaterChargesRequest(Map<String, Object> params)
+  public static PaylaterCharge createPaylaterCharges(Map<String, Object> params)
       throws XenditException {
     return createPaylaterChargeRequest(new HashMap<>(), params);
   }

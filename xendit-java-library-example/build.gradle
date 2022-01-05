@@ -9,5 +9,5 @@ sourceCompatibility = 1.8
 
 dependencies {
      compile project(':xendit-java-lib')
-   compile 'com.xendit:xendit-java-lib:1.1.0'
+   compile 'com.xendit:xendit-java-lib:1.19.0'
 }
