@@ -18,51 +18,73 @@ public class PaylaterClient {
     return opt;
   }
 
-  public static PaylaterPlans initiatePaylaterPlans(
-    String customerId,
-    String channelCode,
-    String currency,
-    String amount,
-    PaylaterOrderItem[] orderItems)
-    throws XenditException {
-     Map<String, Object> params = new HashMap<>();
-     params.put("customer_id", customerId);
-     params.put("channel_code", channelCode);
-     params.put("currency", currency);
-     params.put("amount", amount);
-     params.put("order_items", orderItems);
-     return initiatePaylaterPlans(new HashMap<>(), params);
- }
-
-    public static PaylaterPlans initiatePaylaterPlans(Map<String, Object> params)
-        throws XenditException {
-            return initiatePaylaterPlans(new HashMap<>(), params);
-    }
-
-    public static PaylaterPlans initiatePaylaterPlans(
-        Map<String, String> headers, Map<String, Object> params) throws XenditException {
-            return initiatePaylaterPlans(headers, params);
-    }
-
-    public Paylater createPaylaterCharges(Map<String, Object> params) throws XenditException {
-      return createPayout(new HashMap<>(), params);
-    }
-
-    public Paylater createPaylaterCharges(Map<String, String> headers, Map<String, Object> params)
+  public PaylaterPlans initiatePaylaterPlans(
+      String customerId,
+      String channelCode,
+      String currency,
+      String amount,
+      PaylaterOrderItem[] orderItems)
       throws XenditException {
-    return createChargeRequest(headers, params);
-    }
-    
-    public Paylater createPaylaterChargeRequest(Map<String, String> headers, Map<String, Object> params)
-      throws XenditException{
-        String url = String.format("%s%s", opt.getXenditURL(), "/paylater/charges");
-        return this.requestClient.request(
-            RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterCharge.class);
-    }
+    Map<String, Object> params = new HashMap<>();
+    params.put("customer_id", customerId);
+    params.put("channel_code", channelCode);
+    params.put("currency", currency);
+    params.put("amount", amount);
+    params.put("order_items", orderItems);
+    return initiatePaylaterPlans(new HashMap<>(), params);
+  }
 
-    public Payout getPaylater(String id) throws XenditException {
-      String url = String.format("%s%s%s", opt.getXenditURL(), "/paylater/charges/", id);
-      return this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), Paylater.class);
-    }
+  public PaylaterCharge createPaylaterCharges(
+      String planId,
+      String referenceId,
+      String checkoutMethod,
+      String successRedirectUrl,
+      String failureRedirectUrl,
+      String paymentMethodId,
+      Map<String, Object> metadata)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("plan_id", planId);
+    params.put("reference_id", referenceId);
+    params.put("checkout_method", checkoutMethod);
+    params.put("success_redirect_url", successRedirectUrl);
+    params.put("failure_redirect_url", failureRedirectUrl);
+    params.put("paymentMethodId", paymentMethodId);
+    params.put("metadata", metadata);
+    return createPaylaterChargeRequest(new HashMap<>(), params);
+  }
+
+  public PaylaterPlans initiatePaylaterPlans(Map<String, Object> params)
+      throws XenditException {
+    return initiatePaylaterPlans(new HashMap<>(), params);
+  }
+
+  public PaylaterPlans initiatePaylaterPlans(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
+    return initiatePaylaterPlans(headers, params);
+  }
+
+  public PaylaterCharge createPaylaterCharges(Map<String, Object> params) throws XenditException {
+    return createPaylaterChargeRequest(new HashMap<>(), params);
+  }
+
+  public PaylaterCharge createPaylaterCharges(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    return createPaylaterChargeRequest(headers, params);
+  }
+
+  public PaylaterPlans initiaPaylaterPlans(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    String url = String.format("%s%s", opt.getXenditURL(), "/paylater/plans");
+
+    return this.requestClient.request(
+        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterPlans.class);
+  }
+
+  public PaylaterCharge createPaylaterChargeRequest(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    String url = String.format("%s%s", opt.getXenditURL(), "/paylater/charges");
+    return this.requestClient.request(
+        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterCharge.class);
+  }
 }

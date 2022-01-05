@@ -29,18 +29,14 @@ public class PaylaterChargeTest {
   private static Map<String, String> HEADERS = new HashMap<>();
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
-  PaylaterClient paylaterClient = mock(EWalletClient.class);
-  private static PaylaterCharge VALID_PAYLATER_CHARGE =
-      PaylaterCharge.builder()
-          .planId(PLAN_ID)
-          .referenceId(REFERENCE_ID)
-          .checkoutMethod(CHECKOUT_METHOD)
-          .successRedirectUrl(SUCCESS_REDIRECT_URL)
-          .failureRedirectUrl(FAILURE_REDIRECT_URL)
-          .created("2022-01-02T06:16:35.064408Z")
-          .updated("2022-01-02T06:16:35.064408Z")
-          .captureNow(Boolean.TRUE)
-          .build();
+  PaylaterClient paylaterClient = mock(PaylaterClient.class);
+  private static PaylaterCharge VALID_PAYLATER_CHARGE = PaylaterCharge.builder()
+      .planId(PLAN_ID)
+      .referenceId(REFERENCE_ID)
+      .checkoutMethod(CHECKOUT_METHOD)
+      .successRedirectUrl(SUCCESS_REDIRECT_URL)
+      .failureRedirectUrl(FAILURE_REDIRECT_URL)
+      .build();
 
   @Before
   public void initMocks() {
@@ -66,34 +62,33 @@ public class PaylaterChargeTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            PayleterCharge.class))
-        .thenReturn(VALID_PAYLATER_CHARGE);
+        RequestResource.Method.POST,
+        URL,
+        HEADERS,
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterCharge.class))
+            .thenReturn(VALID_PAYLATER_CHARGE);
     when(paylaterClient.createPaylaterCharges(
-            PLAN_ID,
-            REFERENCE_ID,
-            CHECKOUT_METHOD,
-            SUCCESS_REDIRECT_URL,
-            FAILURE_REDIRECT_URL,
-            null,
-            null))
-        .thenReturn(VALID_PAYLATER_CHARGE);
+        PLAN_ID,
+        REFERENCE_ID,
+        CHECKOUT_METHOD,
+        SUCCESS_REDIRECT_URL,
+        FAILURE_REDIRECT_URL,
+        null,
+        null))
+            .thenReturn(VALID_PAYLATER_CHARGE);
 
-    PaylaterCharge paylaterCharge =
-        paylaterClient.createPaylaterCharges(
-            PLAN_ID,
-            REFERENCE_ID,
-            CHECKOUT_METHOD,
-            SUCCESS_REDIRECT_URL,
-            FAILURE_REDIRECT_URL,
-            null,
-            null);
+    PaylaterCharge paylaterCharge = paylaterClient.createPaylaterCharges(
+        PLAN_ID,
+        REFERENCE_ID,
+        CHECKOUT_METHOD,
+        SUCCESS_REDIRECT_URL,
+        FAILURE_REDIRECT_URL,
+        null,
+        null);
 
-    assertEquals(VALID_EWALLET_CHARGE, paylaterCharge);
+    assertEquals(VALID_PAYLATER_CHARGE, paylaterCharge);
   }
 
   @Test
@@ -101,13 +96,13 @@ public class PaylaterChargeTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            EWalletCharge.class))
-        .thenReturn(VALID_PAYLATER_CHARGE);
+        RequestResource.Method.POST,
+        URL,
+        HEADERS,
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterCharge.class))
+            .thenReturn(VALID_PAYLATER_CHARGE);
     when(paylaterClient.createPaylaterCharges(PARAMS)).thenReturn(VALID_PAYLATER_CHARGE);
 
     PaylaterCharge paylaterCharge = paylaterClient.createPaylaterCharges(PARAMS);
@@ -121,14 +116,14 @@ public class PaylaterChargeTest {
     HEADERS.put("for-user-id", "user-id");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            EWalletCharge.class))
-        .thenReturn(VALID_EWALLET_CHARGE);
-    when(paylaterClient.createPaylaterCharges(HEADERS, PARAMS)).thenReturn(VALID_EWALLET_CHARGE);
+        RequestResource.Method.POST,
+        URL,
+        HEADERS,
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterCharge.class))
+            .thenReturn(VALID_PAYLATER_CHARGE);
+    when(paylaterClient.createPaylaterCharges(HEADERS, PARAMS)).thenReturn(VALID_PAYLATER_CHARGE);
 
     PaylaterCharge paylaterCharge = paylaterClient.createPaylaterCharges(HEADERS, PARAMS);
 
@@ -141,13 +136,13 @@ public class PaylaterChargeTest {
     PARAMS.put("checkout_method", "NOT_ONE_TIME_PAYMENT");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            new HashMap<>(),
-            PARAMS,
-            opt.getApiKey(),
-            PaylaterCharge.class))
-        .thenThrow(new XenditException("Paylater checkout_method is invalid"));
+        RequestResource.Method.POST,
+        URL,
+        new HashMap<>(),
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterCharge.class))
+            .thenThrow(new XenditException("Paylater checkout_method is invalid"));
     when(paylaterClient.createPaylaterCharges(PARAMS))
         .thenThrow(new XenditException("Paylater checkout_method is invalid"));
 

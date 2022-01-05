@@ -11,42 +11,43 @@ import lombok.*;
 @Setter
 @Builder
 public class PaylaterPlans {
-  @SerializedName("customer_id")
-  private String customerId;
+    @SerializedName("customer_id")
+    private String customerId;
 
-  @SerializedName("channel_code")
-  private String channelCode;
+    @SerializedName("channel_code")
+    private String channelCode;
 
-  @SerializedName("currency")
-  private String status;
+    @SerializedName("currency")
+    private String status;
 
-  @SerializedName("amount")
-  private String amount;
+    @SerializedName("amount")
+    private String amount;
 
-  @SerializedName("order_items")
-  private PaylaterOrderItem[] orderItems;
+    @SerializedName("order_items")
+    private PaylaterOrderItem[] orderItems;
 
-  private static PaylaterClient paylaterClient;
+    private static PaylaterClient paylaterClient;
 
-  /**
-   * Create new e-wallet charge
-   *
-   * @param customerId.
-   * @param channel code.
-   * @param currency.
-   * @param amount.
-   * @param order_items, Array of objects describing the item/s purchased using PayLater.
-   * @return Paylater model.
-   * @throws XenditException XenditException
-   */
+    /**
+     * Create new e-wallet charge
+     *
+     * @param customerId.
+     * @param channel      code.
+     * @param currency.
+     * @param amount.
+     * @param order_items, Array of objects describing the item/s purchased using
+     *                     PayLater.
+     * @return Paylater model.
+     * @throws XenditException XenditException
+     */
 
     public static PaylaterPlans initiatePaylaterPlans(
-       String customerId,
-       String channelCode,
-       String currency,
-       String amount,
-       PaylaterOrderItem[] orderItems)
-       throws XenditException {
+            String customerId,
+            String channelCode,
+            String currency,
+            String amount,
+            PaylaterOrderItem[] orderItems)
+            throws XenditException {
         Map<String, Object> params = new HashMap<>();
         params.put("customer_id", customerId);
         params.put("channel_code", channelCode);
@@ -57,27 +58,61 @@ public class PaylaterPlans {
     }
 
     /**
-   * initiate paylater plans with all parameter as HashMap
-   *
-   * @param params listed here https://developers.xendit.co/api-reference/#initiate-paylater-plans.
-   * @return PaylaterPlans
-   * @throws XenditException
-   */
+     * initiate paylater plans with all parameter as HashMap
+     *
+     * @param params listed here
+     *               https://developers.xendit.co/api-reference/#initiate-paylater-plans.
+     * @return PaylaterPlans
+     * @throws XenditException
+     */
     public static PaylaterPlans initiatePaylaterPlans(Map<String, Object> params)
-        throws XenditException {
+            throws XenditException {
         return initiatePaylaterPlans(new HashMap<>(), params);
     }
 
     /**
-    * initiate paylater plans with all parameter as HashMap with headers and all parameter as HashMap
-    *
-    * @param headers
-    * @param params listed here https://developers.xendit.co/api-reference/#initiate-paylater-plans.
-    * @return EWalletCharge
-    * @throws XenditException
-    */
+     * initiate paylater plans with all parameter as HashMap with headers and all
+     * parameter as HashMap
+     *
+     * @param headers
+     * @param params  listed here
+     *                https://developers.xendit.co/api-reference/#initiate-paylater-plans.
+     * @return EWalletCharge
+     * @throws XenditException
+     */
     public static PaylaterPlans initiatePaylaterPlans(
-     Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    return initiatePaylaterPlans(headers, params);
+            Map<String, String> headers, Map<String, Object> params) throws XenditException {
+        PaylaterClient client = getClient();
+        return client.initiatePaylaterPlans(headers, params);
+    }
+
+    /**
+     * Its create a client for paylater
+     *
+     * @return PaylaterClient
+     */
+    private static PaylaterClient getClient() {
+        if (isApiKeyExist()) {
+            if (paylaterClient == null
+                    || !paylaterClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
+                return paylaterClient = new PaylaterClient(Xendit.Opt.setApiKey(Xendit.apiKey),
+                        Xendit.getRequestClient());
+            }
+        } else {
+            if (paylaterClient == null
+                    || !paylaterClient.getOpt().getApiKey().trim().equals(Xendit.Opt.getApiKey().trim())) {
+                return paylaterClient = new PaylaterClient(Xendit.Opt, Xendit.getRequestClient());
+            }
+        }
+        return paylaterClient;
+    }
+
+    /**
+     * check if api-key is exist or not
+     *
+     * @return boolean
+     */
+    private static boolean isApiKeyExist() {
+        return Xendit.apiKey != null;
     }
 }
