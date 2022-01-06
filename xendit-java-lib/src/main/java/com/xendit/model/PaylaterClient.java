@@ -67,8 +67,8 @@ public class PaylaterClient {
     return createPaylaterChargeRequest(headers, params);
   }
 
-  public PaylaterPlans initiatePaylaterPlans(Map<String, String> headers, Map<String, Object> params)
-      throws XenditException {
+  public PaylaterPlans initiatePaylaterPlans(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/paylater/plans");
 
     return this.requestClient.request(
