@@ -18,7 +18,7 @@ public class PaylaterPlans {
   private String channelCode;
 
   @SerializedName("currency")
-  private String currencys;
+  private String currency;
 
   @SerializedName("amount")
   private Number amount;
@@ -44,7 +44,7 @@ public class PaylaterPlans {
       String customerId,
       String channelCode,
       String currency,
-      String amount,
+      Number amount,
       PaylaterOrderItem[] orderItems)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
