@@ -39,7 +39,7 @@ public class ExampleInitiatePaylaterPlans {
 
   public static void main(String[] args) {
     // access key with Option
-    Xendit.Opt.setApiKey("xnd_development_...");
+    Xendit.Opt.setApiKey("xnd_development_HhEaDg8BL32lxtHdNaABWgQ3LvnIEtFtwXIDdK1M9v2imuMwpLWPyAJNMVKq58");
 
     // access static variable (same as old code )
     // Xendit.apiKey = "xnd_development_...";

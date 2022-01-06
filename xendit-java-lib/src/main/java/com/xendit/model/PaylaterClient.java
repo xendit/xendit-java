@@ -58,11 +58,6 @@ public class PaylaterClient {
     return initiatePaylaterPlans(new HashMap<>(), params);
   }
 
-  public PaylaterPlans initiatePaylaterPlans(
-      Map<String, String> headers, Map<String, Object> params) throws XenditException {
-    return initiatePaylaterPlans(headers, params);
-  }
-
   public PaylaterCharge createPaylaterCharges(Map<String, Object> params) throws XenditException {
     return createPaylaterChargeRequest(new HashMap<>(), params);
   }
@@ -72,7 +67,7 @@ public class PaylaterClient {
     return createPaylaterChargeRequest(headers, params);
   }
 
-  public PaylaterPlans initiaPaylaterPlans(Map<String, String> headers, Map<String, Object> params)
+  public PaylaterPlans initiatePaylaterPlans(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/paylater/plans");
 
