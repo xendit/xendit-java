@@ -14,7 +14,7 @@ public class ExampleInitiatePaylaterPlans {
           .name("name")
           .netUnitAmount("net_unit_amount")
           .quantity(1)
-          .url("url")
+          .url("https://google.com")
           .category("category")
           .subCategory("subCategory")
           .description("description")
@@ -32,9 +32,6 @@ public class ExampleInitiatePaylaterPlans {
           currency,
           amount,
           orderItemsArray);
-      System.out.println(initiatePlan.getId());
-      System.out.println(initiatePlan.getBusinessId());
-      System.out.println(initiatePlan.getReferenceId());
     } catch (XenditException e) {
       e.printStackTrace();
     }

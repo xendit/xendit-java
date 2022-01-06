@@ -17,7 +17,7 @@ public class ExampleInitiatePaylaterPlans {
           .name("name")
           .netUnitAmount("net_unit_amount")
           .quantity(1)
-          .url("url")
+          .url("https://www.google.com")
           .category("category")
           .subCategory("subCategory")
           .description("description")
@@ -27,7 +27,7 @@ public class ExampleInitiatePaylaterPlans {
       String customerId = "test-customer-id";
       String channelCode = "ID_KREDIVO";
       String currency = "IDR";
-      String amount = "50000";
+      Number amount = new Integer("50000");
 
       PaylaterPlans initiatePlan = xenditClient.paylater.initiatePaylaterPlans(
           customerId,
@@ -35,9 +35,7 @@ public class ExampleInitiatePaylaterPlans {
           currency,
           amount,
           orderItemsArray);
-      System.out.println(initiatePlan.getId());
-      System.out.println(initiatePlan.getBusinessId());
-      System.out.println(initiatePlan.getReferenceId());
+      System.out.println(initiatePlan.getCustomerId());
     } catch (XenditException e) {
       e.printStackTrace();
     }

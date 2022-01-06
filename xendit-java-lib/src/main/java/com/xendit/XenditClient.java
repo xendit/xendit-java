@@ -10,11 +10,11 @@ import com.xendit.model.DisbursementClient;
 import com.xendit.model.EWalletClient;
 import com.xendit.model.FixedVirtualAccountClient;
 import com.xendit.model.InvoiceClient;
+import com.xendit.model.PaylaterClient;
 import com.xendit.model.PayoutClient;
 import com.xendit.model.QRCodeClient;
 import com.xendit.model.RecurringPaymentClient;
 import com.xendit.model.RetailOutletClient;
-import com.xendit.model.PaylaterClient;
 
 public class XenditClient {
 

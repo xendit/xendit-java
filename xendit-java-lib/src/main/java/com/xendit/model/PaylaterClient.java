@@ -22,7 +22,7 @@ public class PaylaterClient {
       String customerId,
       String channelCode,
       String currency,
-      String amount,
+      Number amount,
       PaylaterOrderItem[] orderItems)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
@@ -54,8 +54,7 @@ public class PaylaterClient {
     return createPaylaterChargeRequest(new HashMap<>(), params);
   }
 
-  public PaylaterPlans initiatePaylaterPlans(Map<String, Object> params)
-      throws XenditException {
+  public PaylaterPlans initiatePaylaterPlans(Map<String, Object> params) throws XenditException {
     return initiatePaylaterPlans(new HashMap<>(), params);
   }
 
@@ -68,8 +67,8 @@ public class PaylaterClient {
     return createPaylaterChargeRequest(new HashMap<>(), params);
   }
 
-  public PaylaterCharge createPaylaterCharges(Map<String, String> headers, Map<String, Object> params)
-      throws XenditException {
+  public PaylaterCharge createPaylaterCharges(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     return createPaylaterChargeRequest(headers, params);
   }
 
@@ -81,8 +80,8 @@ public class PaylaterClient {
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterPlans.class);
   }
 
-  public PaylaterCharge createPaylaterChargeRequest(Map<String, String> headers, Map<String, Object> params)
-      throws XenditException {
+  public PaylaterCharge createPaylaterChargeRequest(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/paylater/charges");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterCharge.class);

@@ -26,7 +26,7 @@ public class PaylaterOrderItem {
   private Number quantity;
 
   @SerializedName("url")
-  private Number url;
+  private String url;
 
   @SerializedName("category")
   private String category;
