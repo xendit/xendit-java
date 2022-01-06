@@ -33,7 +33,7 @@ public class InitializePaylaterTest {
                         .type("PHYSICAL_PRODUCT")
                         .referenceId("SKU_backtoschool-promotion123")
                         .name("Nymbus twothousand")
-                        .netUnitAmount(1000)
+                        .netUnitAmount("1000")
                         .quantity(1)
                         .url("https://www.zngmyhome.com/nymbus")
                         .category("Sports")
