@@ -24,7 +24,7 @@ public class ExampleInitiatePaylaterPlans {
       String customerId = "test-customer-id";
       String channelCode = "ID_KREDIVO";
       String currency = "IDR";
-      String amount = "50000";
+      Number amount = new Integer(50000);
 
       PaylaterPlans initiatePlan = PaylaterPlans.initiatePaylaterPlans(
           customerId,

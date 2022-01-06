@@ -47,7 +47,7 @@ public class InitializePaylaterTest {
                         .channelCode(CHANNEL_CODE)
                         .currency(CURRENCY)
                         .amount(AMOUNT)
-                        .orderItems(ORDER_ITEMS)
+                        .orderItems(ORDER_ITEMS_ARRAY)
                         .build();
 
         @Before
@@ -65,7 +65,7 @@ public class InitializePaylaterTest {
                 PARAMS.put("channel_code", CHANNEL_CODE);
                 PARAMS.put("currency", CURRENCY);
                 PARAMS.put("amount", AMOUNT);
-                PARAMS.put("order_items", ORDER_ITEMS);
+                PARAMS.put("order_items", ORDER_ITEMS_ARRAY);
         }
 
         @Test

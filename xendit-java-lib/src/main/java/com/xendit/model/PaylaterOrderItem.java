@@ -20,7 +20,7 @@ public class PaylaterOrderItem {
   private String name;
 
   @SerializedName("net_unit_amount")
-  private Number netUnitAmount;
+  private String netUnitAmount;
 
   @SerializedName("quantity")
   private Number quantity;
