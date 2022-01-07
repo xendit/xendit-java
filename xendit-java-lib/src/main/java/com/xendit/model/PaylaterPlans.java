@@ -35,8 +35,9 @@ public class PaylaterPlans {
    * @param channelCode.
    * @param currency.
    * @param amount.
-   * @param orderItems, Array of objects describing the item/s purchased using PayLater.
-   * @return Paylater model.
+   * @param orderItems,  Array of objects describing the item/s purchased using
+   *                     PayLater.
+   * @return PaylaterPlans model.
    * @throws XenditException XenditException
    */
   public static PaylaterPlans initiatePaylaterPlans(
@@ -58,7 +59,8 @@ public class PaylaterPlans {
   /**
    * initiate paylater plans with all parameter as HashMap
    *
-   * @param params listed here https://developers.xendit.co/api-reference/#initiate-paylater-plans.
+   * @param params listed here
+   *               https://developers.xendit.co/api-reference/#initiate-paylater-plans.
    * @return PaylaterPlans
    * @throws XenditException
    */
@@ -68,10 +70,12 @@ public class PaylaterPlans {
   }
 
   /**
-   * initiate paylater plans with all parameter as HashMap with headers and all parameter as HashMap
+   * initiate paylater plans with all parameter as HashMap with headers and all
+   * parameter as HashMap
    *
    * @param headers
-   * @param params listed here https://developers.xendit.co/api-reference/#initiate-paylater-plans.
+   * @param params  listed here
+   *                https://developers.xendit.co/api-reference/#initiate-paylater-plans.
    * @return EWalletCharge
    * @throws XenditException
    */
@@ -90,8 +94,7 @@ public class PaylaterPlans {
     if (isApiKeyExist()) {
       if (paylaterClient == null
           || !paylaterClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return paylaterClient =
-            new PaylaterClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+        return paylaterClient = new PaylaterClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (paylaterClient == null

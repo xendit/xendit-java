@@ -27,15 +27,15 @@ public class BalanceTest {
   @Before
   public void initMocks() {
     Xendit.Opt.setApiKey(
-        "xnd_development_HhEaDg8BL32lxtHdNaABWgQ3LvnIEtFtwXIDdK1M9v2imuMwpLWPyAJNMVKq58");
+        "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
   }
 
   @Test
   public void get_Success_IfNoGivenParam() throws XenditException {
     when(this.requestClient.request(
-            RequestResource.Method.GET, URL, HEADERS, null, opt.getApiKey(), Balance.class))
-        .thenReturn(VALID_BALANCE);
+        RequestResource.Method.GET, URL, HEADERS, null, opt.getApiKey(), Balance.class))
+            .thenReturn(VALID_BALANCE);
     when(balanceClient.get()).thenReturn(VALID_BALANCE);
     Balance balance = balanceClient.get();
     assertEquals(balance, VALID_BALANCE);
@@ -45,8 +45,8 @@ public class BalanceTest {
   public void get_Success_IfGivenParam() throws XenditException {
     String url = String.format("%s%s", URL, "?account_type=CASH");
     when(this.requestClient.request(
-            RequestResource.Method.GET, url, HEADERS, null, opt.getApiKey(), Balance.class))
-        .thenReturn(VALID_BALANCE);
+        RequestResource.Method.GET, url, HEADERS, null, opt.getApiKey(), Balance.class))
+            .thenReturn(VALID_BALANCE);
     when(balanceClient.get(Balance.AccountType.CASH)).thenReturn(VALID_BALANCE);
     Balance balance = balanceClient.get(Balance.AccountType.CASH);
     assertEquals(balance, VALID_BALANCE);

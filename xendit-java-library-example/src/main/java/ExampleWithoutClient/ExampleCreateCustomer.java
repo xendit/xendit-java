@@ -11,7 +11,7 @@ import java.util.Map;
 public class ExampleCreateCustomer {
   private static void createCustomer() {
     try {
-      CustomerAddress customerAddress =  CustomerAddress.builder()
+      CustomerAddress customerAddress = CustomerAddress.builder()
           .country("ID")
           .streetLine1("Jl.123")
           .streetLine2("Jl.456")
@@ -22,7 +22,7 @@ public class ExampleCreateCustomer {
           .category("None")
           .isPreferred(true)
           .build();
-      CustomerAddress[] customerAddressArray = new CustomerAddress[]{customerAddress};
+      CustomerAddress[] customerAddressArray = new CustomerAddress[] { customerAddress };
 
       String referenceId = "test-reference-id-2";
       String email = "tes@gmail.com";
@@ -42,8 +42,7 @@ public class ExampleCreateCustomer {
           nationality,
           customerAddressArray,
           dateOfBirth,
-          null
-      );
+          null);
       System.out.println(customer.getReferenceId());
       System.out.println(customer.getEmail());
       System.out.println(customer.getGivenNames());
@@ -75,11 +74,11 @@ public class ExampleCreateCustomer {
   }
 
   public static void main(String[] args) {
-    //access key with Option
-    Xendit.Opt.setApiKey("xnd_development_HhEaDg8BL32lxtHdNaABWgQ3LvnIEtFtwXIDdK1M9v2imuMwpLWPyAJNMVKq58");
+    // access key with Option
+    Xendit.Opt.setApiKey("xnd_development_...");
 
-    //access static variable (same as old code )
-    //Xendit.apiKey = "xnd_development_...";
+    // access static variable (same as old code )
+    // Xendit.apiKey = "xnd_development_...";
     createCustomer();
     createCustomer_withAllParametersAsHashmap();
   }
