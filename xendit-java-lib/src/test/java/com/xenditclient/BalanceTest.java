@@ -34,8 +34,8 @@ public class BalanceTest {
   @Test
   public void get_Success_IfNoGivenParam() throws XenditException {
     when(this.requestClient.request(
-        RequestResource.Method.GET, URL, HEADERS, null, opt.getApiKey(), Balance.class))
-            .thenReturn(VALID_BALANCE);
+            RequestResource.Method.GET, URL, HEADERS, null, opt.getApiKey(), Balance.class))
+        .thenReturn(VALID_BALANCE);
     when(balanceClient.get()).thenReturn(VALID_BALANCE);
     Balance balance = balanceClient.get();
     assertEquals(balance, VALID_BALANCE);
@@ -45,8 +45,8 @@ public class BalanceTest {
   public void get_Success_IfGivenParam() throws XenditException {
     String url = String.format("%s%s", URL, "?account_type=CASH");
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, HEADERS, null, opt.getApiKey(), Balance.class))
-            .thenReturn(VALID_BALANCE);
+            RequestResource.Method.GET, url, HEADERS, null, opt.getApiKey(), Balance.class))
+        .thenReturn(VALID_BALANCE);
     when(balanceClient.get(Balance.AccountType.CASH)).thenReturn(VALID_BALANCE);
     Balance balance = balanceClient.get(Balance.AccountType.CASH);
     assertEquals(balance, VALID_BALANCE);
