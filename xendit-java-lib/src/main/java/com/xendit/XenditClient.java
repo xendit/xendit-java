@@ -10,6 +10,7 @@ import com.xendit.model.DisbursementClient;
 import com.xendit.model.EWalletClient;
 import com.xendit.model.FixedVirtualAccountClient;
 import com.xendit.model.InvoiceClient;
+import com.xendit.model.PaylaterClient;
 import com.xendit.model.PayoutClient;
 import com.xendit.model.QRCodeClient;
 import com.xendit.model.RecurringPaymentClient;
@@ -32,6 +33,7 @@ public class XenditClient {
   public FixedVirtualAccountClient fixedVirtualAccount;
   public RecurringPaymentClient recurringPayment;
   public DirectDebitPaymentClient directDebitPayment;
+  public PaylaterClient paylater;
 
   private XenditClient() {}
 
@@ -81,5 +83,6 @@ public class XenditClient {
     xenditClient.recurringPayment = new RecurringPaymentClient(option, Xendit.getRequestClient());
     xenditClient.directDebitPayment =
         new DirectDebitPaymentClient(option, Xendit.getRequestClient());
+    xenditClient.paylater = new PaylaterClient(option, Xendit.getRequestClient());
   }
 }

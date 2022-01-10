@@ -6,11 +6,11 @@ import com.xendit.model.QRCode;
 
 public class ExampleCreateQRCode {
   public static void main(String[] args) {
-    //access key with Option
+    // access key with Option
     Xendit.Opt.setApiKey("xnd_development_...");
 
-    //access static variable (same as old code )
-    //Xendit.apiKey = "xnd_development_...";
+    // access static variable (same as old code )
+    // Xendit.apiKey = "xnd_development_...";
 
     try {
       QRCode qrCode = QRCode.createQRCode("12", QRCode.QRCodeType.DYNAMIC, "https://webhook.site", 10000);

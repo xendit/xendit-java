@@ -91,6 +91,9 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Validate OTP for direct debit payment](#validate-otp-for-direct-debit-payment)
     - [Get direct debit payment status by ID](#get-direct-debit-payment-status-by-id)
     - [Get direct debit payment status by reference ID](#get-direct-debit-payment-status-by-reference-id)
+  - [Paylater](#paylater)
+    - [Initiate Paylater Plans](#initiate-paylater-plans)
+    - [Create Paylater Charges](#create-paylater-charges)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -1626,6 +1629,107 @@ System.out.println(Arrays.toString(directDebitPayments));
 ```
 
 [Back to top](#table-of-contents)
+
+### Paylater Services
+
+#### Initiate Paylater Plans
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+PaylaterPlans.initiatePaylaterPlans(
+    String customerId,
+    String channelCode,
+    String currency,
+    Number Amount,
+    PaylaterOrderItem[] orderItems
+);
+</pre>
+</td>
+<td>
+<pre>
+PaylaterPlans.initiatePaylaterPlans(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+PaylaterOrderItem orderItems = PaylaterOrderItem.builder()
+    .type("type")
+    .referenceId("reference_id")
+    .name("name")
+    .netUnitAmount("net_unit_amount")
+    .quantity(1)
+    .url("https://www.google.com")
+    .category("category")
+    .subCategory("subCategory")
+    .description("description")
+    .build();
+PaylaterOrderItem[] orderItemsArray = new PaylaterOrderItem[] { orderItem };
+
+Map<String, Object> params = new HashMap<>();
+params.put("customer_id", "test-customer-id");
+params.put("channel_code", "ID_KREDIVO");
+params.put("currency", "IDR");
+params.put("amount", 50000);
+params.put("order_items", orderItemsArray);
+
+/* Without client */
+PaylaterPlans initiatePlan = PaylaterPlans.initiatePaylaterPlans(params);
+/* With client */
+PaylaterPlans initiatePlan = xenditClient.paylater.initiatePaylaterPlans(params);
+```
+
+#### Create Paylater Charges
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+PaylaterCharges.createPaylaterCharges(
+    String planId,
+    String referenceId,
+    String checkoutMethod,
+    String successRedirectUrl,
+    String failureRedirectUrl,
+    String paymentMethodId,
+    Map&lt;String, Object&gt; metadata
+);
+</pre>
+</td>
+<td>
+<pre>
+PaylaterCharges.createPaylaterCharges(Map&lt;String, Object&gt; params);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> metadata = new HashMap<>();
+metadata.put("halo", "hello");
+metadata.put("tes", "123");
+
+Map<String, Object> params = new HashMap<>();
+params.put("plan_id", "test-plan-id");
+params.put("reference_id", "test-reference-id");
+params.put("checkout_method", "ONE_TIME_PAYMENT");
+params.put("success_redirect_url", "https://success-redirect.url");
+params.put("failure_redirect_url", "https://failure-redirect.url");
+params.put("payment_method_id", null);
+params.put("metadata", metadata);
+
+/* Without client */
+PaylaterCharge charge = PaylaterCharge.createPaylaterCharges(params);
+/* With client */
+PaylaterCharge charge = xenditClient.paylater.createPaylaterCharges(params);
+```
 
 ## Contributing
 You can go to the [contributing guidelines](https://github.com/xendit/xendit-java/blob/master/CONTRIBUTING.md) to learn on how to contribute this project.
