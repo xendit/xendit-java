@@ -11,14 +11,41 @@ import lombok.*;
 @Setter
 @Builder
 public class PaylaterCharge {
+  @SerializedName("charge_id")
+  private String chargeId;
+
+  @SerializedName("customer_id")
+  private String customerId;
+
   @SerializedName("plan_id")
   private String planId;
+
+  @SerializedName("business_id")
+  private String businessId;
 
   @SerializedName("reference_id")
   private String referenceId;
 
+  @SerializedName("channel_code")
+  private String channelCode;
+
   @SerializedName("checkout_method")
   private String checkoutMethod;
+
+  @SerializedName("currency")
+  private String currency;
+
+  @SerializedName("amount")
+  private Number amount;
+
+  @SerializedName("refunded_amount")
+  private Number refundedAmount;
+
+  @SerializedName("order_items")
+  private PaylaterOrderItem[] orderItems;
+
+  @SerializedName("status")
+  private String status;
 
   @SerializedName("success_redirect_url")
   private String successRedirectUrl;
@@ -26,11 +53,29 @@ public class PaylaterCharge {
   @SerializedName("failure_redirect_url")
   private String failureRedirectUrl;
 
+  @SerializedName("created")
+  private String created;
+
+  @SerializedName("updated")
+  private String updated;
+
+  @SerializedName("actions")
+  private Map<String, String> actions;
+
+  @SerializedName("callback_url")
+  private String callbackUrl;
+
   @SerializedName("payment_method_id")
   private String paymentMethodId;
 
+  @SerializedName("voided_at")
+  private String voidedAt;
+
   @SerializedName("metadata")
   private Map<String, Object> metadata;
+
+  @SerializedName("refunds")
+  private String refunds;
 
   private static PaylaterClient paylaterClient;
 
@@ -93,6 +138,24 @@ public class PaylaterCharge {
     return createPaylaterChargeRequest(headers, params);
   }
 
+  /**
+   * Get paylater charge by id
+   *
+   * @param chargeId paylater charge ID
+   * @return PaylaterCharge
+   * @throws XenditException XenditException
+   */
+  public static PaylaterCharge getPaylaterChargeStatus(String chargeId) throws XenditException {
+    PaylaterClient client = getClient();
+    return client.getPaylaterChargeStatus(chargeId);
+  }
+
+  /**
+   * @param headers
+   * @param params
+   * @return PaylaterCharge
+   * @throws XenditException
+   */
   public static PaylaterCharge createPaylaterChargeRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     PaylaterClient client = getClient();

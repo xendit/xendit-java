@@ -17,7 +17,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class InitializePaylaterTest {
+public class InitiatePaylaterTest {
   private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/paylater/plans");
   private static String CUSTOMER_ID = "test-customer-id";
   private static String CHANNEL_CODE = "ID_KREDIVO";
@@ -94,7 +94,7 @@ public class InitializePaylaterTest {
   }
 
   @Test
-  public void initializePaylaterPlans_Success_IfParamsIsValid() throws XenditException {
+  public void initiatePaylaterPlans_Success_IfParamsIsValid() throws XenditException {
     initCreateParams();
 
     when(this.requestClient.request(

@@ -149,4 +149,32 @@ public class PaylaterChargeTest {
 
     paylaterClient.createPaylaterCharges(PARAMS);
   }
+
+  @Test
+  public void getPaylaterChargeStatus_Success_IfIdIsAvailable() throws XenditException {
+    String url = String.format("%s/%s%s", URL, "/", PLAN_ID);
+
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), PaylaterCharge.class))
+        .thenReturn(VALID_PAYLATER_CHARGE);
+    when(paylaterClient.getPaylaterChargeStatus(PLAN_ID)).thenReturn(VALID_PAYLATER_CHARGE);
+
+    PaylaterCharge paylaterCharge = paylaterClient.getPaylaterChargeStatus(PLAN_ID);
+
+    assertEquals(VALID_PAYLATER_CHARGE, paylaterCharge);
+  }
+
+  @Test(expected = XenditException.class)
+  public void getPaylaterChargeStatus_ThrowsException_IfIdIsNotAvailable() throws XenditException {
+    String NOT_AVAILABLE_ID = "not-available-id";
+    String url = String.format("%s/%s%s", URL, "/", NOT_AVAILABLE_ID);
+
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), PaylaterCharge.class))
+        .thenThrow(new XenditException("Paylater charge not found"));
+    when(paylaterClient.getPaylaterChargeStatus(NOT_AVAILABLE_ID))
+        .thenThrow(new XenditException("Paylater charge not found"));
+
+    paylaterClient.getPaylaterChargeStatus(NOT_AVAILABLE_ID);
+  }
 }

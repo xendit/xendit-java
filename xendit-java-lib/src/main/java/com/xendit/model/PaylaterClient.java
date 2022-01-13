@@ -67,6 +67,12 @@ public class PaylaterClient {
     return createPaylaterChargeRequest(headers, params);
   }
 
+  public PaylaterCharge getPaylaterChargeStatus(String chargeId) throws XenditException {
+    String url = String.format("%s%s%s", opt.getXenditURL(), "/paylater/charges/", chargeId);
+    return this.requestClient.request(
+        RequestResource.Method.GET, url, null, opt.getApiKey(), PaylaterCharge.class);
+  }
+
   public PaylaterPlans initiatePaylaterPlans(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/paylater/plans");
@@ -80,5 +86,37 @@ public class PaylaterClient {
     String url = String.format("%s%s", opt.getXenditURL(), "/paylater/charges");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterCharge.class);
+  }
+
+  public PaylaterRefund createPaylaterRefund(
+      String chargeId, Number amount, PaylaterEnum.RefundReasons reason) throws XenditException {
+    return createPaylaterRefund(new HashMap<>(), chargeId, amount, reason);
+  }
+
+  public PaylaterRefund createPaylaterRefund(
+      Map<String, String> headers,
+      String chargeId,
+      Number amount,
+      PaylaterEnum.RefundReasons reason)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("amount", amount);
+    params.put("reason", reason);
+    String url =
+        String.format(
+            "%s%s%s%s", Xendit.Opt.getXenditURL(), "/paylater/charges/", chargeId, "/refunds");
+
+    return this.requestClient.request(
+        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterRefund.class);
+  }
+
+  public PaylaterRefund getPaylaterRefundStatus(String chargeId, String refundId)
+      throws XenditException {
+    String url =
+        String.format(
+            "%s%s%s%s%s",
+            Xendit.Opt.getXenditURL(), "/paylater/charges/", chargeId, "/refunds/", refundId);
+    return this.requestClient.request(
+        RequestResource.Method.GET, url, null, opt.getApiKey(), PaylaterRefund.class);
   }
 }

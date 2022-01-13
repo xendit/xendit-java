@@ -11,6 +11,9 @@ import lombok.*;
 @Setter
 @Builder
 public class PaylaterPlans {
+  @SerializedName("id")
+  private String id;
+
   @SerializedName("customer_id")
   private String customerId;
 
@@ -25,6 +28,12 @@ public class PaylaterPlans {
 
   @SerializedName("order_items")
   private PaylaterOrderItem[] orderItems;
+
+  @SerializedName("options")
+  private PaylaterOptions[] options;
+
+  @SerializedName("created")
+  private String created;
 
   private static PaylaterClient paylaterClient;
 
