@@ -94,6 +94,9 @@ This library is the abstraction of Xendit API for access from applications writt
   - [Paylater](#paylater)
     - [Initiate Paylater Plans](#initiate-paylater-plans)
     - [Create Paylater Charges](#create-paylater-charges)
+    - [Get Paylater Charge by ID](#get-paylater-charge-by-id)
+    - [Refund Paylater Charge](#refund-paylater-charge)
+    - [Get Refund by Refund ID](#get-refund-by-refund-id)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -1729,6 +1732,34 @@ params.put("metadata", metadata);
 PaylaterCharge charge = PaylaterCharge.createPaylaterCharges(params);
 /* With client */
 PaylaterCharge charge = xenditClient.paylater.createPaylaterCharges(params);
+```
+
+#### Get Paylater Charge by Charge ID
+
+```java
+/* Without client */
+PaylaterCharge paylaterCharge = PaylaterCharge.getPaylaterChargeStatus("charge-id");
+/* With client */
+PaylaterCharge paylaterCharge = xenditclient.paylater.getPaylaterChargeStatus("charge-id");
+```
+
+#### Refund Paylater Charge
+
+```java
+PaylaterRefund.createPaylaterRefund(String chargeId, Number amount, PaylaterEnum.RefundReasons);
+/* Without client */
+PaylaterRefund paylaterRefund = PaylaterRefund.createPaylaterRefund("charge-id", 1000, "OTHERS");
+/* With client */
+PaylaterRefund paylaterRefund = xenditClient.paylater.createPaylaterRefund("charge-id", 1000, "OTHERS");
+```
+
+#### Get Paylater Refund by Refund ID
+
+```java
+/* Without client */
+PaylaterRefund paylaterRefund = PaylaterRefund.getPaylaterRefundStatus("charge-id", "refund-id");
+/* With client */
+PaylaterRefund paylaterRefund = xenditclient.paylater.getPaylaterRefundStatus("charge-id", "refund-id");
 ```
 
 ## Contributing
