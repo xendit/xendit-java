@@ -88,27 +88,34 @@ public class PaylaterClient {
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterCharge.class);
   }
 
-  public PaylaterRefund createPaylaterRefund(String chargeId, Number amount, PaylaterEnum.RefundReasons reason)
-      throws XenditException {
+  public PaylaterRefund createPaylaterRefund(
+      String chargeId, Number amount, PaylaterEnum.RefundReasons reason) throws XenditException {
     return createPaylaterRefund(new HashMap<>(), chargeId, amount, reason);
   }
 
   public PaylaterRefund createPaylaterRefund(
-      Map<String, String> headers, String chargeId, Number amount, PaylaterEnum.RefundReasons reason)
+      Map<String, String> headers,
+      String chargeId,
+      Number amount,
+      PaylaterEnum.RefundReasons reason)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     params.put("amount", amount);
     params.put("reason", reason);
-    String url = String.format(
-        "%s%s%s%s", Xendit.Opt.getXenditURL(), "/paylater/charges/", chargeId, "/refunds");
+    String url =
+        String.format(
+            "%s%s%s%s", Xendit.Opt.getXenditURL(), "/paylater/charges/", chargeId, "/refunds");
 
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), PaylaterRefund.class);
   }
 
-  public PaylaterRefund getPaylaterRefundStatus(String chargeId, String refundId) throws XenditException {
-    String url = String.format("%s%s%s%s%s", Xendit.Opt.getXenditURL(), "/paylater/charges/", chargeId, "/refunds/",
-        refundId);
+  public PaylaterRefund getPaylaterRefundStatus(String chargeId, String refundId)
+      throws XenditException {
+    String url =
+        String.format(
+            "%s%s%s%s%s",
+            Xendit.Opt.getXenditURL(), "/paylater/charges/", chargeId, "/refunds/", refundId);
     return this.requestClient.request(
         RequestResource.Method.GET, url, null, opt.getApiKey(), PaylaterRefund.class);
   }

@@ -82,18 +82,14 @@ public class PaylaterCharge {
   /**
    * Create new paylater charge
    *
-   * @param planId.            Installment Plan ID retrieved from Initiate
-   *                           PayLater Plans API.
-   * @param referenceId        An ID of your choice. Reference ID provided by
-   *                           merchant for the transaction.
-   * @param checkoutMethod     Checkout method end-customer will apply.
-   * @param successRedirectUrl where the customer is redirected after completing
-   *                           transaction(must be
-   *                           HTTP or HTTPS).
-   * @param failureRedirectUrl where the customer is redirected if the payment has
-   *                           failed.
-   * @param paymentMethodId    of customer source of funds.
-   * @param metadata           Object of additional information the user may use.
+   * @param planId. Installment Plan ID retrieved from Initiate PayLater Plans API.
+   * @param referenceId An ID of your choice. Reference ID provided by merchant for the transaction.
+   * @param checkoutMethod Checkout method end-customer will apply.
+   * @param successRedirectUrl where the customer is redirected after completing transaction(must be
+   *     HTTP or HTTPS).
+   * @param failureRedirectUrl where the customer is redirected if the payment has failed.
+   * @param paymentMethodId of customer source of funds.
+   * @param metadata Object of additional information the user may use.
    * @return PaylaterCharge model.
    * @throws XenditException XenditException
    */
@@ -120,8 +116,7 @@ public class PaylaterCharge {
   /**
    * Create new paylater charge with all parameter as HashMap
    *
-   * @param params listed here
-   *               https://developers.xendit.co/api-reference/#create-paylater-charges.
+   * @param params listed here https://developers.xendit.co/api-reference/#create-paylater-charges.
    * @return PaylaterCharge
    * @throws XenditException
    */
@@ -134,8 +129,7 @@ public class PaylaterCharge {
    * Create new paylater charge with headers and all parameter as HashMap
    *
    * @param headers
-   * @param params  listed here
-   *                https://developers.xendit.co/api-reference/#create-paylater-charges.
+   * @param params listed here https://developers.xendit.co/api-reference/#create-paylater-charges.
    * @return PaylaterCharge
    * @throws XenditException
    */
@@ -156,6 +150,12 @@ public class PaylaterCharge {
     return client.getPaylaterChargeStatus(chargeId);
   }
 
+  /**
+   * @param headers
+   * @param params
+   * @return PaylaterCharge
+   * @throws XenditException
+   */
   public static PaylaterCharge createPaylaterChargeRequest(
       Map<String, String> headers, Map<String, Object> params) throws XenditException {
     PaylaterClient client = getClient();
@@ -171,7 +171,8 @@ public class PaylaterCharge {
     if (isApiKeyExist()) {
       if (paylaterClient == null
           || !paylaterClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return paylaterClient = new PaylaterClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+        return paylaterClient =
+            new PaylaterClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (paylaterClient == null
