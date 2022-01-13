@@ -17,7 +17,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-public class InitializePaylaterTest {
+public class InitiatePaylaterTest {
   private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/paylater/plans");
   private static String CUSTOMER_ID = "test-customer-id";
   private static String CHANNEL_CODE = "ID_KREDIVO";
@@ -29,28 +29,26 @@ public class InitializePaylaterTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   PaylaterClient paylaterClient = mock(PaylaterClient.class);
-  private static PaylaterOrderItem ORDER_ITEMS =
-      PaylaterOrderItem.builder()
-          .type("PHYSICAL_PRODUCT")
-          .referenceId("SKU_backtoschool-promotion123")
-          .name("Nymbus twothousand")
-          .netUnitAmount("5000")
-          .quantity(1)
-          .url("https://www.zngmyhome.com/nymbus")
-          .category("Sports")
-          .subCategory(null)
-          .description(null)
-          .metadata(null)
-          .build();
-  private static PaylaterOrderItem[] ORDER_ITEMS_ARRAY = new PaylaterOrderItem[] {ORDER_ITEMS};
-  private static PaylaterPlans VALID_INITIALIZE_PAYLATER =
-      PaylaterPlans.builder()
-          .customerId(CUSTOMER_ID)
-          .channelCode(CHANNEL_CODE)
-          .currency(CURRENCY)
-          .amount(AMOUNT)
-          .orderItems(ORDER_ITEMS_ARRAY)
-          .build();
+  private static PaylaterOrderItem ORDER_ITEMS = PaylaterOrderItem.builder()
+      .type("PHYSICAL_PRODUCT")
+      .referenceId("SKU_backtoschool-promotion123")
+      .name("Nymbus twothousand")
+      .netUnitAmount("5000")
+      .quantity(1)
+      .url("https://www.zngmyhome.com/nymbus")
+      .category("Sports")
+      .subCategory(null)
+      .description(null)
+      .metadata(null)
+      .build();
+  private static PaylaterOrderItem[] ORDER_ITEMS_ARRAY = new PaylaterOrderItem[] { ORDER_ITEMS };
+  private static PaylaterPlans VALID_INITIALIZE_PAYLATER = PaylaterPlans.builder()
+      .customerId(CUSTOMER_ID)
+      .channelCode(CHANNEL_CODE)
+      .currency(CURRENCY)
+      .amount(AMOUNT)
+      .orderItems(ORDER_ITEMS_ARRAY)
+      .build();
 
   @Before
   public void initMocks() {
@@ -75,36 +73,35 @@ public class InitializePaylaterTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            PaylaterPlans.class))
-        .thenReturn(VALID_INITIALIZE_PAYLATER);
+        RequestResource.Method.POST,
+        URL,
+        HEADERS,
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterPlans.class))
+            .thenReturn(VALID_INITIALIZE_PAYLATER);
     when(paylaterClient.initiatePaylaterPlans(
-            CUSTOMER_ID, CHANNEL_CODE, CURRENCY, AMOUNT, ORDER_ITEMS_ARRAY))
-        .thenReturn(VALID_INITIALIZE_PAYLATER);
+        CUSTOMER_ID, CHANNEL_CODE, CURRENCY, AMOUNT, ORDER_ITEMS_ARRAY))
+            .thenReturn(VALID_INITIALIZE_PAYLATER);
 
-    PaylaterPlans paylaterPlans =
-        paylaterClient.initiatePaylaterPlans(
-            CUSTOMER_ID, CHANNEL_CODE, CURRENCY, AMOUNT, ORDER_ITEMS_ARRAY);
+    PaylaterPlans paylaterPlans = paylaterClient.initiatePaylaterPlans(
+        CUSTOMER_ID, CHANNEL_CODE, CURRENCY, AMOUNT, ORDER_ITEMS_ARRAY);
 
     assertEquals(VALID_INITIALIZE_PAYLATER, paylaterPlans);
   }
 
   @Test
-  public void initializePaylaterPlans_Success_IfParamsIsValid() throws XenditException {
+  public void initiatePaylaterPlans_Success_IfParamsIsValid() throws XenditException {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            PaylaterPlans.class))
-        .thenReturn(VALID_INITIALIZE_PAYLATER);
+        RequestResource.Method.POST,
+        URL,
+        HEADERS,
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterPlans.class))
+            .thenReturn(VALID_INITIALIZE_PAYLATER);
     when(paylaterClient.initiatePaylaterPlans(PARAMS)).thenReturn(VALID_INITIALIZE_PAYLATER);
 
     PaylaterPlans paylaterPlans = paylaterClient.initiatePaylaterPlans(PARAMS);
@@ -118,13 +115,13 @@ public class InitializePaylaterTest {
     HEADERS.put("for-user-id", "user-id");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            PaylaterPlans.class))
-        .thenReturn(VALID_INITIALIZE_PAYLATER);
+        RequestResource.Method.POST,
+        URL,
+        HEADERS,
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterPlans.class))
+            .thenReturn(VALID_INITIALIZE_PAYLATER);
     when(paylaterClient.initiatePaylaterPlans(HEADERS, PARAMS))
         .thenReturn(VALID_INITIALIZE_PAYLATER);
 
@@ -139,13 +136,13 @@ public class InitializePaylaterTest {
     PARAMS.put("currency", "NOT_IDR");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            new HashMap<>(),
-            PARAMS,
-            opt.getApiKey(),
-            PaylaterPlans.class))
-        .thenThrow(new XenditException("Paylater currency is invalid"));
+        RequestResource.Method.POST,
+        URL,
+        new HashMap<>(),
+        PARAMS,
+        opt.getApiKey(),
+        PaylaterPlans.class))
+            .thenThrow(new XenditException("Paylater currency is invalid"));
     when(paylaterClient.initiatePaylaterPlans(PARAMS))
         .thenThrow(new XenditException("Paylater currency is invalid"));
 
