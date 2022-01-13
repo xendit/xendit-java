@@ -14,7 +14,8 @@ public class ExampleGetPaylaterCharge {
 
         try {
             PaylaterCharge charge = PaylaterCharge.getPaylaterChargeStatus("plc_8cb12305-9bcf-4441-a087-ee0d446e297b");
-            System.out.println(charge.getId());
+            System.out.println(charge.getChargeId());
+            System.out.println(refund.getStatus());
         } catch (XenditException e) {
             e.printStackTrace();
         }

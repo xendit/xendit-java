@@ -24,8 +24,7 @@ public class ExampleCreatePaylaterCharge {
           null,
           null,
           null);
-      System.out.println(charge.getPlanId());
-      System.out.println(charge.getReferenceId());
+      System.out.println(charge.getChargeId());
     } catch (XenditException e) {
       e.printStackTrace();
     }

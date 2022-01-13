@@ -16,8 +16,7 @@ public class ExampleCreatePaylaterRefund {
             PaylaterRefund paylaterRefund = xenditClient.paylater.createPaylaterRefund(
                     "plc_8cb12305-9bcf-4441-a087-ee0d446e297b", 1000,
                     PaylaterEnum.RefundReasons.OTHERS);
-            System.out.println(paylaterRefund.getStatus());
-            System.out.println(paylaterRefund.getId());
+            System.out.println(paylaterRefund.getRefundId());
         } catch (XenditException e) {
             e.printStackTrace();
         }
