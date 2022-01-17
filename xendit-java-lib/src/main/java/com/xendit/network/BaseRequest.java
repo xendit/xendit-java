@@ -66,7 +66,7 @@ public class BaseRequest implements NetworkClient {
       headers.put(header.getKey(), header.getValue());
     }
     
-    if (params !== null) {
+    if (params != null) {
       for (Map.Entry<String, Object> param : params.entrySet()) {
         List<String> allowHeaderList = Arrays.asList(allowHeaders);
         if (allowHeaderList.contains(param.getKey())) {
