@@ -155,12 +155,11 @@ public class BaseRequest implements NetworkClient {
     // Hacky way to inject params for XP into headers
     headers = constructCustomHeaders(headers, params);
 
-    // Hacky way to remove injected params appended to headers
-    params = filterParams(params);
-
     String jsonParams = "";
 
     if (params != null) {
+      // Hacky way to remove injected params appended to headers
+      params = filterParams(params);
       Gson gson = new GsonBuilder().create();
       jsonParams = gson.toJson(params);
     }
