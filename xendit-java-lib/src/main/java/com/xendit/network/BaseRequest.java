@@ -65,7 +65,7 @@ public class BaseRequest implements NetworkClient {
     for (Map.Entry<String, String> header : customHeaders.entrySet()) {
       headers.put(header.getKey(), header.getValue());
     }
-    
+
     if (params != null) {
       for (Map.Entry<String, Object> param : params.entrySet()) {
         List<String> allowHeaderList = Arrays.asList(allowHeaders);
@@ -74,7 +74,7 @@ public class BaseRequest implements NetworkClient {
         }
       }
     }
-    
+
     return headers;
   }
 
