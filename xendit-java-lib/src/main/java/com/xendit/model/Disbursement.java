@@ -46,6 +46,9 @@ public class Disbursement {
   @SerializedName("email_bcc")
   private String[] emailBcc;
 
+  @SerializedName("failure_code")
+  private String failure_code;
+
   private static DisbursementClient disbursementClient;
 
   /**
