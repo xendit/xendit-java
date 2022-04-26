@@ -9,6 +9,8 @@ public class Xendit {
 
   public static String apiKey;
 
+  public static String privateKey;
+
   public static Option Opt = new Option();
 
   public static NetworkClient getRequestClient() {
@@ -23,12 +25,25 @@ public class Xendit {
 
     private String apiKey;
 
+    private String privateKey;
+
+    private String publicKey;
+
     public String getApiKey() {
       return apiKey;
     }
 
+    public String getPrivateKey() {
+      return privateKey;
+    }
+
     public Option setApiKey(String secretKey) {
       this.apiKey = secretKey;
+      return this;
+    }
+
+    public Option setPrivateKey(String privateKey) {
+      this.privateKey = privateKey;
       return this;
     }
 

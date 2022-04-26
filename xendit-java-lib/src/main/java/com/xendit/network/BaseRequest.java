@@ -7,6 +7,7 @@ import com.xendit.Xendit;
 import com.xendit.exception.ApiException;
 import com.xendit.exception.AuthException;
 import com.xendit.exception.XenditException;
+import com.xendit.libs.DigitalSignature;
 import com.xendit.model.XenditError;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.SignatureException;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -34,7 +37,12 @@ public class BaseRequest implements NetworkClient {
   private static final int DEFAULT_CONNECT_TIMEOUT = 60000;
   private static String[] allowHeaders =
       new String[] {
-        "for-user-id", "with-fee-rule", "Idempotency-key", "X-IDEMPOTENCY-KEY", "X-api-version"
+        "for-user-id",
+        "with-fee-rule",
+        "Idempotency-key",
+        "X-IDEMPOTENCY-KEY",
+        "X-api-version",
+        "x-signature"
       };
 
   public <T> T request(
@@ -56,7 +64,20 @@ public class BaseRequest implements NetworkClient {
       String apiKey,
       Class<T> clazz)
       throws XenditException {
-    return staticRequest(method, url, headers, params, apiKey, clazz);
+    return staticRequest(method, url, headers, params, apiKey, null, clazz);
+  }
+
+  @Override
+  public <T> T request(
+      RequestResource.Method method,
+      String url,
+      Map<String, String> headers,
+      Map<String, Object> params,
+      String apiKey,
+      String privateKey,
+      Class<T> clazz)
+      throws XenditException {
+    return staticRequest(method, url, headers, params, apiKey, privateKey, clazz);
   }
 
   private static Map<String, String> constructCustomHeaders(
@@ -119,9 +140,10 @@ public class BaseRequest implements NetworkClient {
       Map<String, String> headers,
       Map<String, Object> params,
       String apiKey,
+      String privateKey,
       Class<T> clazz)
       throws XenditException {
-    XenditResponse response = rawRequest(method, url, headers, params, apiKey);
+    XenditResponse response = rawRequest(method, url, headers, params, apiKey, privateKey);
 
     int responseCode = response.getStatusCode();
     String responseBody = response.getBody();
@@ -145,7 +167,8 @@ public class BaseRequest implements NetworkClient {
       String url,
       Map<String, String> headers,
       Map<String, Object> params,
-      String apiKey)
+      String apiKey,
+      String privateKey)
       throws XenditException {
 
     if (apiKey == null || apiKey.trim().isEmpty()) {
@@ -162,6 +185,21 @@ public class BaseRequest implements NetworkClient {
       params = filterParams(params);
       Gson gson = new GsonBuilder().create();
       jsonParams = gson.toJson(params);
+    }
+
+    if (privateKey != null) {
+      System.out.println(jsonParams);
+      String sha256hex = org.apache.commons.codec.digest.DigestUtils.sha256Hex(jsonParams);
+      String payloadToSign = method + ":" + url + ":" + sha256hex + ":" + Instant.now().toString();
+      System.out.println("payloadToSign => " + payloadToSign);
+      try {
+        String signature = DigitalSignature.doSign(payloadToSign, privateKey);
+        System.out.println("Signature => " + signature);
+        headers.put("X-SIGNATURE", signature);
+      } catch (SignatureException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
 
     if (method == RequestResource.Method.PATCH) {
@@ -197,8 +235,9 @@ public class BaseRequest implements NetworkClient {
       response = httpClient.execute(request);
       int responseCode = response.getStatusLine().getStatusCode();
       String responseBody = EntityUtils.toString(response.getEntity());
+      String xSignature = response.getHeaders("x-signature").toString();
 
-      return new XenditResponse(responseCode, responseBody);
+      return new XenditResponse(responseCode, responseBody, xSignature);
     } catch (IOException e) {
       throw new XenditException("Connection error : " + e.getMessage());
     }
@@ -223,7 +262,10 @@ public class BaseRequest implements NetworkClient {
         stream.write(jsonParams.getBytes("utf-8"));
         stream.close();
       }
+      String xSignature = connection.getHeaderField("x-signature");
 
+      connection.getHeaderField("X-Signature");
+      connection.getHeaderField("X-SIGNATURE");
       int responseCode = connection.getResponseCode();
       String responseBody;
 
@@ -233,7 +275,7 @@ public class BaseRequest implements NetworkClient {
         responseBody = getResponseBody(connection.getErrorStream());
       }
 
-      return new XenditResponse(responseCode, responseBody);
+      return new XenditResponse(responseCode, responseBody, xSignature);
     } catch (IOException e) {
 
       throw new XenditException("Connection error");

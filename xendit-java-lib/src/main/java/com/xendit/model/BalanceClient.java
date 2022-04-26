@@ -39,7 +39,16 @@ public class BalanceClient {
       url = String.format("%s%s%s", url, "?account_type=", accountType);
     }
 
-    return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Balance.class);
+    Balance response =
+        this.requestClient.request(
+            RequestResource.Method.GET,
+            url,
+            headers,
+            null,
+            opt.getApiKey(),
+            opt.getPrivateKey(),
+            Balance.class);
+
+    return response;
   }
 }

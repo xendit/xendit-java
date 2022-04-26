@@ -20,4 +20,14 @@ public interface NetworkClient {
       String apiKey,
       Class<T> clazz)
       throws XenditException;
+
+  <T> T request(
+      RequestResource.Method method,
+      String url,
+      Map<String, String> headers,
+      Map<String, Object> params,
+      String apiKey,
+      String privateKey,
+      Class<T> clazz)
+      throws XenditException;
 }

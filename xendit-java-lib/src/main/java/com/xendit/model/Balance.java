@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Balance {
+public class Balance extends SignatureVerification {
   @SerializedName("balance")
   private Number balance;
 

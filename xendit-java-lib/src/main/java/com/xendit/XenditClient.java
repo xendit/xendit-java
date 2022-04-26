@@ -41,6 +41,8 @@ public class XenditClient {
 
     private String apikey;
 
+    private String privateKey;
+
     public Builder() {}
 
     public Builder setApikey(String apikey) {
@@ -48,14 +50,24 @@ public class XenditClient {
       return this;
     }
 
+    public Builder setPrivateKey(String privateKey) {
+      this.privateKey = privateKey;
+      return this;
+    }
+
     public XenditClient build() {
       Xendit.Option option = new Xendit.Option();
       option.setApiKey(this.apikey);
+      option.setPrivateKey(this.privateKey);
       return initClient(option);
     }
 
     public String getApikey() {
       return apikey;
+    }
+
+    public String getPrivateKey() {
+      return privateKey;
     }
   }
 
