@@ -136,14 +136,16 @@ public class DisbursementClient {
 
   public Disbursement[] getByExternalId(Map<String, String> headers, String externalId)
       throws XenditException {
-    String url = String.format("%s%s%s", opt.getXenditURL(), "/disbursements?external_id=", externalId);
+    String url =
+        String.format("%s%s%s", opt.getXenditURL(), "/disbursements?external_id=", externalId);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement[].class);
   }
 
   public Disbursement[] getByReferenceId(Map<String, String> headers, String referenceId)
       throws XenditException {
-    String url = String.format("%s%s%s", opt.getXenditURL(), "/disbursements?reference_id=", referenceId);
+    String url =
+        String.format("%s%s%s", opt.getXenditURL(), "/disbursements?reference_id=", referenceId);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement[].class);
   }
@@ -158,25 +160,45 @@ public class DisbursementClient {
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement.class);
   }
 
-  public DisbursementChannel[] getDisbursementChannels(Map<String, String> headers) throws XenditException {
+  public DisbursementChannel[] getDisbursementChannels(Map<String, String> headers)
+      throws XenditException {
     String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/disbursement-channels");
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementChannel[].class);
+        RequestResource.Method.GET,
+        url,
+        headers,
+        null,
+        opt.getApiKey(),
+        DisbursementChannel[].class);
   }
 
-  public DisbursementChannel[] getByChannelCategory(Map<String, String> headers, String channelCategory)
-      throws XenditException {
-    String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_category=",
-        channelCategory);
+  public DisbursementChannel[] getByChannelCategory(
+      Map<String, String> headers, String channelCategory) throws XenditException {
+    String url =
+        String.format(
+            "%s%s%s",
+            Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_category=", channelCategory);
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementChannel[].class);
+        RequestResource.Method.GET,
+        url,
+        headers,
+        null,
+        opt.getApiKey(),
+        DisbursementChannel[].class);
   }
 
   public DisbursementChannel[] getByChannelCode(Map<String, String> headers, String channelCode)
       throws XenditException {
-    String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_code=",
-        channelCode);
+    String url =
+        String.format(
+            "%s%s%s",
+            Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_code=", channelCode);
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementChannel[].class);
+        RequestResource.Method.GET,
+        url,
+        headers,
+        null,
+        opt.getApiKey(),
+        DisbursementChannel[].class);
   }
 }

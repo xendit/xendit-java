@@ -11,14 +11,14 @@ import com.xendit.model.DisbursementClient;
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
 import com.xendit.network.RequestResource;
-
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DisbursementChannelTest {
-  private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/disbursement-channels");
+  private static String URL =
+      String.format("%s%s", Xendit.Opt.getXenditURL(), "/disbursement-channels");
   private static String CHANNEL_CODE = "PH_CIMB";
   private static String NAME = "CIMB Bank Philippines Inc";
   private static String CHANNEL_CATEGORY = "BANK";
@@ -33,16 +33,18 @@ public class DisbursementChannelTest {
   Xendit.Option opt = mock(Xendit.Option.class);
   DisbursementClient disbursementClient = mock(DisbursementClient.class);
 
-  private static DisbursementChannel VALID_CHANNEL = DisbursementChannel.builder()
-      .channel_code(CHANNEL_CODE)
-      .name(NAME)
-      .channel_category(CHANNEL_CATEGORY)
-      .currency(CURRENCY)
-      .minimum(MINIMUM)
-      .maximum(MAXIMUM)
-      .minimum_increment(MINIMUM_INCREMENT)
-      .build();
-  private static DisbursementChannel[] DISBURSEMENTCHANNEL_ARRAY = new DisbursementChannel[] { VALID_CHANNEL };
+  private static DisbursementChannel VALID_CHANNEL =
+      DisbursementChannel.builder()
+          .channel_code(CHANNEL_CODE)
+          .name(NAME)
+          .channel_category(CHANNEL_CATEGORY)
+          .currency(CURRENCY)
+          .minimum(MINIMUM)
+          .maximum(MAXIMUM)
+          .minimum_increment(MINIMUM_INCREMENT)
+          .build();
+  private static DisbursementChannel[] DISBURSEMENTCHANNEL_ARRAY =
+      new DisbursementChannel[] {VALID_CHANNEL};
 
   @Before
   public void initMocks() {
@@ -56,12 +58,17 @@ public class DisbursementChannelTest {
   @Test
   public void getDisbursementChannels_Success_IfMethodCalledCorrectly() throws XenditException {
     when(this.requestClient.request(
-        RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementChannel[].class))
         .thenReturn(DISBURSEMENTCHANNEL_ARRAY);
-    when(disbursementClient.getDisbursementChannels(HEADERS))
-        .thenReturn(DISBURSEMENTCHANNEL_ARRAY);
+    when(disbursementClient.getDisbursementChannels(HEADERS)).thenReturn(DISBURSEMENTCHANNEL_ARRAY);
 
-    DisbursementChannel disbursementChannels[] = disbursementClient.getDisbursementChannels(HEADERS);
+    DisbursementChannel disbursementChannels[] =
+        disbursementClient.getDisbursementChannels(HEADERS);
 
     assertArrayEquals(DISBURSEMENTCHANNEL_ARRAY, disbursementChannels);
   }
@@ -69,7 +76,12 @@ public class DisbursementChannelTest {
   @Test(expected = XenditException.class)
   public void getDisbursementChannels_ThrowsException_IfServerError() throws XenditException {
     when(this.requestClient.request(
-        RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementChannel[].class))
         .thenThrow(new XenditException("Something went wrong"));
     when(disbursementClient.getDisbursementChannels(new HashMap<>()))
         .thenThrow(new XenditException("Something went wrong"));
@@ -81,21 +93,24 @@ public class DisbursementChannelTest {
     String url = String.format("%s?channel_category=%s", URL, CHANNEL_CATEGORY);
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
         .thenReturn(DISBURSEMENTCHANNEL_ARRAY);
-    when(disbursementClient.getByChannelCategory(HEADERS, CHANNEL_CATEGORY)).thenReturn(DISBURSEMENTCHANNEL_ARRAY);
+    when(disbursementClient.getByChannelCategory(HEADERS, CHANNEL_CATEGORY))
+        .thenReturn(DISBURSEMENTCHANNEL_ARRAY);
 
-    DisbursementChannel[] disbursementChannels = disbursementClient.getByChannelCategory(HEADERS, CHANNEL_CATEGORY);
+    DisbursementChannel[] disbursementChannels =
+        disbursementClient.getByChannelCategory(HEADERS, CHANNEL_CATEGORY);
 
     assertArrayEquals(DISBURSEMENTCHANNEL_ARRAY, disbursementChannels);
   }
 
   @Test(expected = XenditException.class)
-  public void getByChannelCategory_ThrowsException_IfChannelCategoryIsNotAvailable() throws XenditException {
+  public void getByChannelCategory_ThrowsException_IfChannelCategoryIsNotAvailable()
+      throws XenditException {
     String url = String.format("%s?channel_category=%s", URL, CHANNEL_CATEGORY);
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
         .thenThrow(new XenditException("Channel not found"));
     when(disbursementClient.getByChannelCategory(HEADERS, CHANNEL_CATEGORY))
         .thenThrow(new XenditException("Channel not found"));
@@ -108,7 +123,7 @@ public class DisbursementChannelTest {
     String url = String.format("%s?channel_category=%s", URL, CHANNEL_CATEGORY);
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
         .thenThrow(new XenditException("Invalid Arguments"));
     when(disbursementClient.getByChannelCategory(HEADERS, ""))
         .thenThrow(new XenditException("Invalid Arguments"));
@@ -121,21 +136,24 @@ public class DisbursementChannelTest {
     String url = String.format("%s?channel_code=%s", URL, CHANNEL_CODE);
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
         .thenReturn(DISBURSEMENTCHANNEL_ARRAY);
-    when(disbursementClient.getByChannelCode(HEADERS, CHANNEL_CODE)).thenReturn(DISBURSEMENTCHANNEL_ARRAY);
+    when(disbursementClient.getByChannelCode(HEADERS, CHANNEL_CODE))
+        .thenReturn(DISBURSEMENTCHANNEL_ARRAY);
 
-    DisbursementChannel[] disbursementChannels = disbursementClient.getByChannelCode(HEADERS, CHANNEL_CODE);
+    DisbursementChannel[] disbursementChannels =
+        disbursementClient.getByChannelCode(HEADERS, CHANNEL_CODE);
 
     assertArrayEquals(DISBURSEMENTCHANNEL_ARRAY, disbursementChannels);
   }
 
   @Test(expected = XenditException.class)
-  public void getByChannelCode_ThrowsException_IfChannelCodeIsNotAvailable() throws XenditException {
+  public void getByChannelCode_ThrowsException_IfChannelCodeIsNotAvailable()
+      throws XenditException {
     String url = String.format("%s?channel_code=%s", URL, CHANNEL_CODE);
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
         .thenThrow(new XenditException("Channel not found"));
     when(disbursementClient.getByChannelCode(HEADERS, CHANNEL_CODE))
         .thenThrow(new XenditException("Channel not found"));
@@ -148,7 +166,7 @@ public class DisbursementChannelTest {
     String url = String.format("%s?channel_code=%s", URL, CHANNEL_CODE);
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementChannel[].class))
         .thenThrow(new XenditException("Invalid Arguments"));
     when(disbursementClient.getByChannelCode(HEADERS, ""))
         .thenThrow(new XenditException("Invalid Arguments"));

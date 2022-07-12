@@ -37,7 +37,6 @@ public class DisbursementChannel {
   /**
    * Get array of object disbursements channels
    *
-   * @param none
    * @return
    * @throws XenditException
    */
@@ -53,7 +52,8 @@ public class DisbursementChannel {
    * @return
    * @throws XenditException
    */
-  public static DisbursementChannel[] getByChannelCategory(String channelCategory) throws XenditException {
+  public static DisbursementChannel[] getByChannelCategory(String channelCategory)
+      throws XenditException {
     return getByChannelCategory(new HashMap<>(), channelCategory);
   }
 
@@ -65,8 +65,8 @@ public class DisbursementChannel {
    * @return
    * @throws XenditException
    */
-  public static DisbursementChannel[] getByChannelCategory(Map<String, String> headers, String channelCategory)
-      throws XenditException {
+  public static DisbursementChannel[] getByChannelCategory(
+      Map<String, String> headers, String channelCategory) throws XenditException {
     DisbursementClient client = getClient();
     return client.getByChannelCategory(headers, channelCategory);
   }
@@ -86,12 +86,12 @@ public class DisbursementChannel {
    * Get array of object disbursements channels by channel category
    *
    * @param headers
-   * @param channelCategory
+   * @param channelCode
    * @return
    * @throws XenditException
    */
-  public static DisbursementChannel[] getByChannelCode(Map<String, String> headers, String channelCode)
-      throws XenditException {
+  public static DisbursementChannel[] getByChannelCode(
+      Map<String, String> headers, String channelCode) throws XenditException {
     DisbursementClient client = getClient();
     return client.getByChannelCode(headers, channelCode);
   }
@@ -105,8 +105,8 @@ public class DisbursementChannel {
     if (isApiKeyExist()) {
       if (disbursementClient == null
           || !disbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return disbursementClient = new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey),
-            Xendit.getRequestClient());
+        return disbursementClient =
+            new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (disbursementClient == null
