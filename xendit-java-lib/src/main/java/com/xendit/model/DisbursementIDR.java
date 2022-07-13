@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Disbursement {
+public class DisbursementIDR {
   @SerializedName("id")
   private String id;
 
@@ -49,34 +49,17 @@ public class Disbursement {
   @SerializedName("failure_code")
   private String failure_code;
 
-  @SerializedName("xendit_idempotency_key")
-  private String xendit_idempotency_key;
-
-  @SerializedName("reference_id")
-  private String reference_id;
-
-  @SerializedName("currency")
-  private String currency;
-
-  @SerializedName("account_name")
-  private String account_name;
-
-  @SerializedName("account_number")
-  private String account_number;
-
-  @SerializedName("description")
-  private String description;
-
   private static DisbursementClient disbursementClient;
 
   /**
    * Create disbursement with all parameter as HashMap
    *
-   * @param params listed here https://xendit.github.io/apireference/#create-disbursement.
+   * @param params listed here
+   *               https://xendit.github.io/apireference/#create-disbursement.
    * @return Disbursement
    * @throws XenditException
    */
-  public static Disbursement create(Map<String, Object> params) throws XenditException {
+  public static DisbursementIDR create(Map<String, Object> params) throws XenditException {
     return createRequest(new HashMap<>(), params);
   }
 
@@ -84,11 +67,12 @@ public class Disbursement {
    * Create disbursement with all parameter as HashMap
    *
    * @param headers
-   * @param params listed here https://xendit.github.io/apireference/#create-disbursement.
+   * @param params  listed here
+   *                https://xendit.github.io/apireference/#create-disbursement.
    * @return Disbursement
    * @throws XenditException
    */
-  public static Disbursement create(Map<String, String> headers, Map<String, Object> params)
+  public static DisbursementIDR create(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     return createRequest(headers, params);
   }
@@ -96,19 +80,23 @@ public class Disbursement {
   /**
    * Create disbursement with required parameters
    *
-   * @param externalId ID of the disbursement in your system, used to reconcile disbursements after
-   *     they have been completed.
-   * @param bankCode Code of the destination bank.
-   * @param accountHolderName Name of account holder as per the bank's or e-wallet's records. Used
-   *     for verification and error/customer support scenarios.
-   * @param accountNumber Destination bank account number. If disbursing to an e-wallet, phone
-   *     number registered with the e-wallet account.
-   * @param description Description to send with the disbursement
-   * @param amount Amount to disburse
+   * @param externalId        ID of the disbursement in your system, used to
+   *                          reconcile disbursements after
+   *                          they have been completed.
+   * @param bankCode          Code of the destination bank.
+   * @param accountHolderName Name of account holder as per the bank's or
+   *                          e-wallet's records. Used
+   *                          for verification and error/customer support
+   *                          scenarios.
+   * @param accountNumber     Destination bank account number. If disbursing to an
+   *                          e-wallet, phone
+   *                          number registered with the e-wallet account.
+   * @param description       Description to send with the disbursement
+   * @param amount            Amount to disburse
    * @return Disbursement
    * @throws XenditException
    */
-  public static Disbursement create(
+  public static DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -129,21 +117,26 @@ public class Disbursement {
   /**
    * Create disbursement with required parameters
    *
-   * @param externalId ID of the disbursement in your system, used to reconcile disbursements after
-   *     they have been completed.
-   * @param bankCode Code of the destination bank.
-   * @param accountHolderName Name of account holder as per the bank's or e-wallet's records. Used
-   *     for verification and error/customer support scenarios.
-   * @param accountNumber Destination bank account number. If disbursing to an e-wallet, phone
-   *     number registered with the e-wallet account.
-   * @param description Description to send with the disbursement
-   * @param amount Amount to disburse
-   * @param emailTo Email addresses that get notified of disbursement details after the disbursement
-   *     is completed. Maximum 3 email addresses accepted.
+   * @param externalId        ID of the disbursement in your system, used to
+   *                          reconcile disbursements after
+   *                          they have been completed.
+   * @param bankCode          Code of the destination bank.
+   * @param accountHolderName Name of account holder as per the bank's or
+   *                          e-wallet's records. Used
+   *                          for verification and error/customer support
+   *                          scenarios.
+   * @param accountNumber     Destination bank account number. If disbursing to an
+   *                          e-wallet, phone
+   *                          number registered with the e-wallet account.
+   * @param description       Description to send with the disbursement
+   * @param amount            Amount to disburse
+   * @param emailTo           Email addresses that get notified of disbursement
+   *                          details after the disbursement
+   *                          is completed. Maximum 3 email addresses accepted.
    * @return Disbursement
    * @throws XenditException
    */
-  public static Disbursement create(
+  public static DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -166,24 +159,31 @@ public class Disbursement {
   /**
    * Create disbursement with required parameters
    *
-   * @param externalId ID of the disbursement in your system, used to reconcile disbursements after
-   *     they have been completed.
-   * @param bankCode Code of the destination bank.
-   * @param accountHolderName Name of account holder as per the bank's or e-wallet's records. Used
-   *     for verification and error/customer support scenarios.
-   * @param accountNumber Destination bank account number. If disbursing to an e-wallet, phone
-   *     number registered with the e-wallet account.
-   * @param description Description to send with the disbursement
-   * @param amount Amount to disburse
-   * @param emailTo Email addresses that get notified of disbursement details after the disbursement
-   *     is completed. Maximum 3 email addresses accepted.
-   * @param emailCc Email addresses that get notified as carbon copy receiver of disbursement
-   *     details after the disbursement is completed. Maximum 3 email addresses accepted. Only
-   *     allowed if email_to provided.
+   * @param externalId        ID of the disbursement in your system, used to
+   *                          reconcile disbursements after
+   *                          they have been completed.
+   * @param bankCode          Code of the destination bank.
+   * @param accountHolderName Name of account holder as per the bank's or
+   *                          e-wallet's records. Used
+   *                          for verification and error/customer support
+   *                          scenarios.
+   * @param accountNumber     Destination bank account number. If disbursing to an
+   *                          e-wallet, phone
+   *                          number registered with the e-wallet account.
+   * @param description       Description to send with the disbursement
+   * @param amount            Amount to disburse
+   * @param emailTo           Email addresses that get notified of disbursement
+   *                          details after the disbursement
+   *                          is completed. Maximum 3 email addresses accepted.
+   * @param emailCc           Email addresses that get notified as carbon copy
+   *                          receiver of disbursement
+   *                          details after the disbursement is completed. Maximum
+   *                          3 email addresses accepted. Only
+   *                          allowed if email_to provided.
    * @return Disbursement
    * @throws XenditException
    */
-  public static Disbursement create(
+  public static DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -208,27 +208,36 @@ public class Disbursement {
   /**
    * Create disbursement with required parameters
    *
-   * @param externalId ID of the disbursement in your system, used to reconcile disbursements after
-   *     they have been completed.
-   * @param bankCode Code of the destination bank.
-   * @param accountHolderName Name of account holder as per the bank's or e-wallet's records. Used
-   *     for verification and error/customer support scenarios.
-   * @param accountNumber Destination bank account number. If disbursing to an e-wallet, phone
-   *     number registered with the e-wallet account.
-   * @param description Description to send with the disbursement
-   * @param amount Amount to disburse
-   * @param emailTo Email addresses that get notified of disbursement details after the disbursement
-   *     is completed. Maximum 3 email addresses accepted.
-   * @param emailCc Email addresses that get notified as carbon copy receiver of disbursement
-   *     details after the disbursement is completed. Maximum 3 email addresses accepted. Only
-   *     allowed if email_to provided.
-   * @param emailBcc Email addresses that get notified as blind carbon copy receiver of disbursement
-   *     details after the disbursement is completed. Maximum 3 email addresses accepted. Only
-   *     allowed if email_to provided.
+   * @param externalId        ID of the disbursement in your system, used to
+   *                          reconcile disbursements after
+   *                          they have been completed.
+   * @param bankCode          Code of the destination bank.
+   * @param accountHolderName Name of account holder as per the bank's or
+   *                          e-wallet's records. Used
+   *                          for verification and error/customer support
+   *                          scenarios.
+   * @param accountNumber     Destination bank account number. If disbursing to an
+   *                          e-wallet, phone
+   *                          number registered with the e-wallet account.
+   * @param description       Description to send with the disbursement
+   * @param amount            Amount to disburse
+   * @param emailTo           Email addresses that get notified of disbursement
+   *                          details after the disbursement
+   *                          is completed. Maximum 3 email addresses accepted.
+   * @param emailCc           Email addresses that get notified as carbon copy
+   *                          receiver of disbursement
+   *                          details after the disbursement is completed. Maximum
+   *                          3 email addresses accepted. Only
+   *                          allowed if email_to provided.
+   * @param emailBcc          Email addresses that get notified as blind carbon
+   *                          copy receiver of disbursement
+   *                          details after the disbursement is completed. Maximum
+   *                          3 email addresses accepted. Only
+   *                          allowed if email_to provided.
    * @return Disbursement
    * @throws XenditException
    */
-  public static Disbursement create(
+  public static DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -252,7 +261,7 @@ public class Disbursement {
     return createRequest(new HashMap<>(), params);
   }
 
-  private static Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
+  private static DisbursementIDR createRequest(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     DisbursementClient client = getClient();
     return client.createRequest(headers, params);
@@ -290,7 +299,7 @@ public class Disbursement {
    * @return
    * @throws XenditException
    */
-  public static Disbursement[] getByExternalId(Map<String, String> headers, String externalId)
+  public static DisbursementIDR[] getByExternalId(Map<String, String> headers, String externalId)
       throws XenditException {
 
     DisbursementClient client = getClient();
@@ -304,7 +313,7 @@ public class Disbursement {
    * @return
    * @throws XenditException
    */
-  public static Disbursement[] getByExternalId(String externalId) throws XenditException {
+  public static DisbursementIDR[] getByExternalId(String externalId) throws XenditException {
     return getByExternalId(new HashMap<>(), externalId);
   }
 
@@ -316,7 +325,7 @@ public class Disbursement {
    * @return
    * @throws XenditException
    */
-  public static Disbursement getById(Map<String, String> headers, String id)
+  public static DisbursementIDR getById(Map<String, String> headers, String id)
       throws XenditException {
     DisbursementClient client = getClient();
     return client.getById(headers, id);
@@ -329,7 +338,7 @@ public class Disbursement {
    * @return
    * @throws XenditException
    */
-  public static Disbursement getById(String id) throws XenditException {
+  public static DisbursementIDR getById(String id) throws XenditException {
     return getById(new HashMap<>(), id);
   }
 
@@ -342,8 +351,8 @@ public class Disbursement {
     if (isApiKeyExist()) {
       if (disbursementClient == null
           || !disbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return disbursementClient =
-            new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+        return disbursementClient = new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey),
+            Xendit.getRequestClient());
       }
     } else {
       if (disbursementClient == null
@@ -365,56 +374,5 @@ public class Disbursement {
    */
   private static boolean isApiKeyExist() {
     return Xendit.apiKey != null;
-  }
-
-  /**
-   * Create v1 disbursement with required parameters
-   *
-   * @param xendit_idempotency_key
-   * @param reference_id
-   * @param currency
-   * @param channel_code
-   * @param account_name
-   * @param account_number
-   * @param description
-   * @param amount
-   * @return Disbursement
-   * @throws XenditException
-   */
-  public static Disbursement create(
-      String xendit_idempotency_key,
-      String reference_id,
-      String currency,
-      String channel_code,
-      String account_name,
-      String account_number,
-      String description,
-      BigInteger amount)
-      throws XenditException {
-    Map<String, Object> params = new HashMap<>();
-    params.put("xendit_idempotency_key", xendit_idempotency_key);
-    params.put("reference_id", reference_id);
-    params.put("currency", currency);
-    params.put("channel_code", channel_code);
-    params.put("account_name", account_name);
-    params.put("account_number", account_number);
-    params.put("description", description);
-    params.put("amount", amount);
-    return createRequest(new HashMap<>(), params);
-  }
-
-  /**
-   * Get array of object disbursements by external id
-   *
-   * @param headers
-   * @param referenceId
-   * @return
-   * @throws XenditException
-   */
-  public static Disbursement[] getByReferenceId(Map<String, String> headers, String referenceId)
-      throws XenditException {
-
-    DisbursementClient client = getClient();
-    return client.getByReferenceId(headers, referenceId);
   }
 }

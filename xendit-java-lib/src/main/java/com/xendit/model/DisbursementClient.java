@@ -19,16 +19,16 @@ public class DisbursementClient {
     return opt;
   }
 
-  public Disbursement create(Map<String, Object> params) throws XenditException {
+  public DisbursementIDR create(Map<String, Object> params) throws XenditException {
     return createRequest(new HashMap<>(), params);
   }
 
-  public Disbursement create(Map<String, String> headers, Map<String, Object> params)
+  public DisbursementIDR create(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     return createRequest(headers, params);
   }
 
-  public Disbursement create(
+  public DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -46,7 +46,7 @@ public class DisbursementClient {
     return createRequest(new HashMap<>(), params);
   }
 
-  public Disbursement create(
+  public DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -66,7 +66,7 @@ public class DisbursementClient {
     return createRequest(new HashMap<>(), params);
   }
 
-  public Disbursement create(
+  public DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -88,7 +88,7 @@ public class DisbursementClient {
     return createRequest(new HashMap<>(), params);
   }
 
-  public Disbursement create(
+  public DisbursementIDR create(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -112,12 +112,12 @@ public class DisbursementClient {
     return createRequest(new HashMap<>(), params);
   }
 
-  public Disbursement createRequest(Map<String, String> headers, Map<String, Object> params)
+  public DisbursementIDR createRequest(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/disbursements");
 
     return this.requestClient.request(
-        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), Disbursement.class);
+        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), DisbursementIDR.class);
   }
 
   public AvailableBank[] getAvailableBanks() throws XenditException {
@@ -130,34 +130,46 @@ public class DisbursementClient {
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), AvailableBank[].class);
   }
 
-  public Disbursement[] getByExternalId(String externalId) throws XenditException {
+  public DisbursementIDR[] getByExternalId(String externalId) throws XenditException {
     return getByExternalId(new HashMap<>(), externalId);
   }
 
-  public Disbursement[] getByExternalId(Map<String, String> headers, String externalId)
+  public DisbursementIDR[] getByExternalId(Map<String, String> headers, String externalId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", opt.getXenditURL(), "/disbursements?external_id=", externalId);
+    String url = String.format("%s%s%s", opt.getXenditURL(), "/disbursements?external_id=", externalId);
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement[].class);
+        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementIDR[].class);
   }
 
-  public Disbursement[] getByReferenceId(Map<String, String> headers, String referenceId)
+  public DisbursementPH[] getByReferenceId(Map<String, String> headers, String referenceId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", opt.getXenditURL(), "/disbursements?reference_id=", referenceId);
+    String url = String.format("%s%s%s", opt.getXenditURL(), "/disbursements?reference_id=", referenceId);
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement[].class);
+        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementPH[].class);
   }
 
-  public Disbursement getById(String id) throws XenditException {
+  public DisbursementIDR getById(String id) throws XenditException {
     return getById(new HashMap<>(), id);
   }
 
-  public Disbursement getById(Map<String, String> headers, String id) throws XenditException {
+  public DisbursementIDR getById(Map<String, String> headers, String id) throws XenditException {
     String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/disbursements/", id);
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), Disbursement.class);
+        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementIDR.class);
+  }
+
+  public DisbursementPH getPHById(Map<String, String> headers, String id) throws XenditException {
+    String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/disbursements/", id);
+    return this.requestClient.request(
+        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementPH.class);
+  }
+
+  public DisbursementPH createPHRequest(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    String url = String.format("%s%s", opt.getXenditURL(), "/disbursements");
+
+    return this.requestClient.request(
+        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), DisbursementPH.class);
   }
 
   public DisbursementChannel[] getDisbursementChannels(Map<String, String> headers)
@@ -174,10 +186,9 @@ public class DisbursementClient {
 
   public DisbursementChannel[] getByChannelCategory(
       Map<String, String> headers, String channelCategory) throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s",
-            Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_category=", channelCategory);
+    String url = String.format(
+        "%s%s%s",
+        Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_category=", channelCategory);
     return this.requestClient.request(
         RequestResource.Method.GET,
         url,
@@ -189,10 +200,9 @@ public class DisbursementClient {
 
   public DisbursementChannel[] getByChannelCode(Map<String, String> headers, String channelCode)
       throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s",
-            Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_code=", channelCode);
+    String url = String.format(
+        "%s%s%s",
+        Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_code=", channelCode);
     return this.requestClient.request(
         RequestResource.Method.GET,
         url,
