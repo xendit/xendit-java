@@ -85,8 +85,8 @@ public class DisbursementPH {
     if (isApiKeyExist()) {
       if (disbursementClient == null
           || !disbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return disbursementClient = new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey),
-            Xendit.getRequestClient());
+        return disbursementClient =
+            new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (disbursementClient == null
@@ -161,8 +161,8 @@ public class DisbursementPH {
     return client.getByReferenceId(headers, referenceId);
   }
 
-  private static DisbursementPH createRequest(Map<String, String> headers, Map<String, Object> params)
-      throws XenditException {
+  private static DisbursementPH createRequest(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
     DisbursementClient client = getClient();
     return client.createPHRequest(headers, params);
   }
