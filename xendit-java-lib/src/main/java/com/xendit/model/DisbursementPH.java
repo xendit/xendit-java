@@ -3,7 +3,7 @@ package com.xendit.model;
 import com.google.gson.annotations.SerializedName;
 import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
-import java.math.BigInteger;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.*;
@@ -22,10 +22,10 @@ public class DisbursementPH {
   private String currency;
 
   @SerializedName("amount")
-  private BigInteger amount;
+  private Integer amount;
 
   @SerializedName("channel_code")
-  private BigInteger channelCode;
+  private String channelCode;
 
   @SerializedName("description")
   private String description;
@@ -34,10 +34,10 @@ public class DisbursementPH {
   private String status;
 
   @SerializedName("created")
-  private String created;
+  private Date created;
 
   @SerializedName("updated")
-  private String updated;
+  private Date updated;
 
   // optionals
   @SerializedName("email_to")
@@ -132,7 +132,7 @@ public class DisbursementPH {
       String account_name,
       String account_number,
       String description,
-      BigInteger amount)
+      Integer amount)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     params.put("xendit_idempotency_key", xendit_idempotency_key);

@@ -58,7 +58,7 @@ public class DisbursementChannelTest {
   @Test
   public void getDisbursementChannels_Success_IfMethodCalledCorrectly() throws XenditException {
     when(this.requestClient.request(
-            RequestResource.Method.POST,
+            RequestResource.Method.GET,
             URL,
             HEADERS,
             PARAMS,
@@ -76,7 +76,7 @@ public class DisbursementChannelTest {
   @Test(expected = XenditException.class)
   public void getDisbursementChannels_ThrowsException_IfServerError() throws XenditException {
     when(this.requestClient.request(
-            RequestResource.Method.POST,
+            RequestResource.Method.GET,
             URL,
             HEADERS,
             PARAMS,
