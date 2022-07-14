@@ -144,6 +144,126 @@ public class DisbursementPH {
   }
 
   /**
+   * Create v1 disbursement with required and optional parameters
+   *
+   * @param xendit_idempotency_key
+   * @param reference_id
+   * @param currency
+   * @param channel_code
+   * @param account_name
+   * @param account_number
+   * @param description
+   * @param amount
+   * @param ReceiptNotification    receiptNotification
+   * @return Disbursement
+   * @throws XenditException
+   */
+  public static DisbursementPH createPHDisbursement(
+      String xendit_idempotency_key,
+      String reference_id,
+      String currency,
+      String channel_code,
+      String account_name,
+      String account_number,
+      String description,
+      Integer amount,
+      ReceiptNotification receiptNotification)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    params.put("reference_id", reference_id);
+    params.put("currency", currency);
+    params.put("channel_code", channel_code);
+    params.put("account_name", account_name);
+    params.put("account_number", account_number);
+    params.put("description", description);
+    params.put("amount", amount);
+    params.put("receipt_notification", receiptNotification);
+    return createRequest(new HashMap<>(), params);
+  }
+
+  /**
+   * Create v1 disbursement with required and optional parameters
+   *
+   * @param xendit_idempotency_key
+   * @param reference_id
+   * @param currency
+   * @param channel_code
+   * @param account_name
+   * @param account_number
+   * @param description
+   * @param amount
+   * @param Beneficiary            beneficiary
+   * @return Disbursement
+   * @throws XenditException
+   */
+  public static DisbursementPH createPHDisbursement(
+      String xendit_idempotency_key,
+      String reference_id,
+      String currency,
+      String channel_code,
+      String account_name,
+      String account_number,
+      String description,
+      Integer amount,
+      Beneficiary beneficiary)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    params.put("reference_id", reference_id);
+    params.put("currency", currency);
+    params.put("channel_code", channel_code);
+    params.put("account_name", account_name);
+    params.put("account_number", account_number);
+    params.put("description", description);
+    params.put("amount", amount);
+    params.put("beneficiary", beneficiary);
+    return createRequest(new HashMap<>(), params);
+  }
+
+  /**
+   * Create v1 disbursement with required and optional parameters
+   *
+   * @param xendit_idempotency_key
+   * @param reference_id
+   * @param currency
+   * @param channel_code
+   * @param account_name
+   * @param account_number
+   * @param description
+   * @param amount
+   * @param ReceiptNotification    receiptNotification
+   * @param Beneficiary            beneficiary
+   * @return Disbursement
+   * @throws XenditException
+   */
+  public static DisbursementPH createPHDisbursement(
+      String xendit_idempotency_key,
+      String reference_id,
+      String currency,
+      String channel_code,
+      String account_name,
+      String account_number,
+      String description,
+      Integer amount,
+      ReceiptNotification receiptNotification,
+      Beneficiary beneficiary)
+      throws XenditException {
+    Map<String, Object> params = new HashMap<>();
+    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    params.put("reference_id", reference_id);
+    params.put("currency", currency);
+    params.put("channel_code", channel_code);
+    params.put("account_name", account_name);
+    params.put("account_number", account_number);
+    params.put("description", description);
+    params.put("amount", amount);
+    params.put("receipt_notification", receiptNotification);
+    params.put("beneficiary", beneficiary);
+    return createRequest(new HashMap<>(), params);
+  }
+
+  /**
    * Get array of object disbursements by external id
    *
    * @param headers

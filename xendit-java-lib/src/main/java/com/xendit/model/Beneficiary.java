@@ -1,11 +1,12 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 public class Beneficiary {
   @SerializedName("type")
   private String type;
