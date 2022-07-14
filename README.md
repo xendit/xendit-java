@@ -15,10 +15,15 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Gradle](#gradle)
 - [Usage](#usage)
   - [Disbursement Services](#disbursement-services)
-    - [Create a disbursement](#create-a-disbursement)
+    - [Create a IDR disbursement](#create-a-idr-disbursement)
+    - [Create a PH disbursement](#create-a-ph-disbursement)
     - [Get banks with available disbursement service](#get-banks-with-available-disbursement-service)
     - [Get a disbursement by external ID](#get-a-disbursement-by-external-id)
-    - [Get a disbursement by ID](#get-a-disbursement-by-id)
+    - [Get a IDR disbursement by ID](#get-a-idr-disbursement-by-id)
+    - [Get a PH disbursement by ID](#get-a-ph-disbursement-by-id)
+    - [Get disbursements channels](#get-disbursement-channels)
+    - [Get disbursements channels by Channel Category](#get-disbursement-channels-by-channel-category)
+    - [Get disbursements channels by Channel Code](#get-disbursement-channels-by-channel-code)
   - [Invoice services](#invoice-services)
     - [Create an invoice](#create-an-invoice)
     - [Get an invoice by ID](#get-an-invoice-by-id)
@@ -241,7 +246,7 @@ There are some examples provided for you [here](https://github.com/xendit/xendit
 
 ### Disbursement Services
 
-#### Create a disbursement
+#### Create a IDR disbursement
 
 You can choose whether want to put the attributes as parameters or to put in inside a Map object.
 
@@ -249,7 +254,7 @@ You can choose whether want to put the attributes as parameters or to put in ins
 <tr>
 <td>
 <pre>
-Disbursement.create(
+DisbursementIDR.createIDRDisbursement(
     String externalId,
     String bankCode,
     String accountHolderName,
@@ -264,7 +269,7 @@ Disbursement.create(
 </td>
 <td>
 <pre>
-Disbursement.create(
+DisbursementIDR.createIDRDisbursement(
     Map&lt;String, Object&gt; params
 );
 </pre>
@@ -282,17 +287,66 @@ params.put("description", "My Description");
 params.put("amount", "90000");
 
 /* Without client */
-Disbursement disbursement = Disbursement.create(params); 
+DisbursementIDR disbursement = DisbursementIDR.createIDRDisbursement(params); 
 
 /* With client */
-Disbursement disbursement = xenditClient.disbursement.create(params);
+DisbursementIDR disbursement = xenditClient.disbursement.createIDRDisbursement(params);
+```
+#### Create a PH disbursement
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+
+<table>
+<tr>
+<td>
+<pre>
+DisbursementPH.createPHDisbursement(
+    String xendit_idempotency_key,
+    String reference_id,
+    String currency,
+    String channel_code,
+    String account_name,
+    String account_number,
+    String description,
+    Integer amount,
+    ReceiptNotification receiptNotification,
+    Beneficiary beneficiary
+);
+</pre>
+</td>
+<td>
+<pre>
+DisbursementPH.createPHDisbursement(
+    Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+params.put("xendit_idempotency_key", "xendit_idempotency_key");
+params.put("reference_id", "reference_id_value");
+params.put("currency", "PH");
+params.put("channel_code", "required_channel_code");
+params.put("account_name", "John etc");
+params.put("account_number", "123456");
+params.put("description", "Disbursement description");
+params.put("amount", 50000);
+
+/* Without client */
+DisbursementPH disbursement = DisbursementPH.createPHDisbursement(params); 
+
+/* With client */
+DisbursementPH disbursement = xenditClient.disbursement.createPHDisbursement(params);
 ```
 
 #### Get banks with available disbursement service
 
 ```java
 /* Without client */
-AvailableBank[] banks = Disbursement.getAvailableBanks();
+AvailableBank[] banks = DisbursementIDR.getAvailableBanks();
 /* With client */
 AvailableBank[] banks = xenditClient.disbursement.getAvailableBanks();
 ```
@@ -301,18 +355,54 @@ AvailableBank[] banks = xenditClient.disbursement.getAvailableBanks();
 
 ```java
 /* Without client */
-Disbursement disbursement = Disbursement.getByExternalId("EXAMPLE_ID");
+DisbursementIDR disbursement = DisbursementIDR.getByExternalId("EXAMPLE_ID");
 /* With client */
-Disbursement disbursement = xenditClient.disbursement.getByExternalId("EXAMPLE_ID");
+DisbursementIDR disbursement = xenditClient.disbursement.getByExternalId("EXAMPLE_ID");
 ```
 
-#### Get a disbursement by ID
+#### Get a IDR disbursement by ID
 
 ```java
 /* Without client */
-Disbursement disbursement = Disbursement.getById("EXAMPLE_ID");
+DisbursementIDR disbursement = DisbursementIDR.getById("EXAMPLE_ID");
 /* With client */
-Disbursement disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
+DisbursementIDR disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
+```
+#### Get a PH disbursement by ID
+
+```java
+/* Without client */
+DisbursementIDR disbursement = DisbursementIDR.getById("EXAMPLE_ID");
+/* With client */
+DisbursementIDR disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
+```
+#### Get disbursement channels 
+
+```java
+/* Without client */
+DisbursementChannel[] disbursementChannels = DisbursementChannel.getDisbursementChannels();
+/* With client */
+Map<String, Object> headers = new HashMap<>();
+DisbursementChannel[] disbursementChannels = xenditClient.disbursement.getDisbursementChannels(headers);
+```
+
+#### Get disbursement channels by channel category
+
+```java
+/* Without client */
+DisbursementChannel[] disbursementChannels = DisbursementChannel.getByChannelCategory("channel-category");
+/* With client */
+Map<String, Object> headers = new HashMap<>();
+DisbursementChannel[] disbursementChannels = xenditClient.disbursement.getByChannelCategory(headers, "channel-category");
+```
+#### Get disbursement channels by channel code
+
+```java
+/* Without client */
+DisbursementChannel[] disbursementChannels = DisbursementChannel.getByChannelCode("channel-code");
+/* With client */
+Map<String, Object> headers = new HashMap<>();
+DisbursementChannel[] disbursementChannels = xenditClient.disbursement.getByChannelCode(headers, "channel-code");
 ```
 
 [Back to top](#table-of-contents)
