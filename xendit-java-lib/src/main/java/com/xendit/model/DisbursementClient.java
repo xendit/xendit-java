@@ -19,16 +19,25 @@ public class DisbursementClient {
     return opt;
   }
 
-  public DisbursementIDR create(Map<String, Object> params) throws XenditException {
-    return createRequest(new HashMap<>(), params);
+  public DisbursementIDR createIDRDisbursement(Map<String, Object> params) throws XenditException {
+    return createIDRRequest(new HashMap<>(), params);
   }
 
-  public DisbursementIDR create(Map<String, String> headers, Map<String, Object> params)
+  public DisbursementIDR createIDRDisbursement(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
-    return createRequest(headers, params);
+    return createIDRRequest(headers, params);
   }
 
-  public DisbursementIDR create(
+  public DisbursementPH createPHDisbursement(Map<String, Object> params) throws XenditException {
+    return createPHDisbursement(new HashMap<>(), params);
+  }
+
+  public DisbursementPH createPHDisbursement(Map<String, String> headers, Map<String, Object> params)
+      throws XenditException {
+    return createPHDisbursement(headers, params);
+  }
+
+  public DisbursementIDR createIDRDisbursement(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -43,10 +52,10 @@ public class DisbursementClient {
     params.put("account_number", accountNumber);
     params.put("description", description);
     params.put("amount", amount);
-    return createRequest(new HashMap<>(), params);
+    return createIDRRequest(new HashMap<>(), params);
   }
 
-  public DisbursementIDR create(
+  public DisbursementIDR createIDRDisbursement(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -63,10 +72,10 @@ public class DisbursementClient {
     params.put("description", description);
     params.put("amount", amount);
     params.put("email_to", emailTo);
-    return createRequest(new HashMap<>(), params);
+    return createIDRRequest(new HashMap<>(), params);
   }
 
-  public DisbursementIDR create(
+  public DisbursementIDR createIDRDisbursement(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -85,10 +94,10 @@ public class DisbursementClient {
     params.put("amount", amount);
     params.put("email_to", emailTo);
     params.put("email_cc", emailCc);
-    return createRequest(new HashMap<>(), params);
+    return createIDRRequest(new HashMap<>(), params);
   }
 
-  public DisbursementIDR create(
+  public DisbursementIDR createIDRDisbursement(
       String externalId,
       String bankCode,
       String accountHolderName,
@@ -109,10 +118,10 @@ public class DisbursementClient {
     params.put("email_to", emailTo);
     params.put("email_cc", emailCc);
     params.put("email_bcc", emailBcc);
-    return createRequest(new HashMap<>(), params);
+    return createIDRRequest(new HashMap<>(), params);
   }
 
-  public DisbursementIDR createRequest(Map<String, String> headers, Map<String, Object> params)
+  public DisbursementIDR createIDRRequest(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/disbursements");
 
@@ -136,16 +145,14 @@ public class DisbursementClient {
 
   public DisbursementIDR[] getByExternalId(Map<String, String> headers, String externalId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", opt.getXenditURL(), "/disbursements?external_id=", externalId);
+    String url = String.format("%s%s%s", opt.getXenditURL(), "/disbursements?external_id=", externalId);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementIDR[].class);
   }
 
   public DisbursementPH[] getByReferenceId(Map<String, String> headers, String referenceId)
       throws XenditException {
-    String url =
-        String.format("%s%s%s", opt.getXenditURL(), "/disbursements?reference_id=", referenceId);
+    String url = String.format("%s%s%s", opt.getXenditURL(), "/disbursements?reference_id=", referenceId);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementPH[].class);
   }
@@ -188,10 +195,9 @@ public class DisbursementClient {
 
   public DisbursementChannel[] getByChannelCategory(
       Map<String, String> headers, String channelCategory) throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s",
-            Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_category=", channelCategory);
+    String url = String.format(
+        "%s%s%s",
+        Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_category=", channelCategory);
     return this.requestClient.request(
         RequestResource.Method.GET,
         url,
@@ -203,10 +209,9 @@ public class DisbursementClient {
 
   public DisbursementChannel[] getByChannelCode(Map<String, String> headers, String channelCode)
       throws XenditException {
-    String url =
-        String.format(
-            "%s%s%s",
-            Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_code=", channelCode);
+    String url = String.format(
+        "%s%s%s",
+        Xendit.Opt.getXenditURL(), "/disbursement-channels?channel_code=", channelCode);
     return this.requestClient.request(
         RequestResource.Method.GET,
         url,

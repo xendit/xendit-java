@@ -47,12 +47,12 @@ public class ExampleCreateDisbursement {
                         disbursementMap.put("description", "My Description");
                         disbursementMap.put("amount", "90000");
 
-                        DisbursementIDR disbursement = DisbursementIDR.create(disbursementMap);
+                        DisbursementIDR disbursement = DisbursementIDR.createIDRDisbursement(disbursementMap);
 
                         /**
                          * Second option. Create with individual value of required params.
                          */
-                        DisbursementIDR disbursement2 = DisbursementIDR.create(
+                        DisbursementIDR disbursement2 = DisbursementIDR.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
@@ -63,7 +63,7 @@ public class ExampleCreateDisbursement {
                         /**
                          * Third option. Create with individual value of required params + email to.
                          */
-                        DisbursementIDR disbursement3 = DisbursementIDR.create(
+                        DisbursementIDR disbursement3 = DisbursementIDR.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
@@ -78,7 +78,7 @@ public class ExampleCreateDisbursement {
                          * Fourth option. Create with individual value of required params + email to and
                          * cc.
                          */
-                        DisbursementIDR disbursement4 = DisbursementIDR.create(
+                        DisbursementIDR disbursement4 = DisbursementIDR.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
@@ -96,7 +96,7 @@ public class ExampleCreateDisbursement {
                          * Fifth option. Create with individual value of required params + email to, cc
                          * and bcc.
                          */
-                        DisbursementIDR disbursement5 = DisbursementIDR.create(
+                        DisbursementIDR disbursement5 = DisbursementIDR.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",

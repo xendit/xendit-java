@@ -39,15 +39,12 @@ public class DisbursementPH {
   @SerializedName("updated")
   private Date updated;
 
+  @SerializedName("failure_code")
+  private String failureCode;
+
   // optionals
-  @SerializedName("email_to")
-  private String[] emailTo;
-
-  @SerializedName("email_cc")
-  private String[] emailCC;
-
-  @SerializedName("email_bcc")
-  private String[] emailBcc;
+  @SerializedName("receipt_notification")
+  private ReceiptNotification receiptNotification;
 
   private static DisbursementClient disbursementClient;
 
@@ -85,8 +82,8 @@ public class DisbursementPH {
     if (isApiKeyExist()) {
       if (disbursementClient == null
           || !disbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return disbursementClient =
-            new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
+        return disbursementClient = new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey),
+            Xendit.getRequestClient());
       }
     } else {
       if (disbursementClient == null
@@ -124,7 +121,7 @@ public class DisbursementPH {
    * @return Disbursement
    * @throws XenditException
    */
-  public static DisbursementPH create(
+  public static DisbursementPH createPHDisbursement(
       String xendit_idempotency_key,
       String reference_id,
       String currency,

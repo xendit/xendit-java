@@ -47,12 +47,12 @@ public class ExampleCreateDisbursement {
                         params.put("description", "My Description");
                         params.put("amount", "90000");
 
-                        DisbursementIDR disbursement = xenditClient.disbursement.create(params);
+                        DisbursementIDR disbursement = xenditClient.disbursement.createIDRDisbursement(params);
 
                         /**
                          * Second option. Create with individual value of required params.
                          */
-                        DisbursementIDR disbursement2 = xenditClient.disbursement.create(
+                        DisbursementIDR disbursement2 = xenditClient.disbursement.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
@@ -63,7 +63,7 @@ public class ExampleCreateDisbursement {
                         /**
                          * Third option. Create with individual value of required params + email to.
                          */
-                        DisbursementIDR disbursement3 = xenditClient.disbursement.create(
+                        DisbursementIDR disbursement3 = xenditClient.disbursement.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
@@ -78,7 +78,7 @@ public class ExampleCreateDisbursement {
                          * Fourth option. Create with individual value of required params + email to and
                          * cc.
                          */
-                        DisbursementIDR disbursement4 = xenditClient.disbursement.create(
+                        DisbursementIDR disbursement4 = xenditClient.disbursement.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
@@ -96,7 +96,7 @@ public class ExampleCreateDisbursement {
                          * Fifth option. Create with individual value of required params + email to, cc
                          * and bcc.
                          */
-                        DisbursementIDR disbursement5 = xenditClient.disbursement.create(
+                        DisbursementIDR disbursement5 = xenditClient.disbursement.createIDRDisbursement(
                                         "my_external_id",
                                         destinationBank.getCode(),
                                         "John Doe",
