@@ -37,40 +37,43 @@ public class DisbursementPHTest {
   Xendit.Option opt = mock(Xendit.Option.class);
   DisbursementClient disbursementClient = mock(DisbursementClient.class);
 
-  private static ReceiptNotification RECEIPTNOTIFICATION = ReceiptNotification.builder()
-      .emailTo(new String[] { "test@emailTo.com" })
-      .emailCC(new String[] { "test@emailCC.com" })
-      .emailBcc(new String[] { "test@emailBcc.com" })
-      .build();
-  private static Beneficiary BENIFICIARY = Beneficiary.builder()
-      .type("test-type")
-      .givenNames("Test Name")
-      .middleName("Middle Name")
-      .surname("Sur Name")
-      .businessName("Test")
-      .streetLine1("Jl. 123")
-      .streetLine2("Jl. 456")
-      .city("Jakarta Selatan")
-      .province("DKI Jakarta")
-      .state("Test")
-      .country("Test")
-      .zipCode("12345")
-      .mobileNumber("123456789")
-      .phoneNumber("123456789")
-      .email("email@test.com")
-      .build();
-  private static DisbursementPH VALID_PH_DISBURSEMENT = DisbursementPH.builder()
-      .id(ID)
-      .referenceId(REFERNCEID)
-      .currency(CURRENCY)
-      .amount(AMOUNT)
-      .channelCode(CHANNEL_CODE)
-      .description(DESCRIPTION)
-      .status(STATUS)
-      .created(CREATED)
-      .updated(UPDATED)
-      .receiptNotification(RECEIPTNOTIFICATION)
-      .build();
+  private static ReceiptNotification RECEIPTNOTIFICATION =
+      ReceiptNotification.builder()
+          .emailTo(new String[] {"test@emailTo.com"})
+          .emailCC(new String[] {"test@emailCC.com"})
+          .emailBcc(new String[] {"test@emailBcc.com"})
+          .build();
+  private static Beneficiary BENIFICIARY =
+      Beneficiary.builder()
+          .type("test-type")
+          .givenNames("Test Name")
+          .middleName("Middle Name")
+          .surname("Sur Name")
+          .businessName("Test")
+          .streetLine1("Jl. 123")
+          .streetLine2("Jl. 456")
+          .city("Jakarta Selatan")
+          .province("DKI Jakarta")
+          .state("Test")
+          .country("Test")
+          .zipCode("12345")
+          .mobileNumber("123456789")
+          .phoneNumber("123456789")
+          .email("email@test.com")
+          .build();
+  private static DisbursementPH VALID_PH_DISBURSEMENT =
+      DisbursementPH.builder()
+          .id(ID)
+          .referenceId(REFERNCEID)
+          .currency(CURRENCY)
+          .amount(AMOUNT)
+          .channelCode(CHANNEL_CODE)
+          .description(DESCRIPTION)
+          .status(STATUS)
+          .created(CREATED)
+          .updated(UPDATED)
+          .receiptNotification(RECEIPTNOTIFICATION)
+          .build();
 
   @Before
   public void initMocks() {
@@ -85,12 +88,12 @@ public class DisbursementPHTest {
   public void getById_Success_IfMethodCalledCorrectly() throws XenditException {
     String url = String.format("%s/", URL, ID);
     when(this.requestClient.request(
-        RequestResource.Method.GET,
-        url,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.GET,
+            url,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenReturn(VALID_PH_DISBURSEMENT);
     when(disbursementClient.getPHById(HEADERS, ID)).thenReturn(VALID_PH_DISBURSEMENT);
 
@@ -103,12 +106,12 @@ public class DisbursementPHTest {
   public void getById_ThrowsException_IfServerError() throws XenditException {
     String url = String.format("%s/", URL, ID);
     when(this.requestClient.request(
-        RequestResource.Method.GET,
-        url,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.GET,
+            url,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenThrow(new XenditException("Something went wrong"));
     when(disbursementClient.getPHById(HEADERS, ID))
         .thenThrow(new XenditException("Something went wrong"));
@@ -120,7 +123,7 @@ public class DisbursementPHTest {
     String url = String.format("%s/", URL, "");
 
     when(this.requestClient.request(
-        RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementPH.class))
+            RequestResource.Method.GET, url, null, opt.getApiKey(), DisbursementPH.class))
         .thenThrow(new XenditException("Invalid Arguments"));
     when(disbursementClient.getPHById(HEADERS, ""))
         .thenThrow(new XenditException("Invalid Arguments"));
@@ -144,12 +147,12 @@ public class DisbursementPHTest {
     initCreateParams();
 
     when(this.requestClient.request(
-        RequestResource.Method.POST,
-        URL,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenReturn(VALID_PH_DISBURSEMENT);
     when(disbursementClient.createPHRequest(HEADERS, PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
     DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS, PARAMS);
@@ -163,17 +166,15 @@ public class DisbursementPHTest {
     PARAMS.put("beneficiary", BENIFICIARY);
     PARAMS.put("receipt_notification", RECEIPTNOTIFICATION);
     when(this.requestClient.request(
-        RequestResource.Method.POST,
-        URL,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenReturn(VALID_PH_DISBURSEMENT);
-    when(disbursementClient.createPHRequest(HEADERS,
-        PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
-    DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS,
-        PARAMS);
+    when(disbursementClient.createPHRequest(HEADERS, PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
+    DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS, PARAMS);
 
     assertEquals(disbursement, VALID_PH_DISBURSEMENT);
   }
@@ -183,17 +184,15 @@ public class DisbursementPHTest {
     initCreateParams();
     PARAMS.put("beneficiary", BENIFICIARY);
     when(this.requestClient.request(
-        RequestResource.Method.POST,
-        URL,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenReturn(VALID_PH_DISBURSEMENT);
-    when(disbursementClient.createPHRequest(HEADERS,
-        PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
-    DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS,
-        PARAMS);
+    when(disbursementClient.createPHRequest(HEADERS, PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
+    DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS, PARAMS);
 
     assertEquals(disbursement, VALID_PH_DISBURSEMENT);
   }
@@ -203,17 +202,15 @@ public class DisbursementPHTest {
     initCreateParams();
     PARAMS.put("receipt_notification", RECEIPTNOTIFICATION);
     when(this.requestClient.request(
-        RequestResource.Method.POST,
-        URL,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenReturn(VALID_PH_DISBURSEMENT);
-    when(disbursementClient.createPHRequest(HEADERS,
-        PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
-    DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS,
-        PARAMS);
+    when(disbursementClient.createPHRequest(HEADERS, PARAMS)).thenReturn(VALID_PH_DISBURSEMENT);
+    DisbursementPH disbursement = disbursementClient.createPHRequest(HEADERS, PARAMS);
 
     assertEquals(disbursement, VALID_PH_DISBURSEMENT);
   }
@@ -223,12 +220,12 @@ public class DisbursementPHTest {
     PARAMS.put("amount", "amount");
 
     when(this.requestClient.request(
-        RequestResource.Method.POST,
-        URL,
-        HEADERS,
-        PARAMS,
-        opt.getApiKey(),
-        DisbursementPH.class))
+            RequestResource.Method.POST,
+            URL,
+            HEADERS,
+            PARAMS,
+            opt.getApiKey(),
+            DisbursementPH.class))
         .thenThrow(new XenditException("Amount is invalid"));
     when(disbursementClient.createPHRequest(HEADERS, PARAMS))
         .thenThrow(new XenditException("Amount is invalid"));

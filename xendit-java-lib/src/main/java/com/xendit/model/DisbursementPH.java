@@ -82,8 +82,8 @@ public class DisbursementPH {
     if (isApiKeyExist()) {
       if (disbursementClient == null
           || !disbursementClient.getOpt().getApiKey().trim().equals(Xendit.apiKey.trim())) {
-        return disbursementClient = new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey),
-            Xendit.getRequestClient());
+        return disbursementClient =
+            new DisbursementClient(Xendit.Opt.setApiKey(Xendit.apiKey), Xendit.getRequestClient());
       }
     } else {
       if (disbursementClient == null
@@ -154,7 +154,7 @@ public class DisbursementPH {
    * @param account_number
    * @param description
    * @param amount
-   * @param ReceiptNotification    receiptNotification
+   * @param receiptNotification ReceiptNotification
    * @return Disbursement
    * @throws XenditException
    */
@@ -193,7 +193,7 @@ public class DisbursementPH {
    * @param account_number
    * @param description
    * @param amount
-   * @param Beneficiary            beneficiary
+   * @param beneficiary Beneficiary
    * @return Disbursement
    * @throws XenditException
    */
@@ -232,8 +232,8 @@ public class DisbursementPH {
    * @param account_number
    * @param description
    * @param amount
-   * @param ReceiptNotification    receiptNotification
-   * @param Beneficiary            beneficiary
+   * @param receiptNotification ReceiptNotification
+   * @param beneficiary Beneficiary
    * @return Disbursement
    * @throws XenditException
    */
