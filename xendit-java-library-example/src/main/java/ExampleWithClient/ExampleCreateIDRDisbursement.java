@@ -9,7 +9,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExampleCreateDisbursement {
+public class ExampleCreateIDRDisbursement {
         public static void main(String[] args) {
 
                 // create xendit client which holds value of apikey
@@ -36,7 +36,8 @@ public class ExampleCreateDisbursement {
                         /**
                          * There are several options to create disbursement.
                          * First option. Create directly from a properly named hashmap key value pair.
-                         * Check https://xendit.github.io/apireference/#create-disbursement for field
+                         * Check https://xendit.github.io/apireference/#create-an-idr-disbursement for
+                         * field
                          * name.
                          */
                         Map<String, Object> params = new HashMap<String, Object>();

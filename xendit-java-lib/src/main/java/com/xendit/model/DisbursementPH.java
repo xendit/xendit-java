@@ -132,7 +132,8 @@ public class DisbursementPH {
       Integer amount)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
-    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    Map<String, String> headers = new HashMap<>();
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -140,7 +141,7 @@ public class DisbursementPH {
     params.put("account_number", account_number);
     params.put("description", description);
     params.put("amount", amount);
-    return createRequest(new HashMap<>(), params);
+    return createRequest(headers, params);
   }
 
   /**
@@ -170,7 +171,8 @@ public class DisbursementPH {
       ReceiptNotification receiptNotification)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
-    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    Map<String, String> headers = new HashMap<>();
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -179,7 +181,7 @@ public class DisbursementPH {
     params.put("description", description);
     params.put("amount", amount);
     params.put("receipt_notification", receiptNotification);
-    return createRequest(new HashMap<>(), params);
+    return createRequest(headers, params);
   }
 
   /**
@@ -209,7 +211,8 @@ public class DisbursementPH {
       Beneficiary beneficiary)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
-    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    Map<String, String> headers = new HashMap<>();
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -218,7 +221,7 @@ public class DisbursementPH {
     params.put("description", description);
     params.put("amount", amount);
     params.put("beneficiary", beneficiary);
-    return createRequest(new HashMap<>(), params);
+    return createRequest(headers, params);
   }
 
   /**
@@ -250,7 +253,8 @@ public class DisbursementPH {
       Beneficiary beneficiary)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
-    params.put("xendit_idempotency_key", xendit_idempotency_key);
+    Map<String, String> headers = new HashMap<>();
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -260,7 +264,7 @@ public class DisbursementPH {
     params.put("amount", amount);
     params.put("receipt_notification", receiptNotification);
     params.put("beneficiary", beneficiary);
-    return createRequest(new HashMap<>(), params);
+    return createRequest(headers, params);
   }
 
   /**

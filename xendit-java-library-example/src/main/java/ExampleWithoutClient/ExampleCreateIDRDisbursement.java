@@ -9,7 +9,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExampleCreateDisbursement {
+public class ExampleCreateIDRDisbursement {
         public static void main(String[] args) {
                 // access key with Option
                 Xendit.Opt.setApiKey("xnd_development_...");

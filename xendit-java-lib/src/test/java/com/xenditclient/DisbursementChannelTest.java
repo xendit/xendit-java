@@ -35,13 +35,13 @@ public class DisbursementChannelTest {
 
   private static DisbursementChannel VALID_CHANNEL =
       DisbursementChannel.builder()
-          .channel_code(CHANNEL_CODE)
+          .channelCode(CHANNEL_CODE)
           .name(NAME)
-          .channel_category(CHANNEL_CATEGORY)
+          .channelCategory(CHANNEL_CATEGORY)
           .currency(CURRENCY)
           .minimum(MINIMUM)
           .maximum(MAXIMUM)
-          .minimum_increment(MINIMUM_INCREMENT)
+          .minimumIncrement(MINIMUM_INCREMENT)
           .build();
   private static DisbursementChannel[] DISBURSEMENTCHANNEL_ARRAY =
       new DisbursementChannel[] {VALID_CHANNEL};

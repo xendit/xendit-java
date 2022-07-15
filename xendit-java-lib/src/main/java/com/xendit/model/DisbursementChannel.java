@@ -12,13 +12,13 @@ import lombok.*;
 @Builder
 public class DisbursementChannel {
   @SerializedName("channel_code")
-  private String channel_code;
+  private String channelCode;
 
   @SerializedName("name")
   private String name;
 
   @SerializedName("channel_category")
-  private String channel_category;
+  private String channelCategory;
 
   @SerializedName("currency")
   private String currency;
@@ -30,7 +30,7 @@ public class DisbursementChannel {
   private Integer maximum;
 
   @SerializedName("minimum_increment")
-  private Double minimum_increment;
+  private Double minimumIncrement;
 
   private static DisbursementClient disbursementClient;
 

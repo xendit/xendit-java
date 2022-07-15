@@ -334,7 +334,7 @@ ReceiptNotification receiptNotification = ReceiptNotification.builder()
 Map<String, Object> params = new HashMap<>();
 params.put("xendit_idempotency_key", "xendit_idempotency_key");
 params.put("reference_id", "reference_id_value");
-params.put("currency", "PH");
+params.put("currency", "PHP");
 params.put("channel_code", "required_channel_code");
 params.put("account_name", "John etc");
 params.put("account_number", "123456");
@@ -346,7 +346,9 @@ params.put("receipt_notification", receiptNotification);
 DisbursementPH disbursement = DisbursementPH.createPHDisbursement(params); 
 
 /* With client */
-DisbursementPH disbursement = xenditClient.disbursement.createPHDisbursement(params);
+Map<String, String> headers = new HashMap<>();
+headers.put("xendit_idempotency_key", "xendit_idempotency_key");
+DisbursementPH disbursement = xenditClient.disbursement.createPHDisbursement(headers, params);
 ```
 
 #### Get banks with available disbursement service
