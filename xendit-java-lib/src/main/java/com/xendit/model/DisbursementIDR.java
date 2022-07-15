@@ -302,7 +302,7 @@ public class DisbursementIDR {
   public static DisbursementIDR getById(Map<String, String> headers, String id)
       throws XenditException {
     DisbursementClient client = getClient();
-    return client.getById(headers, id);
+    return client.getIDRById(headers, id);
   }
 
   /**
@@ -312,7 +312,7 @@ public class DisbursementIDR {
    * @return
    * @throws XenditException
    */
-  public static DisbursementIDR getById(String id) throws XenditException {
+  public static DisbursementIDR getIDRById(String id) throws XenditException {
     return getById(new HashMap<>(), id);
   }
 

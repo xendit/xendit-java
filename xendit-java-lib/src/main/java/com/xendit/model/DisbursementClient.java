@@ -159,14 +159,18 @@ public class DisbursementClient {
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementPH[].class);
   }
 
-  public DisbursementIDR getById(String id) throws XenditException {
-    return getById(new HashMap<>(), id);
+  public DisbursementIDR getIDRById(String id) throws XenditException {
+    return getIDRById(new HashMap<>(), id);
   }
 
-  public DisbursementIDR getById(Map<String, String> headers, String id) throws XenditException {
+  public DisbursementIDR getIDRById(Map<String, String> headers, String id) throws XenditException {
     String url = String.format("%s%s%s", Xendit.Opt.getXenditURL(), "/disbursements/", id);
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, null, opt.getApiKey(), DisbursementIDR.class);
+  }
+
+  public DisbursementPH getPHById(String id) throws XenditException {
+    return getPHById(new HashMap<>(), id);
   }
 
   public DisbursementPH getPHById(Map<String, String> headers, String id) throws XenditException {

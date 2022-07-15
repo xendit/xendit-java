@@ -371,17 +371,17 @@ DisbursementIDR disbursement = xenditClient.disbursement.getByExternalId("EXAMPL
 
 ```java
 /* Without client */
-DisbursementIDR disbursement = DisbursementIDR.getById("EXAMPLE_ID");
+DisbursementIDR disbursement = DisbursementIDR.getIDRById("EXAMPLE_ID");
 /* With client */
-DisbursementIDR disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
+DisbursementIDR disbursement = xenditClient.disbursement.getIDRById("EXAMPLE_ID");
 ```
 #### Get a PH disbursement by ID
 
 ```java
 /* Without client */
-DisbursementIDR disbursement = DisbursementIDR.getById("EXAMPLE_ID");
+DisbursementIDR disbursement = DisbursementIDR.getPHById("EXAMPLE_ID");
 /* With client */
-DisbursementIDR disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
+DisbursementIDR disbursement = xenditClient.disbursement.getPHById("EXAMPLE_ID");
 ```
 #### Get disbursement channels 
 

@@ -85,7 +85,7 @@ public class DisbursementPHTest {
   }
 
   @Test
-  public void getById_Success_IfMethodCalledCorrectly() throws XenditException {
+  public void getPHById_Success_IfMethodCalledCorrectly() throws XenditException {
     String url = String.format("%s/", URL, ID);
     when(this.requestClient.request(
             RequestResource.Method.GET,
@@ -103,7 +103,7 @@ public class DisbursementPHTest {
   }
 
   @Test(expected = XenditException.class)
-  public void getById_ThrowsException_IfServerError() throws XenditException {
+  public void getPHById_ThrowsException_IfServerError() throws XenditException {
     String url = String.format("%s/", URL, ID);
     when(this.requestClient.request(
             RequestResource.Method.GET,
@@ -119,7 +119,7 @@ public class DisbursementPHTest {
   }
 
   @Test(expected = XenditException.class)
-  public void getById_ThrowsException_IfInvalidArgs() throws XenditException {
+  public void getPHById_ThrowsException_IfInvalidArgs() throws XenditException {
     String url = String.format("%s/", URL, "");
 
     when(this.requestClient.request(

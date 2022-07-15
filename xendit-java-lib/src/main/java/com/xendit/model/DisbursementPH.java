@@ -69,7 +69,7 @@ public class DisbursementPH {
    * @return
    * @throws XenditException
    */
-  public static DisbursementPH getById(String id) throws XenditException {
+  public static DisbursementPH getPHById(String id) throws XenditException {
     return getById(new HashMap<>(), id);
   }
 
