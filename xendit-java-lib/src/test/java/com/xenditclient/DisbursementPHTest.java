@@ -143,7 +143,8 @@ public class DisbursementPHTest {
   }
 
   @Test
-  public void createDisbursementPH_Success_IfParamsAreValid() throws XenditException {
+  public void createDisbursementPH_Success_IfOnlyRequiredParamsAreProvided()
+      throws XenditException {
     initCreateParams();
 
     when(this.requestClient.request(
@@ -161,7 +162,7 @@ public class DisbursementPHTest {
   }
 
   @Test
-  public void createDisbursementPH_Success_IfOptionalParamsAreValid() throws XenditException {
+  public void createDisbursementPH_Success_IfOptionalParamsAreProvided() throws XenditException {
     initCreateParams();
     PARAMS.put("beneficiary", BENIFICIARY);
     PARAMS.put("receipt_notification", RECEIPTNOTIFICATION);
@@ -201,6 +202,7 @@ public class DisbursementPHTest {
   public void createDisbursementPH_Success_IfOptionalRecepIsValid() throws XenditException {
     initCreateParams();
     PARAMS.put("receipt_notification", RECEIPTNOTIFICATION);
+    System.out.println(PARAMS);
     when(this.requestClient.request(
             RequestResource.Method.POST,
             URL,

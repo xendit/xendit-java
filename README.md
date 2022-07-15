@@ -15,11 +15,11 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Gradle](#gradle)
 - [Usage](#usage)
   - [Disbursement Services](#disbursement-services)
-    - [Create a IDR disbursement](#create-a-idr-disbursement)
+    - [Create an IDR disbursement](#create-an-idr-disbursement)
     - [Create a PH disbursement](#create-a-ph-disbursement)
     - [Get banks with available disbursement service](#get-banks-with-available-disbursement-service)
     - [Get a disbursement by external ID](#get-a-disbursement-by-external-id)
-    - [Get a IDR disbursement by ID](#get-a-idr-disbursement-by-id)
+    - [Get an IDR disbursement by ID](#get-an-idr-disbursement-by-id)
     - [Get a PH disbursement by ID](#get-a-ph-disbursement-by-id)
     - [Get disbursements channels](#get-disbursement-channels)
     - [Get disbursements channels by Channel Category](#get-disbursement-channels-by-channel-category)
@@ -246,7 +246,7 @@ There are some examples provided for you [here](https://github.com/xendit/xendit
 
 ### Disbursement Services
 
-#### Create a IDR disbursement
+#### Create an IDR disbursement
 
 You can choose whether want to put the attributes as parameters or to put in inside a Map object.
 
@@ -325,6 +325,12 @@ DisbursementPH.createPHDisbursement(
 </table>
 
 ```java
+ReceiptNotification receiptNotification = ReceiptNotification.builder()
+    .emailTo(new String[] { "test@emailTo.com" })
+    .emailCC(new String[] { "test@emailCC.com" })
+    .emailBcc(new String[] { "test@emailBcc.com" })
+    .build();
+
 Map<String, Object> params = new HashMap<>();
 params.put("xendit_idempotency_key", "xendit_idempotency_key");
 params.put("reference_id", "reference_id_value");
@@ -334,6 +340,7 @@ params.put("account_name", "John etc");
 params.put("account_number", "123456");
 params.put("description", "Disbursement description");
 params.put("amount", 50000);
+params.put("receipt_notification", receiptNotification);
 
 /* Without client */
 DisbursementPH disbursement = DisbursementPH.createPHDisbursement(params); 
@@ -360,7 +367,7 @@ DisbursementIDR disbursement = DisbursementIDR.getByExternalId("EXAMPLE_ID");
 DisbursementIDR disbursement = xenditClient.disbursement.getByExternalId("EXAMPLE_ID");
 ```
 
-#### Get a IDR disbursement by ID
+#### Get an IDR disbursement by ID
 
 ```java
 /* Without client */
