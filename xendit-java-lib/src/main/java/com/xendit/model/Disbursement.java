@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.*;
 
+/** Disbursement Class is being used for IDR Disbursements. */
 @Getter
 @Setter
 @Builder

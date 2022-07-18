@@ -7,6 +7,7 @@ import com.xendit.model.CreditCardClient;
 import com.xendit.model.CustomerClient;
 import com.xendit.model.DirectDebitPaymentClient;
 import com.xendit.model.DisbursementClient;
+import com.xendit.model.DisbursementPHPClient;
 import com.xendit.model.EWalletClient;
 import com.xendit.model.FixedVirtualAccountClient;
 import com.xendit.model.InvoiceClient;
@@ -23,6 +24,7 @@ public class XenditClient {
   public BalanceClient balance;
   public PayoutClient payout;
   public DisbursementClient disbursement;
+  public DisbursementPHPClient disbursementPHP;
   public EWalletClient eWallet;
   public QRCodeClient qrCode;
   public CustomerClient customer;
@@ -70,6 +72,7 @@ public class XenditClient {
     xenditClient.invoice = new InvoiceClient(option, Xendit.getRequestClient());
     xenditClient.balance = new BalanceClient(option, Xendit.getRequestClient());
     xenditClient.disbursement = new DisbursementClient(option, Xendit.getRequestClient());
+    xenditClient.disbursementPHP = new DisbursementPHPClient(option, Xendit.getRequestClient());
     xenditClient.payout = new PayoutClient(option, Xendit.getRequestClient());
     xenditClient.eWallet = new EWalletClient(option, Xendit.getRequestClient());
     xenditClient.qrCode = new QRCodeClient(option, Xendit.getRequestClient());
