@@ -54,7 +54,7 @@ public class DisbursementIDR {
   /**
    * Create disbursement with all parameter as HashMap
    *
-   * @param params listed here https://xendit.github.io/apireference/#create-disbursement.
+   * @param params listed here https://xendit.github.io/apireference/#create-an-idr-disbursement.
    * @return Disbursement
    * @throws XenditException
    */
@@ -67,7 +67,7 @@ public class DisbursementIDR {
    * Create disbursement with all parameter as HashMap
    *
    * @param headers
-   * @param params listed here https://xendit.github.io/apireference/#create-disbursement.
+   * @param params listed here https://xendit.github.io/apireference/#create-an-idr-disbursement.
    * @return Disbursement
    * @throws XenditException
    */

@@ -347,7 +347,7 @@ DisbursementPH disbursement = DisbursementPH.createPHDisbursement(params);
 
 /* With client */
 Map<String, String> headers = new HashMap<>();
-headers.put("xendit_idempotency_key", "xendit_idempotency_key");
+headers.put("xendit-idempotency-key", "xendit_idempotency_key");
 DisbursementPH disbursement = xenditClient.disbursement.createPHDisbursement(headers, params);
 ```
 

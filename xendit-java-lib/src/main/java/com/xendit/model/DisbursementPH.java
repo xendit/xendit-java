@@ -108,6 +108,18 @@ public class DisbursementPH {
   }
 
   /**
+   * Create disbursement with all parameter as HashMap
+   *
+   * @param params listed here https://xendit.github.io/apireference/#create-ph-disbursement.
+   * @return Disbursement
+   * @throws XenditException
+   */
+  public static DisbursementPH createPHDisbursement(
+      Map<String, String> headers, Map<String, Object> params) throws XenditException {
+    return createRequest(headers, params);
+  }
+
+  /**
    * Create v1 disbursement with required parameters
    *
    * @param xendit_idempotency_key

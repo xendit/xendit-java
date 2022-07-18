@@ -129,7 +129,7 @@ public class DisbursementClient {
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     Map<String, String> headers = new HashMap<>();
-    headers.put("xendit_idempotency_key", xendit_idempotency_key);
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -153,7 +153,7 @@ public class DisbursementClient {
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     Map<String, String> headers = new HashMap<>();
-    headers.put("xendit_idempotency_key", xendit_idempotency_key);
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -178,7 +178,7 @@ public class DisbursementClient {
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     Map<String, String> headers = new HashMap<>();
-    headers.put("xendit_idempotency_key", xendit_idempotency_key);
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);
@@ -204,7 +204,7 @@ public class DisbursementClient {
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
     Map<String, String> headers = new HashMap<>();
-    headers.put("xendit_idempotency_key", xendit_idempotency_key);
+    headers.put("xendit-idempotency-key", xendit_idempotency_key);
     params.put("reference_id", reference_id);
     params.put("currency", currency);
     params.put("channel_code", channel_code);

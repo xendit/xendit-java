@@ -1,9 +1,9 @@
-package ExampleWithClient;
+package ExampleWithoutClient;
 
+import com.xendit.Xendit;
 import com.xendit.exception.XenditException;
 import com.xendit.model.Beneficiary;
 import com.xendit.model.DisbursementChannel;
-import com.xendit.XenditClient;
 import com.xendit.model.DisbursementPH;
 import com.xendit.model.ReceiptNotification;
 
@@ -13,11 +13,8 @@ import java.util.Map;
 
 public class ExampleCreatePHDisbursement {
         public static void main(String[] args) {
-
-                // create xendit client which holds value of apikey
-                XenditClient xenditClient = new XenditClient.Builder()
-                                .setApikey("xnd_development_nsn3PhwpWyMZeCZ9YZNlzh5TVmGTqYxVBoXpdbz2glHi1Nk1dBZOibZdUmqw7")
-                                .build();
+                // access key with Option
+                Xendit.Opt.setApiKey("xnd_development_nsn3PhwpWyMZeCZ9YZNlzh5TVmGTqYxVBoXpdbz2glHi1Nk1dBZOibZdUmqw7");
 
                 try {
                         /**
@@ -30,8 +27,7 @@ public class ExampleCreatePHDisbursement {
                          * standard code.
                          * In this example, we call available disbursement bank function.
                          */
-                        DisbursementChannel[] disbursementChannels = xenditClient.disbursement
-                                        .getDisbursementChannels();
+                        DisbursementChannel[] disbursementChannels = DisbursementChannel.getDisbursementChannels();
                         /**
                          * Let's say that we want to use first channel in that list.
                          */
@@ -43,24 +39,25 @@ public class ExampleCreatePHDisbursement {
                          * field
                          * name.
                          */
-                        Map<String, Object> params = new HashMap<String, Object>();
+                        Map<String, Object> disbursementMap = new HashMap<String, Object>();
                         Map<String, String> headers = new HashMap<>();
-                        headers.put("xendit-idempotency-key", "xendit_idempotency_key".concat(new Date().toString()));
-                        params.put("reference_id", "reference_id_value");
-                        params.put("currency", "PHP");
-                        params.put("channel_code", disbursementChannel.getChannelCode());
-                        params.put("account_name", "John etc");
-                        params.put("account_number", "123456");
-                        params.put("description", "Disbursement description");
-                        params.put("amount", 50000);
+                        headers.put("xendit-idempotency-key",
+                                        "xendit_idempotency_key".concat(new Date().toString()));
+                        disbursementMap.put("reference_id", "reference_id_value");
+                        disbursementMap.put("currency", "PHP");
+                        disbursementMap.put("channel_code", disbursementChannel.getChannelCode());
+                        disbursementMap.put("account_name", "John etc");
+                        disbursementMap.put("account_number", "123456");
+                        disbursementMap.put("description", "Disbursement description");
+                        disbursementMap.put("amount", 50000);
 
-                        DisbursementPH disbursement = xenditClient.disbursement.createPHDisbursement(headers, params);
+                        DisbursementPH disbursement = DisbursementPH.createPHDisbursement(headers, disbursementMap);
                         System.out.print(disbursement);
 
                         /**
                          * Second option. Create with individual value of required params.
                          */
-                        DisbursementPH disbursement2 = xenditClient.disbursement.createPHDisbursement(
+                        DisbursementPH disbursement2 = DisbursementPH.createPHDisbursement(
                                         "xendit_idempotency_key".concat(new Date().toString()), "reference_id_value",
                                         "PHP",
                                         disbursementChannel.getChannelCode(), "John etc", "123456",
@@ -75,7 +72,7 @@ public class ExampleCreatePHDisbursement {
                                         .emailCC(new String[] { "test@emailCC.com" })
                                         .emailBcc(new String[] { "test@emailBcc.com" })
                                         .build();
-                        DisbursementPH disbursement3 = xenditClient.disbursement.createPHDisbursement(
+                        DisbursementPH disbursement3 = DisbursementPH.createPHDisbursement(
                                         "xendit_idempotency_key".concat(new Date().toString()), "reference_id_value",
                                         "PHP",
                                         disbursementChannel.getChannelCode(), "John etc", "123456",
@@ -102,7 +99,7 @@ public class ExampleCreatePHDisbursement {
                                         .phoneNumber("987654321")
                                         .email("email@test.com")
                                         .build();
-                        DisbursementPH disbursement4 = xenditClient.disbursement.createPHDisbursement(
+                        DisbursementPH disbursement4 = DisbursementPH.createPHDisbursement(
                                         "xendit_idempotency_key".concat(new Date().toString()), "reference_id_value",
                                         "PHP",
                                         disbursementChannel.getChannelCode(), "John etc", "123456",
@@ -112,7 +109,7 @@ public class ExampleCreatePHDisbursement {
                          * Fifth option. Create with individual value of required params + optional
                          * Beneficiary
                          */
-                        DisbursementPH disbursement5 = xenditClient.disbursement.createPHDisbursement(
+                        DisbursementPH disbursement5 = DisbursementPH.createPHDisbursement(
                                         "xendit_idempotency_key".concat(new Date().toString()), "reference_id_value",
                                         "PHP",
                                         disbursementChannel.getChannelCode(), "John etc", "123456",
