@@ -16,7 +16,8 @@ public class RegionalRetailOutletPaymentCode {
     DPMLHUILLIER("DPMLHUILLIER"),
     DPPALAWAN("DPPALAWAN"),
     ECPAY("ECPAY"),
-    LBC("LBC");
+    LBC("LBC"),
+    DPECPAYLOAN("DP_ECPAY_LOAN");
 
     private String code;
 
