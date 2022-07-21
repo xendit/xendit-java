@@ -15,10 +15,16 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Gradle](#gradle)
 - [Usage](#usage)
   - [Disbursement Services](#disbursement-services)
-    - [Create a disbursement](#create-a-disbursement)
-    - [Get banks with available disbursement service](#get-banks-with-available-disbursement-service)
-    - [Get a disbursement by external ID](#get-a-disbursement-by-external-id)
-    - [Get a disbursement by ID](#get-a-disbursement-by-id)
+    - [Create an IDR disbursement](#create-an-idr-disbursement)
+    - [Create a PHP disbursement](#create-a-php-disbursement)
+    - [Get banks with available IDR disbursement service](#get-banks-with-available-idr-disbursement-service)
+    - [Get disbursements channels](#get-disbursements-channels)
+    - [Get disbursements channels by channel category](#get-disbursement-channels-by-channel-category)
+    - [Get disbursements channels by channel code](#get-disbursement-channels-by-channel-code)
+    - [Get an IDR disbursement by external ID](#get-an-idr-disbursement-by-external-id)
+    - [Get a PHP disbursement by reference ID](#get-a-php-disbursement-by-reference-id)
+    - [Get an IDR disbursement by ID](#get-an-idr-disbursement-by-id)
+    - [Get a PHP disbursement by ID](#get-a-php-disbursement-by-id)
   - [Invoice services](#invoice-services)
     - [Create an invoice](#create-an-invoice)
     - [Get an invoice by ID](#get-an-invoice-by-id)
@@ -135,7 +141,7 @@ More information: https://search.maven.org/artifact/com.xendit/xendit-java-lib
 You need to use secret API key in order to use functionality in this library. The key can be obtained from your [Xendit Dashboard](https://dashboard.xendit.co/settings/developers#api-keys).
 
 ### Without Client
-If you're only dealing with a single secret key, you can simply import the packages required for the products you're interacting with without the need to create a client.
+If you're only dealing with a single secret key, you can simply import the packages required for the products you're interacting with without the need to create a client. Xendit Disbursement class is being used for IDR Disbursement.
 
 There is another way to set secret key using **Xendit.Opt.setApiKey(")** which is recommended way to use instead of **Xendit.apiKey**.
 
@@ -151,7 +157,7 @@ public class Example {
 }
 ```
 ### With Client
-If you're dealing with multiple secret keys, it is recommended that you use **XenditClient**. This allows you to create as many clients as needed, each with their own individual key.
+If you're dealing with multiple secret keys, it is recommended that you use **XenditClient**. This allows you to create as many clients as needed, each with their own individual key. Xendit Disbursement Client is being used for IDR Disbursements.
 ```java
 import com.xendit.XenditClient;
 
@@ -168,7 +174,7 @@ public class Example {
     }
 }
 ```
-Example: Create a disbursement
+Example: Create an IDR disbursement
 
 ###### Without Client
 ```java
@@ -202,6 +208,7 @@ public class ExampleCreateDisbursement {
 }
 ```
 ###### With Client
+Xendit Disbursement Client is being used for IDR Disbursement.
 ```java
 import com.xendit.exception.XenditException;
 import com.xendit.XenditClient;
@@ -241,9 +248,9 @@ There are some examples provided for you [here](https://github.com/xendit/xendit
 
 ### Disbursement Services
 
-#### Create a disbursement
+#### Create an IDR disbursement
 
-You can choose whether want to put the attributes as parameters or to put in inside a Map object.
+You can choose whether want to put the attributes as parameters or to put in inside a Map object. 
 
 <table>
 <tr>
@@ -288,7 +295,7 @@ Disbursement disbursement = Disbursement.create(params);
 Disbursement disbursement = xenditClient.disbursement.create(params);
 ```
 
-#### Get banks with available disbursement service
+#### Get banks with available IDR disbursement service
 
 ```java
 /* Without client */
@@ -297,7 +304,7 @@ AvailableBank[] banks = Disbursement.getAvailableBanks();
 AvailableBank[] banks = xenditClient.disbursement.getAvailableBanks();
 ```
 
-#### Get a disbursement by external ID
+#### Get an IDR disbursement by external ID
 
 ```java
 /* Without client */
@@ -306,13 +313,130 @@ Disbursement disbursement = Disbursement.getByExternalId("EXAMPLE_ID");
 Disbursement disbursement = xenditClient.disbursement.getByExternalId("EXAMPLE_ID");
 ```
 
-#### Get a disbursement by ID
+#### Get an IDR disbursement by ID
 
 ```java
 /* Without client */
 Disbursement disbursement = Disbursement.getById("EXAMPLE_ID");
 /* With client */
 Disbursement disbursement = xenditClient.disbursement.getById("EXAMPLE_ID");
+```
+
+#### Create a PHP disbursement
+
+You can choose whether want to put the attributes as parameters or to put in inside a Map object. 
+
+<table>
+<tr>
+<td>
+<pre>
+DisbursementPHP.createPHPDisbursement(
+    String xendit_idempotency_key,
+    String reference_id,
+    String currency,
+    String channel_code,
+    String account_name,
+    String account_number,
+    String description,
+    Integer amount,
+    ReceiptNotification receiptNotification,
+    Beneficiary beneficiary
+);
+ReceiptNotification receiptNotification = ReceiptNotification.builder()
+    .emailTo(new String[] { "test@emailTo.com" })
+    .emailCC(new String[] { "test@emailCC.com" })
+    .emailBcc(new String[] { "test@emailBcc.com" })
+    .build();
+Beneficiary beneficiary =
+    Beneficiary.builder()
+        .type("test-type")
+        .givenNames("Test Name")
+        .middleName("Middle Name")
+        .surname("Sur Name")
+        .businessName("Test")
+        .streetLine1("Jl. 123")
+        .streetLine2("Jl. 456")
+        .city("Jakarta Selatan")
+        .province("DKI Jakarta")
+        .state("Test")
+        .country("Test")
+        .zipCode("12345")
+        .mobileNumber("123456789")
+        .phoneNumber("12345678")
+        .email("email@test.com")
+        .build();
+</pre>
+</td>
+<td>
+<pre>
+DisbursementPHP.createPHPDisbursement(
+    Map&lt;String, String&gt; headers, Map&lt;String, Object&gt; params
+);
+</pre>
+</td>
+</tr>
+</table>
+
+```java
+Map<String, Object> params = new HashMap<>();
+Map<String, String> headers = new HashMap<>();
+headers.put("xendit-idempotency-key", "xendit-idempotency-key");
+params.put("reference_id", "reference_id_value");
+params.put("currency", "PHP");
+params.put("channel_code", "required_channel_code");
+params.put("account_name", "John etc");
+params.put("account_number", "123456");
+params.put("description", "Disbursement description");
+params.put("amount", 50000);
+params.put("receipt_notification", receiptNotification);
+
+/* Without client */
+DisbursementPHP disbursement = DisbursementPHP.createPHPDisbursement(headers, params); 
+
+/* With client */
+DisbursementPHP disbursement = xenditClient.disbursementPHP.createPHPDisbursement(headers, params);
+```
+
+#### Get disbursements Channels
+
+```java
+/* Without client */
+DisbursementChannel[] disbursementChannels = DisbursementChannel.getDisbursementChannels();
+/* With client */
+DisbursementChannel[] disbursementChannels = xenditClient.disbursementPHP.getDisbursementChannels();
+```
+#### Get disbursement channels by channel category
+
+```java
+/* Without client */
+DisbursementChannel[] disbursementChannels = DisbursementChannel.getByChannelCategory("channel-category");
+/* With client */
+DisbursementChannel[] disbursementChannels = xenditClient.disbursementPHP.getByChannelCategory("channel-category");
+```
+#### Get disbursement channels by channel code
+
+```java
+/* Without client */
+DisbursementChannel[] disbursementChannels = DisbursementChannel.getByChannelCode("channel-code");
+/* With client */
+DisbursementChannel[] disbursementChannels = xenditClient.disbursementPHP.getByChannelCode("channel-code");
+```
+#### Get a PHP disbursement by reference ID
+
+```java
+/* Without client */
+DisbursementPHP disbursement = DisbursementPHP.getPHPByReferenceId("EXAMPLE_ID");
+/* With client */
+DisbursementPHP disbursement = xenditClient.disbursementPHP.getPHPByReferenceId("EXAMPLE_ID");
+```
+
+#### Get a PHP disbursement by ID
+
+```java
+/* Without client */
+DisbursementPHP disbursement = Disbursement.getPHPById("EXAMPLE_ID");
+/* With client */
+DisbursementPHP disbursement = xenditClient.disbursementPHP.getPHPById("EXAMPLE_ID");
 ```
 
 [Back to top](#table-of-contents)
