@@ -17,9 +17,9 @@ public class RegionalRetailOutletPaymentCode {
     DPPALAWAN("DP_PALAWAN"),
     ECPAY("ECPAY"),
     LBC("LBC"),
-    DPECPAYLOAN("DP_ECPAY_LOAN");
-    DPECPAYSCHOOL("DP_ECPAY_SCHOOL");
-    DPCVM("DP_CVM");
+    DPECPAYLOAN("DP_ECPAY_LOAN"),
+    DPECPAYSCHOOL("DP_ECPAY_SCHOOL"),
+    DPCVM("DP_CVM"),
     DPRDPAWNSHOP("DP_RD_PAWNSHOP");
 
     private String code;
