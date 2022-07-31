@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'com.xendit'
-version '1.19.5'
+version '1.20.1'
 
 sourceCompatibility = 1.8
 
