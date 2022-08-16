@@ -59,6 +59,9 @@ public class EWalletCharge {
   @SerializedName("voided_at")
   private String voidedAt;
 
+  @SerializedName("void_status")
+  private String voidStatus;
+
   @SerializedName("capture_now")
   private Boolean captureNow;
 
