@@ -10,7 +10,9 @@ public class CreditCardEnum {
 
   public enum CardType {
     DEBIT,
-    CREDIT
+    CREDIT,
+    PREPAID,
+    UNKNOWN
   }
 
   public enum ChargeType {
