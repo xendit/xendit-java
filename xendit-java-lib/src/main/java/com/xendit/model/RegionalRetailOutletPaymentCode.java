@@ -20,7 +20,8 @@ public class RegionalRetailOutletPaymentCode {
     DPECPAYLOAN("DP_ECPAY_LOAN"),
     DPECPAYSCHOOL("DP_ECPAY_SCHOOL"),
     DPCVM("DP_CVM"),
-    DPRDPAWNSHOP("DP_RD_PAWNSHOP");
+    DPRDPAWNSHOP("DP_RD_PAWNSHOP"),
+    DPUSSC("DP_USSC");
 
     private String code;
 
