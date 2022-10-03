@@ -22,7 +22,7 @@ public class DisbursementPHP {
   private String currency;
 
   @SerializedName("amount")
-  private BigDecimal amount;
+  private double amount;
 
   @SerializedName("channel_code")
   private String channelCode;
