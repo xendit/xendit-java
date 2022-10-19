@@ -59,4 +59,7 @@ public class CreditCardCharge {
 
   @SerializedName("failure_reason")
   private CreditCardEnum.FailureReason failureReason;
+
+  @SerializedName("installment")
+  private Map<String, Object> installment;
 }
