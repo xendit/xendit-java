@@ -43,7 +43,8 @@ public class CreditCardEnum {
     INACTIVE_CARD,
     INVALID_CVN,
     PROCESSOR_ERROR,
-    BIN_BLOCK
+    BIN_BLOCK,
+    VALIDATION_ERROR
   }
 
   public enum RefundStatus {
@@ -53,6 +54,7 @@ public class CreditCardEnum {
 
   public enum RefundFailureReason {
     INSUFFICIENT_BALANCE,
-    REFUND_FAILED
+    REFUND_FAILED,
+    VALIDATION_ERROR
   }
 }
