@@ -1,6 +1,7 @@
 package com.xendit.model;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,4 +60,7 @@ public class CreditCardCharge {
 
   @SerializedName("failure_reason")
   private CreditCardEnum.FailureReason failureReason;
+
+  @SerializedName("installment")
+  private Map<String, Object> installment;
 }
