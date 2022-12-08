@@ -61,6 +61,6 @@ public class QRCodeClient {
     headers.put("api-version", "2022-07-31");
 
     return this.requestClient.request(
-        RequestResource.Method.GET, url, headers, opt.getApiKey(), QRCode.class);
+        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), QRCode.class);
   }
 }
