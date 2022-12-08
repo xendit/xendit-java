@@ -30,7 +30,7 @@ public class QRCodeClient {
     //Use new API version
       
     Map<String, Object> headers = new HashMap<>();
-    headers.put("api-version", "2022-07-31")
+    headers.put("api-version", "2022-07-31");
     String url = String.format("%s%s", opt.getXenditURL(), "/qr_codes");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), QRCode.class);
@@ -43,7 +43,7 @@ public class QRCodeClient {
   public QRCode createQRCode(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/qr_codes");
-    headers.put("api-version", "2022-07-31")
+    headers.put("api-version", "2022-07-31");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), QRCode.class);
   }
@@ -58,7 +58,7 @@ public class QRCodeClient {
     String url = String.format("%s%s%s", opt.getXenditURL(), "/qr_codes/", qrId);
 
     Map<String, Object> headers = new HashMap<>();
-    headers.put("api-version", "2022-07-31")
+    headers.put("api-version", "2022-07-31");
 
     return this.requestClient.request(
         RequestResource.Method.GET, url, headers, opt.getApiKey(), QRCode.class);
