@@ -24,7 +24,7 @@ public class QRCodeClient {
     Map<String, Object> params = new HashMap<>();
     params.put("reference_id", referenceId);
     params.put("type", type.toString());
-    params.put("currency", currency)
+    params.put("currency", currency);
     params.put("amount", amount);
 
     //Use new API version
