@@ -23,7 +23,7 @@ public class QRCodeTest {
   private static String TEST_QR_STRING = "this_is_qr_string";
   private static String TEST_QR_TYPE = QRCode.QRCodeType.DYNAMIC.toString();
   private static String TEST_QR_STATUS = QRCode.QRCodeStatus.ACTIVE.toString();
-  private static String TEST_QR_CURRENCY = "IDR"
+  private static String TEST_QR_CURRENCY = "IDR";
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
   private static QRCode VALID_PAYMENT =
@@ -56,7 +56,7 @@ public class QRCodeTest {
   }
 
   private void initCreateHeaders() {
-    HEADERS.put("api-version", "2022-07-31")
+    HEADERS.put("api-version", "2022-07-31");
   }
 
   @Test
@@ -159,7 +159,7 @@ public class QRCodeTest {
     String url = String.format("%s/%s", URL, TEST_ID);
 
     Map<String, Object> headers = new HashMap<>();
-    headers.put("api-version", "2022-07-31")
+    headers.put("api-version", "2022-07-31");
 
     when(this.requestClient.request(
             RequestResource.Method.GET, url, headers, opt.getApiKey(), QRCode.class))
@@ -176,7 +176,7 @@ public class QRCodeTest {
     String url = String.format("%s/%s", URL, NOT_VALID_QR_ID);
 
     Map<String, Object> headers = new HashMap<>();
-    headers.put("api-version", "2022-07-31")
+    headers.put("api-version", "2022-07-31");
 
     when(this.requestClient.request(
             RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class))
