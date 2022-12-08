@@ -114,7 +114,7 @@ public class QRCodeTest {
     initCreateParams();
     HEADERS.put("for-user-id", "user-id");
 
-    private static Map<String, String> RequestHeaders = new HashMap<>();
+    Map<String, String> RequestHeaders = new HashMap<>();
     RequestHeaders.put("for-user-id", "user-id");
     RequestHeaders.put("api-version", "2022-07-31");
 
