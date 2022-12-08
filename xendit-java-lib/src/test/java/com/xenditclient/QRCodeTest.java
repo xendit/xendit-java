@@ -29,7 +29,7 @@ public class QRCodeTest {
   private static QRCode VALID_PAYMENT =
       QRCode.builder()
           .id(TEST_ID)
-          .externalId(TEST_REFERENCE_ID)
+          .referenceId(TEST_REFERENCE_ID)
           .currency(TEST_QR_CURRENCY)
           .qrString(TEST_QR_STRING)
           .status(TEST_QR_STATUS)
