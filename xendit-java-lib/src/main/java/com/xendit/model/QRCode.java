@@ -76,7 +76,7 @@ public class QRCode {
    * @param type DYNAMIC or STATIC. DYNAMIC QR code contains the payment value upon scanning and can
    *     be paid multiple times. STATIC QR code requires end user to input the payment value and can
    *     be paid multiple times
-   * @param currency Currency of the QR code generated 
+   * @param currency Currency of the QR code generated
    * @param amount The payment value embedded in the QR code, end user can only pay the specified
    *     amount after scanning the QR code. For STATIC QR code, amount parameter will be ignored.
    * @return QRCode
@@ -129,7 +129,8 @@ public class QRCode {
   /**
    * Get QR Code by qr id id
    *
-   * @param qrId Xendit provided unique ID returned when generating a qr code request. Starts with qr_
+   * @param qrId Xendit provided unique ID returned when generating a qr code request. Starts with
+   *     qr_
    * @return QRCode
    * @throws XenditException XenditException
    */

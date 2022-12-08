@@ -77,12 +77,7 @@ public class QRCodeTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            QRCode.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), QRCode.class))
         .thenReturn(VALID_PAYMENT);
     when(qrCodeClient.createQRCode(PARAMS)).thenReturn(VALID_PAYMENT);
     QRCode qrCode = qrCodeClient.createQRCode(PARAMS);
@@ -96,12 +91,7 @@ public class QRCodeTest {
     PARAMS.put("type", "NOT_DYNAMIC");
 
     when(this.requestClient.request(
-            RequestResource.Method.POST,
-            URL,
-            HEADERS,
-            PARAMS,
-            opt.getApiKey(),
-            QRCode.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), QRCode.class))
         .thenThrow(new XenditException("QR Code type is invalid"));
     when(qrCodeClient.createQRCode(PARAMS))
         .thenThrow(new XenditException("QR Code type is invalid"));

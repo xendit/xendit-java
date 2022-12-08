@@ -28,7 +28,6 @@ public class QRCodeClient {
     params.put("amount", amount);
 
     //Use new API version
-      
     Map<String, String> headers = new HashMap<>();
     headers.put("api-version", "2022-07-31");
     String url = String.format("%s%s", opt.getXenditURL(), "/qr_codes");
