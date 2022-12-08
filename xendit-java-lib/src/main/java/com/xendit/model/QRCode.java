@@ -127,7 +127,7 @@ public class QRCode {
   }
 
   /**
-   * Get QR Code by external id
+   * Get QR Code by qr id id
    *
    * @param qrId Xendit provided unique ID returned when generating a qr code request. Starts with qr_
    * @return QRCode
@@ -135,7 +135,7 @@ public class QRCode {
    */
   public static QRCode getQRCodeByQRId(String qrId) throws XenditException {
     QRCodeClient client = getClient();
-    return client.getQRCodeByQRId(externalId);
+    return client.getQRCodeByQRId(qrId);
   }
 
   /**
