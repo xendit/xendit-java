@@ -42,6 +42,7 @@ public class QRCodeClient {
   public QRCode createQRCode(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/qr_codes");
+    //Use new API version
     headers.put("api-version", "2022-07-31");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), QRCode.class);
