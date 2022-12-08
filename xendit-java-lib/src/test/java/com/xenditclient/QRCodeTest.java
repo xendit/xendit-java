@@ -55,10 +55,6 @@ public class QRCodeTest {
     PARAMS.put("amount", 10000);
   }
 
-  private void initCreateHeaders() {
-    HEADERS.put("api-version", "2022-07-31");
-  }
-
   @Test
   public void createQRCode_Success_IfMethodCalledCorrectly() throws XenditException {
     initCreateParams();
@@ -118,8 +114,13 @@ public class QRCodeTest {
     initCreateParams();
     HEADERS.put("for-user-id", "user-id");
 
+    private static Map<String, String> RequestHeaders = new HashMap<>();
+    RequestHeaders.put("for-user-id", "user-id");
+    RequestHeaders.put("api-version", "2022-07-31");
+
+
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), QRCode.class))
+            RequestResource.Method.POST, URL, RequestHeaders, PARAMS, opt.getApiKey(), QRCode.class))
         .thenReturn(VALID_PAYMENT);
     when(qrCodeClient.createQRCode(HEADERS, PARAMS)).thenReturn(VALID_PAYMENT);
 
@@ -162,7 +163,7 @@ public class QRCodeTest {
     headers.put("api-version", "2022-07-31");
 
     when(this.requestClient.request(
-            RequestResource.Method.GET, url, headers, opt.getApiKey(), QRCode.class))
+            RequestResource.Method.GET, url, headers, null, opt.getApiKey(), QRCode.class))
         .thenReturn(VALID_PAYMENT);
     when(qrCodeClient.getQRCodeByQRId(TEST_ID)).thenReturn(VALID_PAYMENT);
     QRCode qrCode = qrCodeClient.getQRCodeByQRId(TEST_ID);
@@ -179,7 +180,7 @@ public class QRCodeTest {
     headers.put("api-version", "2022-07-31");
 
     when(this.requestClient.request(
-            RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class))
+            RequestResource.Method.GET, url, headers, null, opt.getApiKey(), QRCode.class))
         .thenThrow(new XenditException("not found"));
     when(qrCodeClient.getQRCodeByQRId(NOT_VALID_QR_ID)).thenThrow(new XenditException("not found"));
 
