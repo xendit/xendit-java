@@ -19,19 +19,19 @@ import org.junit.Test;
 public class QRCodeTest {
   private static String URL = String.format("%s%s", Xendit.Opt.getXenditURL(), "/qr_codes");
   private static String TEST_ID = "test_id";
-  private static String TEST_EXTERNAL_ID = "test_external_id";
+  private static String TEST_REFERENCE_ID = "test_reference_id";
   private static String TEST_QR_STRING = "this_is_qr_string";
-  private static String TEST_CALLBACK_URL = "https://callback.url";
   private static String TEST_QR_TYPE = QRCode.QRCodeType.DYNAMIC.toString();
   private static String TEST_QR_STATUS = QRCode.QRCodeStatus.ACTIVE.toString();
+  private static String TEST_QR_CURRENCY = "IDR"
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
   private static QRCode VALID_PAYMENT =
       QRCode.builder()
           .id(TEST_ID)
-          .externalId(TEST_EXTERNAL_ID)
+          .externalId(TEST_REFERENCE_ID)
+          .currency(TEST_QR_CURRENCY)
           .qrString(TEST_QR_STRING)
-          .callbackUrl(TEST_CALLBACK_URL)
           .status(TEST_QR_STATUS)
           .amount(10000)
           .build();
@@ -49,10 +49,14 @@ public class QRCodeTest {
   }
 
   private void initCreateParams() {
-    PARAMS.put("external_id", TEST_EXTERNAL_ID);
+    PARAMS.put("reference_id", TEST_REFERENCE_ID);
     PARAMS.put("type", TEST_QR_TYPE);
-    PARAMS.put("callback_url", TEST_CALLBACK_URL);
+    PARAMS.put("currency", TEST_QR_CURRENCY);
     PARAMS.put("amount", 10000);
+  }
+
+  private void initCreateHeaders() {
+    HEADERS.put("api-version", "2022-07-31")
   }
 
   @Test
@@ -60,14 +64,14 @@ public class QRCodeTest {
     initCreateParams();
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, PARAMS, opt.getApiKey(), QRCode.class))
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), QRCode.class))
         .thenReturn(VALID_PAYMENT);
     when(qrCodeClient.createQRCode(
-            TEST_EXTERNAL_ID, QRCode.QRCodeType.DYNAMIC, TEST_CALLBACK_URL, 10000))
+            TEST_REFERENCE_ID, QRCode.QRCodeType.DYNAMIC, TEST_QR_CURRENCY, 10000))
         .thenReturn(VALID_PAYMENT);
     QRCode qrCode =
         qrCodeClient.createQRCode(
-            TEST_EXTERNAL_ID, QRCode.QRCodeType.DYNAMIC, TEST_CALLBACK_URL, 10000);
+            TEST_REFERENCE_ID, QRCode.QRCodeType.DYNAMIC, TEST_QR_CURRENCY, 10000);
 
     assertEquals(qrCode, VALID_PAYMENT);
   }
@@ -79,7 +83,7 @@ public class QRCodeTest {
     when(this.requestClient.request(
             RequestResource.Method.POST,
             URL,
-            new HashMap<>(),
+            HEADERS,
             PARAMS,
             opt.getApiKey(),
             QRCode.class))
@@ -98,7 +102,7 @@ public class QRCodeTest {
     when(this.requestClient.request(
             RequestResource.Method.POST,
             URL,
-            new HashMap<>(),
+            HEADERS,
             PARAMS,
             opt.getApiKey(),
             QRCode.class))
@@ -126,27 +130,59 @@ public class QRCodeTest {
 
   @Test
   public void GetQRCode_Success_WithExternalId() throws XenditException {
-    String url = String.format("%s/%s", URL, TEST_EXTERNAL_ID);
+    String url = String.format("%s/%s", URL, TEST_REFERENCE_ID);
 
     when(this.requestClient.request(
             RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class))
         .thenReturn(VALID_PAYMENT);
-    when(qrCodeClient.getQRCode(TEST_EXTERNAL_ID)).thenReturn(VALID_PAYMENT);
-    QRCode qrCode = qrCodeClient.getQRCode(TEST_EXTERNAL_ID);
+    when(qrCodeClient.getQRCode(TEST_REFERENCE_ID)).thenReturn(VALID_PAYMENT);
+    QRCode qrCode = qrCodeClient.getQRCode(TEST_REFERENCE_ID);
 
     assertEquals(qrCode, VALID_PAYMENT);
   }
 
   @Test(expected = XenditException.class)
   public void GetQRCode_ThrowsException_OnExternalIDNotFound() throws XenditException {
-    String NOT_VALID_EXTERNAL_ID = "not_valid_external_id";
-    String url = String.format("%s/%s", URL, NOT_VALID_EXTERNAL_ID);
+    String NOT_VALID_REFERENCE_ID = "not_valid_reference_id";
+    String url = String.format("%s/%s", URL, NOT_VALID_REFERENCE_ID);
 
     when(this.requestClient.request(
             RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class))
         .thenThrow(new XenditException("not found"));
-    when(qrCodeClient.getQRCode(NOT_VALID_EXTERNAL_ID)).thenThrow(new XenditException("not found"));
+    when(qrCodeClient.getQRCode(NOT_VALID_REFERENCE_ID)).thenThrow(new XenditException("not found"));
 
-    qrCodeClient.getQRCode(NOT_VALID_EXTERNAL_ID);
+    qrCodeClient.getQRCode(NOT_VALID_REFERENCE_ID);
+  }
+
+  @Test
+  public void GetQRCode_Success_WithQRId() throws XenditException {
+    String url = String.format("%s/%s", URL, TEST_ID);
+
+    Map<String, Object> headers = new HashMap<>();
+    headers.put("api-version", "2022-07-31")
+
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, headers, opt.getApiKey(), QRCode.class))
+        .thenReturn(VALID_PAYMENT);
+    when(qrCodeClient.getQRCodeByQRId(TEST_ID)).thenReturn(VALID_PAYMENT);
+    QRCode qrCode = qrCodeClient.getQRCodeByQRId(TEST_ID);
+
+    assertEquals(qrCode, VALID_PAYMENT);
+  }
+
+  @Test(expected = XenditException.class)
+  public void GetQRCode_ThrowsException_OnExternalIDNotFound() throws XenditException {
+    String NOT_VALID_QR_ID = "not_valid_qr_id";
+    String url = String.format("%s/%s", URL, NOT_VALID_QR_ID);
+
+    Map<String, Object> headers = new HashMap<>();
+    headers.put("api-version", "2022-07-31")
+
+    when(this.requestClient.request(
+            RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class))
+        .thenThrow(new XenditException("not found"));
+    when(qrCodeClient.getQRCodeByQRId(NOT_VALID_QR_ID)).thenThrow(new XenditException("not found"));
+
+    qrCodeClient.getQRCodeByQRId(NOT_VALID_QR_ID);
   }
 }
