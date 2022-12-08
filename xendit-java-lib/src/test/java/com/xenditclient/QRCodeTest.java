@@ -159,7 +159,7 @@ public class QRCodeTest {
   public void GetQRCode_Success_WithQRId() throws XenditException {
     String url = String.format("%s/%s", URL, TEST_ID);
 
-    Map<String, Object> headers = new HashMap<>();
+    Map<String, String> headers = new HashMap<>();
     headers.put("api-version", "2022-07-31");
 
     when(this.requestClient.request(
@@ -176,7 +176,7 @@ public class QRCodeTest {
     String NOT_VALID_QR_ID = "not_valid_qr_id";
     String url = String.format("%s/%s", URL, NOT_VALID_QR_ID);
 
-    Map<String, Object> headers = new HashMap<>();
+    Map<String, String> headers = new HashMap<>();
     headers.put("api-version", "2022-07-31");
 
     when(this.requestClient.request(
