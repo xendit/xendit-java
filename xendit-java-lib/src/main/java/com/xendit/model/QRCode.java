@@ -133,7 +133,7 @@ public class QRCode {
    * @return QRCode
    * @throws XenditException XenditException
    */
-  public static QRCode getQRCode(String qrId) throws XenditException {
+  public static QRCode getQRCodeByQRId(String qrId) throws XenditException {
     QRCodeClient client = getClient();
     return client.getQRCodeByQRId(externalId);
   }
