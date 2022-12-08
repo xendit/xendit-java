@@ -13,7 +13,7 @@ public class ExampleGetQRCodeByQRId {
     // Xendit.apiKey = "xnd_development_...";
 
     try {
-      QRCode qrCode = QRCode.ExampleGetQRCodeByQRId("qr_004a0427-b194-49be-9439-657ef77ee4f3");
+      QRCode qrCode = QRCode.getQRCodeByQRId("qr_004a0427-b194-49be-9439-657ef77ee4f3");
       System.out.println(qrCode.getId());
     } catch (XenditException e) {
       e.printStackTrace();
