@@ -1334,16 +1334,16 @@ CardlessCredit cardlessCredit = xenditClient.cardlessCredit.create(
 ```java
 /* Without client */
 QRCode qrCode = QRCode.create(
-    "external_id",
+    "reference_id",
     QRCode.QRCodeType.DYNAMIC,
-    "https://callback.site",
+    "IDR",
     10000
 );
 /* With client */
 QRCode qrCode = xenditClient.qrCode.create(
-    "external_id",
+    "reference_id",
     QRCode.QRCodeType.DYNAMIC,
-    "https://callback.site",
+    "IDR",
     10000
 );
 ```
@@ -1352,9 +1352,9 @@ QRCode qrCode = xenditClient.qrCode.create(
 
 ```java
 /* Without client */
-QRCode qrCode = QRCode.getQRCode("external_id");
+QRCode qrCode = QRCode.getQRCodeByQRId("qr_004a0427-b194-49be-9439-657ef77ee4f3");
 /* With client */
-QRCode qrCode = xenditClient.qrCode.getQRCode("external_id");
+QRCode qrCode = xenditClient.qrCode.getQRCodeByQRId("qr_004a0427-b194-49be-9439-657ef77ee4f3");
 ```
 
 ### Customer
