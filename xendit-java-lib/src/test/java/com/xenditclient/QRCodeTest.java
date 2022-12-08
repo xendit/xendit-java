@@ -110,7 +110,12 @@ public class QRCodeTest {
 
 
     when(this.requestClient.request(
-            RequestResource.Method.POST, URL, RequestHeaders, PARAMS, opt.getApiKey(), QRCode.class))
+            RequestResource.Method.POST, 
+            URL, 
+            RequestHeaders, 
+            PARAMS, 
+            opt.getApiKey(), 
+            QRCode.class))
         .thenReturn(VALID_PAYMENT);
     when(qrCodeClient.createQRCode(HEADERS, PARAMS)).thenReturn(VALID_PAYMENT);
 
