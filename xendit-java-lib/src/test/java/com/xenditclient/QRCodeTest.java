@@ -171,7 +171,7 @@ public class QRCodeTest {
   }
 
   @Test(expected = XenditException.class)
-  public void GetQRCode_ThrowsException_OnExternalIDNotFound() throws XenditException {
+  public void GetQRCode_ThrowsException_OnReferenceIDNotFound() throws XenditException {
     String NOT_VALID_QR_ID = "not_valid_qr_id";
     String url = String.format("%s/%s", URL, NOT_VALID_QR_ID);
 
