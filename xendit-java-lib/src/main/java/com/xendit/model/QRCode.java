@@ -24,8 +24,14 @@ public class QRCode {
   @SerializedName("id")
   private String id;
 
-  @SerializedName("external_id")
-  private String externalId;
+  @SerializedName("reference_id")
+  private String referenceId;
+
+  @SerializedName("business_id")
+  private String businessId;
+
+  @SerializedName("currency")
+  private String currency;
 
   @SerializedName("amount")
   private Number amount;
@@ -33,8 +39,14 @@ public class QRCode {
   @SerializedName("qr_string")
   private String qrString;
 
-  @SerializedName("callback_url")
-  private String callbackUrl;
+  @SerializedName("webhook_url")
+  private String webhookUrl;
+
+  @SerializedName("channel_code")
+  private String channelCode;
+
+  @SerializedName("expires_at")
+  private String expiresAt;
 
   @SerializedName("type")
   private String type;
@@ -48,28 +60,33 @@ public class QRCode {
   @SerializedName("updated")
   private String updated;
 
+  @SerializedName("basket")
+  private Object basket;
+
+  @SerializedName("metadata")
+  private Object metadata;
+
   private static QRCodeClient qrCodeClient;
 
   /**
    * Create QR Code with given parameters
    *
-   * @param externalId An ID of your choice. Often it is unique identifier in your system like
+   * @param referenceId An ID of your choice. Often it is unique identifier in your system like
    *     customer ID or order ID
    * @param type DYNAMIC or STATIC. DYNAMIC QR code contains the payment value upon scanning and can
    *     be paid multiple times. STATIC QR code requires end user to input the payment value and can
    *     be paid multiple times
-   * @param callbackUrl The URL to receive payment notification after payment has been made by end
-   *     user
+   * @param currency Currency of the QR code generated
    * @param amount The payment value embedded in the QR code, end user can only pay the specified
    *     amount after scanning the QR code. For STATIC QR code, amount parameter will be ignored.
    * @return QRCode
    * @throws XenditException XenditException
    */
   public static QRCode createQRCode(
-      String externalId, QRCodeType type, String callbackUrl, Number amount)
+      String referenceId, QRCode.QRCodeType type, String currency, Number amount)
       throws XenditException {
     QRCodeClient client = getClient();
-    return client.createQRCode(externalId, type, callbackUrl, amount);
+    return client.createQRCode(referenceId, type, currency, amount);
   }
 
   /**
@@ -107,6 +124,19 @@ public class QRCode {
   public static QRCode getQRCode(String externalId) throws XenditException {
     QRCodeClient client = getClient();
     return client.getQRCode(externalId);
+  }
+
+  /**
+   * Get QR Code by qr id id
+   *
+   * @param qrId Xendit provided unique ID returned when generating a qr code request. Starts with
+   *     qr_
+   * @return QRCode
+   * @throws XenditException XenditException
+   */
+  public static QRCode getQRCodeByQRId(String qrId) throws XenditException {
+    QRCodeClient client = getClient();
+    return client.getQRCodeByQRId(qrId);
   }
 
   /**

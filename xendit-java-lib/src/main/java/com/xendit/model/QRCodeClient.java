@@ -19,16 +19,20 @@ public class QRCodeClient {
   }
 
   public QRCode createQRCode(
-      String externalId, QRCode.QRCodeType type, String callbackUrl, Number amount)
+      String referenceId, QRCode.QRCodeType type, String currency, Number amount)
       throws XenditException {
     Map<String, Object> params = new HashMap<>();
-    params.put("external_id", externalId);
+    params.put("reference_id", referenceId);
     params.put("type", type.toString());
-    params.put("callback_url", callbackUrl);
+    params.put("currency", currency);
     params.put("amount", amount);
+
+    // Use new API version
+    Map<String, String> headers = new HashMap<>();
+    headers.put("api-version", "2022-07-31");
     String url = String.format("%s%s", opt.getXenditURL(), "/qr_codes");
     return this.requestClient.request(
-        RequestResource.Method.POST, url, params, opt.getApiKey(), QRCode.class);
+        RequestResource.Method.POST, url, headers, params, opt.getApiKey(), QRCode.class);
   }
 
   public QRCode createQRCode(Map<String, Object> params) throws XenditException {
@@ -38,6 +42,8 @@ public class QRCodeClient {
   public QRCode createQRCode(Map<String, String> headers, Map<String, Object> params)
       throws XenditException {
     String url = String.format("%s%s", opt.getXenditURL(), "/qr_codes");
+    // Use new API version
+    headers.put("api-version", "2022-07-31");
     return this.requestClient.request(
         RequestResource.Method.POST, url, headers, params, opt.getApiKey(), QRCode.class);
   }
@@ -46,5 +52,15 @@ public class QRCodeClient {
     String url = String.format("%s%s%s", opt.getXenditURL(), "/qr_codes/", externalId);
     return this.requestClient.request(
         RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class);
+  }
+
+  public QRCode getQRCodeByQRId(String qrId) throws XenditException {
+    String url = String.format("%s%s%s", opt.getXenditURL(), "/qr_codes/", qrId);
+
+    Map<String, String> headers = new HashMap<>();
+    headers.put("api-version", "2022-07-31");
+
+    return this.requestClient.request(
+        RequestResource.Method.GET, url, headers, null, opt.getApiKey(), QRCode.class);
   }
 }
