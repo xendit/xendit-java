@@ -108,13 +108,12 @@ public class QRCodeTest {
     RequestHeaders.put("for-user-id", "user-id");
     RequestHeaders.put("api-version", "2022-07-31");
 
-
     when(this.requestClient.request(
-            RequestResource.Method.POST, 
-            URL, 
-            RequestHeaders, 
-            PARAMS, 
-            opt.getApiKey(), 
+            RequestResource.Method.POST,
+            URL,
+            RequestHeaders,
+            PARAMS,
+            opt.getApiKey(),
             QRCode.class))
         .thenReturn(VALID_PAYMENT);
     when(qrCodeClient.createQRCode(HEADERS, PARAMS)).thenReturn(VALID_PAYMENT);
@@ -145,7 +144,8 @@ public class QRCodeTest {
     when(this.requestClient.request(
             RequestResource.Method.GET, url, null, opt.getApiKey(), QRCode.class))
         .thenThrow(new XenditException("not found"));
-    when(qrCodeClient.getQRCode(NOT_VALID_REFERENCE_ID)).thenThrow(new XenditException("not found"));
+    when(qrCodeClient.getQRCode(NOT_VALID_REFERENCE_ID))
+        .thenThrow(new XenditException("not found"));
 
     qrCodeClient.getQRCode(NOT_VALID_REFERENCE_ID);
   }
