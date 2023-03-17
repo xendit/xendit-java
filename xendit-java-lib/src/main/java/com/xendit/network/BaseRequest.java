@@ -243,8 +243,8 @@ public class BaseRequest implements NetworkClient {
       }
 
       Map<String, String> responseHeaders = new HashMap<>();
-      for (Map.Entry<String, List<String>> header : connection.getHeaderFields().entrySet()) {
-        responseHeaders.put(header.getKey(), header.getValue().get(0));
+      for (Map.Entry<String, List<String>> headerResponse : connection.getHeaderFields().entrySet()) {
+        responseHeaders.put(headerResponse.getKey(), headerResponse.getValue().get(0));
       }
       Xendit.setResponseHeaders(responseHeaders);
       return new XenditResponse(responseCode, responseBody);
