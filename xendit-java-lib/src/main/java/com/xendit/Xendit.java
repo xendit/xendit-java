@@ -48,7 +48,7 @@ public class Xendit {
     }
 
     public String getVersion() {
-      return "1.21.0";
+      return "1.22.0";
     }
   }
 }
