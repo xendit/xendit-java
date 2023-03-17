@@ -41,7 +41,7 @@ public class ExampleCreateClosedVA {
             FixedVirtualAccount virtualAccount3 = FixedVirtualAccount.createClosed("my_external_id",
                     BankCode.MANDIRI.getText(), "John Doe", 100000L, closedVAMap);
 
-            System.out.println(virtualAccount);
+            System.out.println(virtualAccount.getId());
         } catch (XenditException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.xenditclient;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +27,12 @@ public class QRCodeTest {
   private static String TEST_QR_CURRENCY = "IDR";
   private static Map<String, Object> PARAMS = new HashMap<>();
   private static Map<String, String> HEADERS = new HashMap<>();
+  private static Map<String, String> responseHeaders =
+      new HashMap<String, String>() {
+        {
+          put("Request-Id", "test_request_id");
+        }
+      };
   private static QRCode VALID_PAYMENT =
       QRCode.builder()
           .id(TEST_ID)
@@ -46,6 +53,7 @@ public class QRCodeTest {
     Xendit.setRequestClient(requestClient);
 
     PARAMS.clear();
+    Xendit.setResponseHeaders(responseHeaders);
   }
 
   private void initCreateParams() {
@@ -70,6 +78,24 @@ public class QRCodeTest {
             TEST_REFERENCE_ID, QRCode.QRCodeType.DYNAMIC, TEST_QR_CURRENCY, 10000);
 
     assertEquals(qrCode, VALID_PAYMENT);
+  }
+
+  @Test
+  public void createQRCode_And_RequestId_Not_Null() throws XenditException {
+    initCreateParams();
+
+    when(this.requestClient.request(
+            RequestResource.Method.POST, URL, HEADERS, PARAMS, opt.getApiKey(), QRCode.class))
+        .thenReturn(VALID_PAYMENT);
+    when(qrCodeClient.createQRCode(
+            TEST_REFERENCE_ID, QRCode.QRCodeType.DYNAMIC, TEST_QR_CURRENCY, 10000))
+        .thenReturn(VALID_PAYMENT);
+    QRCode qrCode =
+        qrCodeClient.createQRCode(
+            TEST_REFERENCE_ID, QRCode.QRCodeType.DYNAMIC, TEST_QR_CURRENCY, 10000);
+
+    assertEquals(qrCode, VALID_PAYMENT);
+    assertNotNull(Xendit.getResponseHeaders().get("Request-Id"));
   }
 
   @Test

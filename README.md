@@ -103,6 +103,7 @@ This library is the abstraction of Xendit API for access from applications writt
     - [Get Paylater Charge by ID](#get-paylater-charge-by-id)
     - [Refund Paylater Charge](#refund-paylater-charge)
     - [Get Refund by Refund ID](#get-refund-by-refund-id)
+  - [How to get Request Id](#how-to-get-request-id)
 - [Contributing](#contributing)
   - [Lint](#lint)
   - [Tests](#tests)
@@ -1885,6 +1886,28 @@ PaylaterRefund paylaterRefund = PaylaterRefund.getPaylaterRefundStatus("charge-i
 /* With client */
 PaylaterRefund paylaterRefund = xenditclient.paylater.getPaylaterRefundStatus("charge-id", "refund-id");
 ```
+
+### How to get Request ID
+
+Each API request has an asssociated request identifier. You can find this value in the response headers, under Request-ID. You can use Request-ID to find logs in [API Logs](https://dashboard.xendit.co/api-logs) in Dashboard. Learn more about Searching API Logs using Request-ID in [API Logs Docs](https://docs.xendit.co/api-integration/api-logs). 
+
+If you need to contact us about a specific request, providing the Request ID will ensure the fastest possible resolution.
+
+The following example will show how to obtain Request-ID when creating QRCode
+
+```java
+/* Without client */
+QRCode qrCode = QRCode.createQRCode("12", QRCode.QRCodeType.DYNAMIC, "IDR", 10000);
+/* Xendit.getResponseHeaders() will contain all response headers after your request is completed, hence you can obtain Request-Id from header by doing the following:*/
+System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
+
+/* With client */
+QRCode qrCode = xenditClient.qrCode.createQRCode("external_id", QRCode.QRCodeType.DYNAMIC, "IDR", 10000);
+/* Xendit.getResponseHeaders() will contain all response headers after your request is completed, hence you can obtain Request-Id from header by doing the following:*/
+System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
+```
+Full Example can be found [here](https://github.com/xendit/xendit-java/blob/9bd69bd6f4061307a5dee30287a1f7712d060527/xendit-java-library-example/src/main/java/ExampleWithClient/ExampleCreateQRCode.java)
+
 
 ## Contributing
 You can go to the [contributing guidelines](https://github.com/xendit/xendit-java/blob/master/CONTRIBUTING.md) to learn on how to contribute this project.
