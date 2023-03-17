@@ -1,6 +1,7 @@
 package com.xenditclient;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,12 +24,30 @@ public class BalanceTest {
   NetworkClient requestClient = mock(BaseRequest.class);
   Xendit.Option opt = mock(Xendit.Option.class);
   BalanceClient balanceClient = mock(BalanceClient.class);
+  private static Map<String, String> responseHeaders =
+      new HashMap<String, String>() {
+        {
+          put("Request-Id", "test_request_id");
+        }
+      };
 
   @Before
   public void initMocks() {
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
+    Xendit.setResponseHeaders(responseHeaders);
+  }
+
+  @Test
+  public void get_Success_With_RequestId() throws XenditException {
+    when(this.requestClient.request(
+            RequestResource.Method.GET, URL, HEADERS, null, opt.getApiKey(), Balance.class))
+        .thenReturn(VALID_BALANCE);
+    when(balanceClient.get()).thenReturn(VALID_BALANCE);
+    Balance balance = balanceClient.get();
+    assertEquals(balance, VALID_BALANCE);
+    assertNotNull(Xendit.getResponseHeaders().get("Request-Id"));
   }
 
   @Test

@@ -13,8 +13,13 @@ public class ExampleCreateQRCode {
     // Xendit.apiKey = "xnd_development_...";
 
     try {
-      QRCode qrCode = QRCode.createQRCode("12", QRCode.QRCodeType.DYNAMIC, "https://webhook.site", 10000);
+      QRCode qrCode = QRCode.createQRCode("12", QRCode.QRCodeType.DYNAMIC, "IDR", 10000);
       System.out.println(qrCode.getId());
+
+      // You can find this value in the response headers, under Request-ID. You can
+      // use Request-ID to find logs in API Logs in Dashboard
+      // (https://dashboard.xendit.co/api-logs).
+      System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
     } catch (XenditException e) {
       e.printStackTrace();
     }

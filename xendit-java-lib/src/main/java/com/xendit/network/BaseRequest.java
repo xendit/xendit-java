@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -198,6 +199,14 @@ public class BaseRequest implements NetworkClient {
       int responseCode = response.getStatusLine().getStatusCode();
       String responseBody = EntityUtils.toString(response.getEntity());
 
+      Header[] allHeaders = response.getAllHeaders();
+      Map<String, String> responseHeaders = new HashMap<>();
+      for (Header header : allHeaders) {
+        responseHeaders.put(header.getName(), header.getValue());
+      }
+
+      Xendit.setResponseHeaders(responseHeaders);
+
       return new XenditResponse(responseCode, responseBody);
     } catch (IOException e) {
       throw new XenditException("Connection error : " + e.getMessage());
@@ -233,6 +242,11 @@ public class BaseRequest implements NetworkClient {
         responseBody = getResponseBody(connection.getErrorStream());
       }
 
+      Map<String, String> responseHeaders = new HashMap<>();
+      for (Map.Entry<String, List<String>> header : connection.getHeaderFields().entrySet()) {
+        responseHeaders.put(header.getKey(), header.getValue().get(0));
+      }
+      Xendit.setResponseHeaders(responseHeaders);
       return new XenditResponse(responseCode, responseBody);
     } catch (IOException e) {
 
@@ -268,12 +282,14 @@ public class BaseRequest implements NetworkClient {
     }
   }
 
-  private static String getResponseBody(InputStream responseStream) throws IOException {
+  private static String getResponseBody(InputStream responseStream) throws XenditException {
     try (final Scanner scanner = new Scanner(responseStream, RequestResource.CHARSET)) {
       // \A is the beginning of the stream boundary
       final String responseBody = scanner.useDelimiter("\\A").next();
       responseStream.close();
       return responseBody;
+    } catch (Exception e) {
+      throw new XenditException("Failed to get response, Please check your connection");
     }
   }
 
