@@ -1887,7 +1887,7 @@ PaylaterRefund paylaterRefund = PaylaterRefund.getPaylaterRefundStatus("charge-i
 PaylaterRefund paylaterRefund = xenditclient.paylater.getPaylaterRefundStatus("charge-id", "refund-id");
 ```
 
-### How to get Request Id
+### How to get Request ID
 
 Each API request has an asssociated request identifier. You can find this value in the response headers, under Request-ID. You can use Request-ID to find logs in [API Logs](https://dashboard.xendit.co/api-logs) in Dashboard. Learn more about Searching API Logs using Request-ID in [API Logs Docs](https://docs.xendit.co/api-integration/api-logs). 
 
