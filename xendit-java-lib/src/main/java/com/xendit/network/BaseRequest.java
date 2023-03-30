@@ -141,8 +141,8 @@ public class BaseRequest implements NetworkClient {
     } catch (JsonSyntaxException e) {
       raiseMalformedJsonError(responseBody, responseCode);
     } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      // e.printStackTrace();
+      throw new XenditException("Failed to parse response headers, Please check your request."+e.getMessage());
     }
 
     return resource;
