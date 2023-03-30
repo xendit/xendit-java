@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class QRCode {
+public class QRCode extends AbstractResponseHeaders {
   public enum QRCodeType {
     DYNAMIC,
     STATIC

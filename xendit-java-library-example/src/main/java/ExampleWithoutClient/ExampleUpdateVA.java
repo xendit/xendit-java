@@ -25,7 +25,7 @@ public class ExampleUpdateVA {
             // You can find this value in the response headers, under Request-ID. You can
             // use Request-ID to find logs in API Logs in Dashboard
             // (https://dashboard.xendit.co/api-logs).
-            System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
+            System.out.println(fixedVirtualAccount.getResponseHeaders().get("Request-Id"));
         } catch (XenditException e) {
             e.printStackTrace();
         }

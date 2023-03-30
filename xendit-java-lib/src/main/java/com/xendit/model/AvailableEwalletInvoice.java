@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AvailableEwalletInvoice {
+public class AvailableEwalletInvoice extends AbstractResponseHeaders {
   @SerializedName("ewallet_type")
   private String ewalletType;
 }

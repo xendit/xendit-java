@@ -8,7 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class CreditCardReverseAuth {
+public class CreditCardReverseAuth extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

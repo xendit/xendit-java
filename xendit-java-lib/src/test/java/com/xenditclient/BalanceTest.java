@@ -36,7 +36,7 @@ public class BalanceTest {
     Xendit.Opt.setApiKey(
         "xnd_development_Z568GecuIH66011GIILkDFNJOoR1wFZdGqOOMFBrRVeX64DISB1o7hnNKB");
     Xendit.setRequestClient(requestClient);
-    Xendit.setResponseHeaders(responseHeaders);
+    VALID_BALANCE.setResponseHeaders(responseHeaders);
   }
 
   @Test
@@ -47,7 +47,7 @@ public class BalanceTest {
     when(balanceClient.get()).thenReturn(VALID_BALANCE);
     Balance balance = balanceClient.get();
     assertEquals(balance, VALID_BALANCE);
-    assertNotNull(Xendit.getResponseHeaders().get("Request-Id"));
+    assertNotNull(balance.getResponseHeaders().get("Request-Id"));
   }
 
   @Test

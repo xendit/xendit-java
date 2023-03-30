@@ -8,7 +8,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class DirectDebitRefunds {
+public class DirectDebitRefunds extends AbstractResponseHeaders {
   @SerializedName("data")
   private String[] data;
 

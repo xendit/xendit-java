@@ -2,7 +2,7 @@ package com.xendit.model;
 
 import com.xendit.Xendit;
 
-public class AbstractRetailOutlet {
+public class AbstractRetailOutlet extends AbstractResponseHeaders {
   protected static RetailOutletClient retailOutletClient;
   /**
    * Its create a client for RetailOutlet

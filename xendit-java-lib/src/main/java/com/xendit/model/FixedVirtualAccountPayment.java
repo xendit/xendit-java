@@ -8,7 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class FixedVirtualAccountPayment {
+public class FixedVirtualAccountPayment extends AbstractResponseHeaders {
   @SerializedName("id")
   String id;
 

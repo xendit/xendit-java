@@ -2,6 +2,7 @@ package ExampleWithClient;
 
 import com.xendit.enums.BankCode;
 import com.xendit.exception.XenditException;
+import com.xendit.Xendit;
 import com.xendit.XenditClient;
 import com.xendit.model.FixedVirtualAccount;
 
@@ -40,7 +41,8 @@ public class ExampleCreateClosedVA {
             FixedVirtualAccount virtualAccount3 = xenditClient.fixedVirtualAccount.createClosed("my_external_id",
                     BankCode.MANDIRI.getText(), "John Doe", 100000L, closedVAMap);
 
-            System.out.println(virtualAccount);
+            System.out.println(virtualAccount.getId());
+            System.out.println(virtualAccount.getResponseHeaders().get("Request-Id"));
         } catch (XenditException e) {
             e.printStackTrace();
         }

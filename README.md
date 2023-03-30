@@ -1899,12 +1899,12 @@ The following example will show how to obtain Request-ID when creating QRCode
 /* Without client */
 QRCode qrCode = QRCode.createQRCode("12", QRCode.QRCodeType.DYNAMIC, "IDR", 10000);
 /* Xendit.getResponseHeaders() will contain all response headers after your request is completed, hence you can obtain Request-Id from header by doing the following:*/
-System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
+System.out.println(qrCode.getResponseHeaders().get("Request-Id"));
 
 /* With client */
 QRCode qrCode = xenditClient.qrCode.createQRCode("external_id", QRCode.QRCodeType.DYNAMIC, "IDR", 10000);
 /* Xendit.getResponseHeaders() will contain all response headers after your request is completed, hence you can obtain Request-Id from header by doing the following:*/
-System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
+System.out.println(qrCode.getResponseHeaders().get("Request-Id"));
 ```
 Full Example can be found [here](https://github.com/xendit/xendit-java/blob/9bd69bd6f4061307a5dee30287a1f7712d060527/xendit-java-library-example/src/main/java/ExampleWithClient/ExampleCreateQRCode.java)
 

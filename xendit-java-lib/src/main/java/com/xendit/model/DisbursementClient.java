@@ -10,7 +10,7 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class DisbursementClient {
+public class DisbursementClient extends AbstractResponseHeaders {
   private Xendit.Option opt;
 
   private NetworkClient requestClient;

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CreditCard {
+public class CreditCard extends AbstractResponseHeaders {
 
   private static CreditCardClient creditCardClient;
 

@@ -10,7 +10,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class AccessibleLinkedAccount {
+public class AccessibleLinkedAccount extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

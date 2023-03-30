@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class InitializedLinkedAccount {
+public class InitializedLinkedAccount extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

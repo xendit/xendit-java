@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class DirectDebitPayment {
+public class DirectDebitPayment extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

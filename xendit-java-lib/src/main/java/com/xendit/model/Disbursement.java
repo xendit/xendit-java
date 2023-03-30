@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Disbursement {
+public class Disbursement extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

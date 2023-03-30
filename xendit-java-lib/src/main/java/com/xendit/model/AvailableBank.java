@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AvailableBank {
+public class AvailableBank extends AbstractResponseHeaders {
   @SerializedName("name")
   String name;
 

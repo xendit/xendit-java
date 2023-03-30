@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class RecurringPayment {
+public class RecurringPayment extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

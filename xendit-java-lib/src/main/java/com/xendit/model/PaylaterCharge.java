@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class PaylaterCharge {
+public class PaylaterCharge extends AbstractResponseHeaders {
   @SerializedName("charge_id")
   private String chargeId;
 

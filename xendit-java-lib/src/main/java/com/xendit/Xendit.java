@@ -2,7 +2,6 @@ package com.xendit;
 
 import com.xendit.network.BaseRequest;
 import com.xendit.network.NetworkClient;
-import java.util.Map;
 
 public class Xendit {
 
@@ -18,16 +17,6 @@ public class Xendit {
 
   public static void setRequestClient(NetworkClient requestClient) {
     Xendit.requestClient = requestClient;
-  }
-
-  protected static Map<String, String> responseHeaders;
-
-  public static Map<String, String> getResponseHeaders() {
-    return responseHeaders;
-  }
-
-  public static void setResponseHeaders(Map<String, String> headers) {
-    Xendit.responseHeaders = headers;
   }
 
   public static class Option {

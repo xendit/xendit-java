@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class DisbursementPHP {
+public class DisbursementPHP extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

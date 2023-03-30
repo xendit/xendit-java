@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class DisbursementChannel {
+public class DisbursementChannel extends AbstractResponseHeaders {
   @SerializedName("channel_code")
   private String channelCode;
 
