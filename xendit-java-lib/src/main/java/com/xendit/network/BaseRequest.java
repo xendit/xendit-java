@@ -142,7 +142,8 @@ public class BaseRequest implements NetworkClient {
       raiseMalformedJsonError(responseBody, responseCode);
     } catch (Exception e) {
       // e.printStackTrace();
-      throw new XenditException("Failed to parse response headers, Please check your request."+e.getMessage());
+      throw new XenditException(
+          "Failed to parse response headers, Please check your request." + e.getMessage());
     }
 
     return resource;
