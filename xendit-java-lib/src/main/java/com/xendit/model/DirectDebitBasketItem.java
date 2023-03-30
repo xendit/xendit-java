@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 @Setter
 @Getter
-public class DirectDebitBasketItem {
+public class DirectDebitBasketItem extends AbstractResponseHeaders {
   @SerializedName("reference_id")
   private String referenceId;
 

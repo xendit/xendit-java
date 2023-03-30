@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Beneficiary {
+public class Beneficiary extends AbstractResponseHeaders {
   @SerializedName("type")
   private String type;
 

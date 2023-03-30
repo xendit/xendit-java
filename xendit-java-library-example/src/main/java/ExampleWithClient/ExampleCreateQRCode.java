@@ -1,7 +1,6 @@
 package ExampleWithClient;
 
 import com.xendit.exception.XenditException;
-import com.xendit.Xendit;
 import com.xendit.XenditClient;
 import com.xendit.model.QRCode;
 
@@ -16,7 +15,7 @@ public class ExampleCreateQRCode {
       System.out.println(qrCode.getId());
 
       //You can find this value in the response headers, under Request-ID. You can use Request-ID to find logs in API Logs in Dashboard (https://dashboard.xendit.co/api-logs).
-      System.out.println(Xendit.getResponseHeaders().get("Request-Id"));
+      System.out.println(qrCode.getResponseHeaders().get("Request-Id"));
     } catch (XenditException e) {
       e.printStackTrace();
     }

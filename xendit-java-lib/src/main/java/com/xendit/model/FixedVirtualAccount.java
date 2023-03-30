@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class FixedVirtualAccount {
+public class FixedVirtualAccount extends AbstractResponseHeaders {
 
   @SerializedName("id")
   private String id;

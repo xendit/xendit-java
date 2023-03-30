@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class RegionalRetailOutletPaymentCode {
+public class RegionalRetailOutletPaymentCode extends AbstractResponseHeaders {
   public enum ChannelCode {
     SEVENELEVEN("7ELEVEN"),
     SEVENELEVENCLIQQ("7ELEVEN_CLIQQ"),

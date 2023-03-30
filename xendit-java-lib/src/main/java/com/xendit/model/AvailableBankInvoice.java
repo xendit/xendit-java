@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AvailableBankInvoice {
+public class AvailableBankInvoice extends AbstractResponseHeaders {
   @SerializedName("bank_code")
   private String bankCode;
 

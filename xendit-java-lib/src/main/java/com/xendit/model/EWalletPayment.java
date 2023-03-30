@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class EWalletPayment {
+public class EWalletPayment extends AbstractResponseHeaders {
   public enum EWalletType {
     DANA,
     OVO,

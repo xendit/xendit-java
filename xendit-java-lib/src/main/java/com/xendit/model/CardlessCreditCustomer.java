@@ -8,7 +8,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class CardlessCreditCustomer {
+public class CardlessCreditCustomer extends AbstractResponseHeaders {
   @SerializedName("first_name")
   private String firstName;
 

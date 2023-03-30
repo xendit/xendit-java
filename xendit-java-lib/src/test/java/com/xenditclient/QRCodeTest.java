@@ -53,7 +53,7 @@ public class QRCodeTest {
     Xendit.setRequestClient(requestClient);
 
     PARAMS.clear();
-    Xendit.setResponseHeaders(responseHeaders);
+    VALID_PAYMENT.setResponseHeaders(responseHeaders);
   }
 
   private void initCreateParams() {
@@ -95,7 +95,7 @@ public class QRCodeTest {
             TEST_REFERENCE_ID, QRCode.QRCodeType.DYNAMIC, TEST_QR_CURRENCY, 10000);
 
     assertEquals(qrCode, VALID_PAYMENT);
-    assertNotNull(Xendit.getResponseHeaders().get("Request-Id"));
+    assertNotNull(qrCode.getResponseHeaders().get("Request-Id"));
   }
 
   @Test

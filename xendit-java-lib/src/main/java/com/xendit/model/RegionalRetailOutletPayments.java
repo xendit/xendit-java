@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class RegionalRetailOutletPayments {
+public class RegionalRetailOutletPayments extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

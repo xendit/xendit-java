@@ -134,8 +134,15 @@ public class BaseRequest implements NetworkClient {
     T resource = null;
     try {
       resource = new Gson().fromJson(responseBody, clazz);
+      clazz
+          .getMethod("setResponseHeaders", Map.class)
+          .invoke(resource, response.getResponseHeaders());
+
     } catch (JsonSyntaxException e) {
       raiseMalformedJsonError(responseBody, responseCode);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
 
     return resource;
@@ -205,9 +212,7 @@ public class BaseRequest implements NetworkClient {
         responseHeaders.put(respHeader.getName(), respHeader.getValue());
       }
 
-      Xendit.setResponseHeaders(responseHeaders);
-
-      return new XenditResponse(responseCode, responseBody);
+      return new XenditResponse(responseCode, responseBody, responseHeaders);
     } catch (IOException e) {
       throw new XenditException("Connection error : " + e.getMessage());
     }
@@ -247,8 +252,8 @@ public class BaseRequest implements NetworkClient {
           connection.getHeaderFields().entrySet()) {
         responseHeaders.put(headerResponse.getKey(), headerResponse.getValue().get(0));
       }
-      Xendit.setResponseHeaders(responseHeaders);
-      return new XenditResponse(responseCode, responseBody);
+
+      return new XenditResponse(responseCode, responseBody, responseHeaders);
     } catch (IOException e) {
 
       throw new XenditException("Connection error");

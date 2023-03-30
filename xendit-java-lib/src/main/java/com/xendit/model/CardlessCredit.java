@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class CardlessCredit {
+public class CardlessCredit extends AbstractResponseHeaders {
   @SerializedName("redirect_url")
   private String redirectUrl;
 

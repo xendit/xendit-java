@@ -18,7 +18,7 @@ public class ExampleUpdateVA {
             Map<String, Object> params = new HashMap<>();
             params.put("is_single_use", true);
 
-            FixedVirtualAccount fixedVirtualAccount = xenditClient.fixedVirtualAccount.update("61513f1341de11279b3388bd", params);
+            FixedVirtualAccount fixedVirtualAccount = xenditClient.fixedVirtualAccount.update("6413d9622123d8f96721cd1d", params);
             System.out.println(fixedVirtualAccount.getIsSingleUse());
         } catch (XenditException e) {
             e.printStackTrace();

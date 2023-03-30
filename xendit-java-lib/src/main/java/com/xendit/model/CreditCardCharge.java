@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class CreditCardCharge {
+public class CreditCardCharge extends AbstractResponseHeaders {
   @SerializedName("id")
   private String id;
 

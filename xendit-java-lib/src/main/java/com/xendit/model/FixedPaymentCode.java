@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class FixedPaymentCode {
+public class FixedPaymentCode extends AbstractResponseHeaders {
   public enum RetailOutletName {
     ALFAMART,
     INDOMARET

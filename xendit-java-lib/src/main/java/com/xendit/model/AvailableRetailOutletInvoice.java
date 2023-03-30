@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AvailableRetailOutletInvoice {
+public class AvailableRetailOutletInvoice extends AbstractResponseHeaders {
   @SerializedName("retail_outlet_name")
   private String retailOutletName;
 
