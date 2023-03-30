@@ -13,7 +13,7 @@ public class ExampleCreateClosedVA {
     public static void main(String[] args) {
         //create xendit client which holds value of apikey
         XenditClient xenditClient = new XenditClient.Builder()
-                .setApikey("xnd_development_zpMSsE3DWEE30Hfyj4Zg8yOm0lTRM9jSO8IZwJrogx3pxp5hAnCvZ9EZ16Zipd")
+                .setApikey("xnd_development_...")
                 .build();
 
         Map<String, Object> closedVAMap = new HashMap<String, Object>();
